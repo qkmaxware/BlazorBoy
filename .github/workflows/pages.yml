@@ -23,7 +23,7 @@ jobs:
           dotnet-version: '8.0.x' # SDK Version to use
 
       - name: Change base-tag
-        run: sed -i 's/<base href="\/" \/>/<base href="\/BlazorBoy\/" \/>/g' wwwroot/index.html
+        run: sed -i 's/<base href="\/" \/>/<base href="\/BlazorBoy\/" \/>/g' BlazorBoy.Player/wwwroot/index.html
 
       - name: Restore Packages
         env: 
