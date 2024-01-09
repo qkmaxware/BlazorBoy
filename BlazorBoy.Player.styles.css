@@ -1,0 +1,328 @@
+/* /Pages/Index.razor.rz.scp.css */
+img[b-w1pu1zzjxh] {
+    height: 3em;
+}
+
+h2[b-w1pu1zzjxh] {
+    text-align: center;
+    margin-left: 2em;
+    margin-right: 2em;
+    border-bottom: 3px solid teal;
+}
+
+.w3-display-container[b-w1pu1zzjxh] {
+    height: 100vh;
+    height: 100dvh;
+}
+/* /Shared/CartridgeInfo.razor.rz.scp.css */
+table[b-7oqlzfzk3a] {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 12px;
+    border-radius: 12px;
+    width: 100%;
+}
+
+table th[b-7oqlzfzk3a] {
+    text-align: left;
+}
+/* /Shared/DebugTools.razor.rz.scp.css */
+.half[b-n6mexbp8e8] {
+    width: 49.8%;
+    display: inline-block;
+}
+/* /Shared/Disassembler.razor.rz.scp.css */
+table[b-cmrchon0wi] {
+    width: 100%;
+    max-height: 450px;
+    overflow-y: auto;
+}
+/* /Shared/GameboyWebFrontend.razor.rz.scp.css */
+#play-area[b-wuv9iwljwz] {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+}
+
+#gb[b-wuv9iwljwz] {
+    margin-top: 32mm;
+    position: relative;
+    display: inline-block;
+    outline: none;
+
+    height: 80vh;
+    height: 80dvh;
+    width:  48.679vh;
+    width:  48.679dvh;
+}
+#gb:focus[b-wuv9iwljwz] {
+    outline: none;
+}
+
+@media (orientation: landscape) {
+    /*1.64341085271 aspect ratio*/
+}
+
+@media (orientation: portrait) {
+    /*1.64341085271 aspect ratio*/
+    /*#gb {
+        width:  100vw;
+        width:  100dvw;
+        height: 164.341vw;
+        height: 164.341dvw;
+    }*/
+}
+
+#meta[b-wuv9iwljwz] {
+    margin-top: 32mm;
+    display: inline-block;
+    width: 300px;
+    height: 80vh;
+    height: 80dvh;
+    overflow-y: auto;
+    overflow-x: auto;
+}
+
+#console[b-wuv9iwljwz] {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+#cart-release[b-wuv9iwljwz] {
+    position: absolute;
+    width: 100%;
+    top: -15mm;
+    left: 0;
+    cursor: pointer;
+}
+#cart-release:hover[b-wuv9iwljwz] {
+    top: -32mm;
+}
+#cart-release span[b-wuv9iwljwz] {
+    display: block;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 12px;
+    border-radius: 12px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 60%;
+}
+#cart[b-wuv9iwljwz] {
+    width: 100%;
+}
+
+#screen[b-wuv9iwljwz] {
+    position: absolute;
+    left: 22.5%;
+    top: 13.5%;
+    width: 54%;
+    height: 30%;
+}
+
+#power[b-wuv9iwljwz] {
+    position: absolute;
+    left: 9%;
+    top: 14%;
+    width: 12%;
+    height: 7%;
+    padding: 2px;
+    overflow: visible;
+}
+#power > img[b-wuv9iwljwz] {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+#power > label[b-wuv9iwljwz] {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 12px;
+    border-radius: 12px;
+    text-align: center;
+    position: absolute;
+    left: -65px;
+    top: -32px; 
+}
+
+#reset[b-wuv9iwljwz] {
+    position: absolute;
+    left: 12%;
+    top: 22%;
+    width: 6%;
+    height: 3.5%;
+    padding: 0;
+    overflow: visible;
+}
+#reset > img[b-wuv9iwljwz] {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+#reset > label[b-wuv9iwljwz] {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 6px;
+    border-radius: 12px;
+    text-align: center;
+    position: absolute;
+    font-size: small;
+    left: -16px;
+    top: 22px; 
+}
+
+#A[b-wuv9iwljwz] {
+    position: absolute;
+    left: 79%;
+    top: 61.5%;
+    width: 15%;
+    height: 9%;
+}
+
+#B[b-wuv9iwljwz] {
+    position: absolute;
+    left: 63%;
+    top: 66%;
+    width: 15%;
+    height: 9%;
+}
+
+#Select[b-wuv9iwljwz] {
+    position: absolute;
+    left: 32%;
+    top: 82%;
+    width: 15%;
+    height: 9%;
+}
+
+#Start[b-wuv9iwljwz] {
+    position: absolute;
+    left: 50%;
+    top: 82%;
+    width: 15%;
+    height: 9%;
+}
+
+#ArrowUp[b-wuv9iwljwz] {
+    padding: 0;
+    position: absolute;
+    left: 15%;
+    top: 61%;
+    width: 11%;
+    height: 6%;
+}
+
+#ArrowDown[b-wuv9iwljwz] {
+    padding: 0;
+    position: absolute; 
+    left: 15%;
+    top: 73%;
+    width: 11%;
+    height: 6%;
+}
+
+#ArrowLeft[b-wuv9iwljwz] {
+    padding: 0;
+    position: absolute; 
+    left: 5%;
+    top: 67%;
+    width: 11%;
+    height: 6%;
+}
+
+#ArrowRight[b-wuv9iwljwz] {
+    padding: 0;
+    position: absolute; 
+    left: 26%;
+    top: 67%;
+    width: 11%;
+    height: 6%;
+}
+/* /Shared/MainLayout.razor.rz.scp.css */
+/* /Shared/Modal.razor.rz.scp.css */
+dialog[b-dhd5oul3la] {
+    border: none;
+}
+
+.w3-modal[b-dhd5oul3la] {
+    padding-top: 25px;
+}
+/* /Shared/NavMenu.razor.rz.scp.css */
+.navbar-toggler[b-xdjmw5f3dw] {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.top-row[b-xdjmw5f3dw] {
+    height: 3.5rem;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.navbar-brand[b-xdjmw5f3dw] {
+    font-size: 1.1rem;
+}
+
+.oi[b-xdjmw5f3dw] {
+    width: 2rem;
+    font-size: 1.1rem;
+    vertical-align: text-top;
+    top: -2px;
+}
+
+.nav-item[b-xdjmw5f3dw] {
+    font-size: 0.9rem;
+    padding-bottom: 0.5rem;
+}
+
+    .nav-item:first-of-type[b-xdjmw5f3dw] {
+        padding-top: 1rem;
+    }
+
+    .nav-item:last-of-type[b-xdjmw5f3dw] {
+        padding-bottom: 1rem;
+    }
+
+    .nav-item[b-xdjmw5f3dw]  a {
+        color: #d7d7d7;
+        border-radius: 4px;
+        height: 3rem;
+        display: flex;
+        align-items: center;
+        line-height: 3rem;
+    }
+
+.nav-item[b-xdjmw5f3dw]  a.active {
+    background-color: rgba(255,255,255,0.25);
+    color: white;
+}
+
+.nav-item[b-xdjmw5f3dw]  a:hover {
+    background-color: rgba(255,255,255,0.1);
+    color: white;
+}
+
+@media (min-width: 641px) {
+    .navbar-toggler[b-xdjmw5f3dw] {
+        display: none;
+    }
+
+    .collapse[b-xdjmw5f3dw] {
+        /* Never collapse the sidebar for wide screens */
+        display: block;
+    }
+    
+    .nav-scrollable[b-xdjmw5f3dw] {
+        /* Allow sidebar to scroll for tall menus */
+        height: calc(100vh - 3.5rem);
+        overflow-y: auto;
+    }
+}
+/* /Shared/RegistryViewer.razor.rz.scp.css */
+table[b-8hmd2rl1yy] {
+    width: 100%;
+}
+/* /Shared/Stepper.razor.rz.scp.css */
