@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "BlazorBoy.Player",
   "resources": {
-    "hash": "sha256-hxutrvJ3yOHxkYzfz0s/lxHjHevv3U1ojTeA6zRYmY8=",
+    "hash": "sha256-MvVxI3poLv7wwXhQB9DrExlV6WRuwbeVi1GJqUbLYj8=",
     "jsModuleNative": {
       "dotnet.native.8.0.0.45ykigla5r.js": "sha256-LjLDIz9+J7uuiwMlQ4HbNx2BnSpphOtO2MwkoI28vdI="
     },
@@ -17,8 +17,8 @@
       "icudt_no_CJK.dat": "sha256-L7sV7NEYP37/Qr2FPCePo5cJqRgTXRwGHuwF5Q+0Nfs="
     },
     "assembly": {
-      "BlazorBoy.Player.wasm": "sha256-K9i2/LCJcjd0ruPEtEANCgOjOh7Y749GPOf7VXE6jzc=",
-      "Gameboy.wasm": "sha256-REuprtULPUJ+ehiZiBId+5WovCkkTLcP5QhsdCsPKWc=",
+      "BlazorBoy.Player.wasm": "sha256-55ki7Vt2N1LVFOTkw5J5LsSOqifi63/sboQ2dCROo+k=",
+      "Gameboy.wasm": "sha256-uKffxtEecCwHS+gomvDfPfyNsV9AZyil22zN/VmLbfM=",
       "Microsoft.AspNetCore.Components.wasm": "sha256-52iThhKtGuOyh6Hc9OMfFRyzuuXgU6XGEvs3ZYwIwBQ=",
       "Microsoft.AspNetCore.Components.Web.wasm": "sha256-B70e0ysaho4YX8g1M7+MTemfV82MFXpcO4SeDZ6BP4E=",
       "Microsoft.AspNetCore.Components.WebAssembly.wasm": "sha256-5FaflSk4l761sg/eVrAb3FIdwbplaj7pDCyFzPHZ2Cc=",
@@ -33,7 +33,7 @@
       "Microsoft.Extensions.Primitives.wasm": "sha256-6187ynEahDlSLMBvD4vAmiLpZ3clRb5xu6rM7O8AxNo=",
       "Microsoft.JSInterop.wasm": "sha256-46ISrKZtHoqFTL4haLcjkvz5lrkP1CmIPYY73Bc8nIY=",
       "Microsoft.JSInterop.WebAssembly.wasm": "sha256-CQVLCKiSxLN5ghyJZG3mhnMGRROdqrbNUjtAXB0nWb8=",
-      "Qkmaxware.Vm.LR35902.wasm": "sha256-ivC54ReGzIKo1n7BjNFgaosQ5US8lLodUlM/HaUbRKQ=",
+      "Qkmaxware.Vm.LR35902.wasm": "sha256-OYrQU5tJdrbe1LmFCX63tEZt2UKekO0s+EqENrmLtZI=",
       "System.Collections.Concurrent.wasm": "sha256-RMysCmsNfkwkkl6XfXRyID9KEepQGAP/lVR8UxbKXYA=",
       "System.Collections.wasm": "sha256-Yw28y2Y103Ta3dMXVVNn90mf4GNxr+s3WoIQQYiq0rg=",
       "System.ComponentModel.Primitives.wasm": "sha256-A5y5C+bq0jCJu9dmLIJ+6Bprf+aVUv68XErH6sTyQ6w=",
