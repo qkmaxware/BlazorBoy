@@ -1,0 +1,38 @@
+@using Qkmaxware.Emulators.Gameboy
+@using Qkmaxware.Emulators.Gameboy.Hardware
+
+@if (Header is not null) {
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th> <th>@Header.title</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Region</td> <td>@Header.region</td>
+            </tr>
+            <tr>
+                <td>Manufacturer</td> <td>@Header.manufacturerCode</td>
+            </tr>
+            <tr>
+                <td>Licencee</td> <td>@Header.licencee</td>
+            </tr>
+            <tr>
+                <td>Cart Type</td> <td>@Header.cartType.MBC</td>
+            </tr>
+            <tr>
+                <td>Rom</td> <td>size:@Header.romClass.Size, banks:@Header.romClass.BankCount</td>
+            </tr>
+            <tr>
+                <td>Ram</td> <td>size:@Header.eramClass.Size, banks:@Header.eramClass.BankCount</td>
+            </tr>
+        </tbody>
+    </table>
+}
+
+@code { 
+    [Parameter] public Cartridge? Cart {get; set;}
+
+    public CartridgeHeader? Header => Cart?.Info;
+}

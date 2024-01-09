@@ -1,0 +1,90 @@
+@using Qkmaxware.Emulators.Gameboy;
+@using System.Diagnostics
+@inject RendererService renderer
+
+<div>
+    <button @onclick=step>
+        Step<br>
+        @if(singleStepTiming.HasValue) { <text>@singleStepTiming</text>  } else { <text>-</text> }
+    </button>
+    <button @onclick=stepUntilRender>
+        Run until render<br>
+        @if(untilRenderTiming.HasValue && renderTiming.HasValue) { <text>@untilRenderTiming + @renderTiming</text>  } else { <text>-</text> }
+    </button>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Component</th> <th>Total</th> <th>Avg</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    @foreach (var metric in PerformanceAnalyzer.AllRecords.OrderByDescending(kv => kv.Value.Sum)) {
+        <tr>
+            <td>@metric.Key</td> <td>@metric.Value.Sum</td> <td>@if (metric.Value.Count > 0) { <text>@metric.Value.Average</text> }</td>
+        </tr>
+    }
+    </table>
+
+    @if (Gb?.CPU?.Trace is InstructionHistoryTrace trace) {
+    <table>
+        <thead>
+            <tr>
+                <th>Line</th> <th>Instruction</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var entry in trace.History) {
+            <tr>
+                <td>0x@(entry.StartAddress.ToString("X4"))</td><td>0x@(entry.Operation.Opcode.ToString("X2")) @entry.Operation.Name</td>
+            </tr> 
+        }
+        </tbody>
+    </table>
+    }
+</div>
+
+@code {
+    [Parameter] public ElementReference? Screen {get; set;}
+    [Parameter] public Gameboy? Gb {get; set;}
+    [Parameter] public Action? AfterStep {get; set;}
+
+    private void prepare(Gameboy gb) {
+        if (gb.CPU.Trace is not InstructionHistoryTrace)
+            gb.CPU.Trace = new InstructionHistoryTrace(10);
+    }
+
+    private TimeSpan? singleStepTiming;
+    private TimeSpan? untilRenderTiming;
+    private TimeSpan? renderTiming;
+
+    private void step() {
+        if (Gb is null)
+            return;
+        prepare(Gb);
+        Stopwatch stopWatch = new Stopwatch();
+        stopWatch.Start();
+        Gb.Dispatch();
+        stopWatch.Stop();
+        singleStepTiming = stopWatch.Elapsed;
+        AfterStep?.Invoke();
+    }
+
+    private async Task stepUntilRender() {
+        if (Gb is null)
+            return;
+        prepare(Gb);
+
+        Stopwatch stopWatch = new Stopwatch();
+        stopWatch.Start();
+        Gb.DispatchUntilBufferFlush();
+        stopWatch.Stop();
+        untilRenderTiming = stopWatch.Elapsed;
+
+        stopWatch = new Stopwatch();
+        stopWatch.Start();
+        await renderer.PushPixels(Screen, Gb.GPU.Canvas);
+        stopWatch.Stop();
+        renderTiming = stopWatch.Elapsed;
+    }
+}

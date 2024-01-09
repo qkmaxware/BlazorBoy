@@ -1,0 +1,27 @@
+@using Qkmaxware.Emulators.Gameboy;
+
+<button @onclick=@(() => showDebugger = true)>Show Debugger</button> <button @onclick=@(() => showDebugger = false)>Hide Debugger</button>
+@if (showDebugger && Gb is not null) {
+    <Stepper Screen=@Screen Gb=@Gb AfterStep=Revalidate></Stepper>
+    <div>
+        <div class="half">
+            <RegistryViewer @ref=reg Registry=@Gb.CPU.Registry></RegistryViewer>
+        </div>
+        <div class="half">
+            <Disassembler Cart=@Gb.GetCartridge()></Disassembler>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter] public Gameboy? Gb {get; set;}
+    [Parameter] public ElementReference? Screen {get; set;}
+
+    private bool showDebugger;
+
+    private RegistryViewer? reg;
+
+    public void Revalidate() {
+        reg?.Refesh();
+    }
+}

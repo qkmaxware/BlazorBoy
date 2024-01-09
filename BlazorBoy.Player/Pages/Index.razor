@@ -1,0 +1,83 @@
+﻿@page "/"
+
+<Modal @ref=notice AutoOpen=true>
+    <div class="w3-center w3-padding">
+        <img src="title.svg" alt="BlazorBoy Logo">
+    </div>
+    @if (notice_page == 0) {
+        <h2>About</h2>
+        <p>
+            BlazorBoy is a Nintendo&#8482; Game Boy emulator that runs entirely in your web-browser thanks to C#'s Blazor WebAssembly framework and HTML5 canvas. 
+        </p>
+        <p>
+            BlazorBoy is not intended to be a "fully featured" emulator. 
+            It has numerous glitches, it may not support some ROMs and features like saving and loading are not included. 
+            Usage of this emulator is intended for educational purposes only. If you're curious as to how it works, feel free to examine the source code on GitHub <a href="https://github.com/qkmaxware/BlazorBoy" target="_blank">here</a>.
+        </p>
+        <p>
+            No ROMs are provided for usage with this emulator, nor will it suggest places to get any. 
+            I highly recommend developing your own Game Boy games for use with this emulator as there are many projects out there for Game Boy development such as <a href="https://www.gbstudio.dev/" target="_blank">GB Studio</a>.
+        </p>
+        <h2>History</h2>
+        <p>
+            BlazorBoy began as a hardware learning exercise back during my undergrad years where it was written entirely in Java. It is still available in it's original Java version on my GitHub <a href="https://github.com/qkmaxware/GBemu" target="_blank">here</a>. 
+            Over the years I've moved way from using Java, due to a variety of factors, and thought it would be fun to convert the project to C#, my current language of choice, and maybe improve it along the way.  
+        </p>
+    } else if (notice_page == 1) {
+        <h2>Piracy Notice</h2>
+        <p>
+            BlazorBoy does not condone piracy. This emulator should only be used with ROMs which the user has a <b>Legal</b> right to use. 
+        </p>
+        <p>
+            To continue to the emulator, please acknowledge that you only intend to use it for your own <b>personal</b>, non commercial, use only and with ROMs that you are <b>Legally</b> entited to possess. 
+        </p>
+        <div class="w3-padding w3-center">
+            <button class="w3-button w3-green w3-round-large" @onclick=acceptAntiPiracyNotice>I Accept</button>
+        </div>
+    }
+    <div class="w3-margin w3-row">
+        <div class="w3-col s4" style="text-align: right;">
+            <button class="w3-button" @onclick=prevNoticePage>&lt; Back</button>
+        </div>
+        <div class="w3-col s4" style="text-align: center;">
+            @(notice_page + 1) / @(notice_page_total)
+        </div>
+        <div class="w3-col s4"  style="text-align: left;">
+            <button class="w3-button" @onclick=nextNoticePage>Next &gt;</button>
+        </div>
+    </div>
+</Modal>
+
+@if (hasAcceptedNotice) {
+    <GameboyWebFrontend></GameboyWebFrontend>
+} else {
+    <div class="w3-display-container">
+        <div class="w3-display-middle">
+            <p>
+                To use the emulator you need to acknowledge that you only intend to use it for your own personal use and with ROMs that you are <b>Legally</b> entited to possess.
+            </p>
+            <p>
+                You should have been prompted via a popup window to provide this acknowledgement. If you closed it by accident, you may reload the page to see it again.
+            </p>
+        </div>
+    </div>
+}
+
+@code {
+    private Modal? notice;
+    private int notice_page = 0;
+    private static readonly int notice_page_total = 2;
+    private bool hasAcceptedNotice = false;
+
+    private void prevNoticePage() {
+        notice_page = Math.Max(notice_page - 1, 0);
+    }
+    private void nextNoticePage() {
+        notice_page = Math.Min(notice_page + 1, notice_page_total - 1);
+    }
+
+    private void acceptAntiPiracyNotice() {
+        hasAcceptedNotice = true;
+        notice?.Hide();
+    }
+}

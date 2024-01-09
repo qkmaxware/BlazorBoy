@@ -1,0 +1,5 @@
+bin/
+obj/
+[pP]rivate/
+TestResults/
+.site/

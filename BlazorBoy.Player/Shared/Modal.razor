@@ -1,0 +1,31 @@
+<dialog class="w3-modal @openCss">
+    <div class="w3-modal-content w3-round-xlarge">
+        <div class="w3-container">
+            @ChildContent
+        </div>
+    </div>
+</dialog>
+
+@code {
+    private bool isOpen = false;
+    private string openCss => isOpen ? "w3-show" : "w3-hide";
+    [Parameter] public bool AutoOpen {get; set;}
+    [Parameter] public RenderFragment? ChildContent {get; set;}
+
+    protected override void OnInitialized() {
+        base.OnInitialized();
+        if (AutoOpen) {
+            isOpen = true;
+        }
+    }
+
+    public void Show() {
+        this.isOpen = true;
+        StateHasChanged();
+    }
+
+    public void Hide() {
+        this.isOpen = false;
+        StateHasChanged();
+    }
+}

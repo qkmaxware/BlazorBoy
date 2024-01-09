@@ -1,0 +1,51 @@
+@using Qkmaxware.Emulators.Gameboy.Hardware
+
+<div>
+    <table>
+        <thead>
+            <tr>
+                <th>Address</th> <th>Value</th> <th>Opcode</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (showDissassembly && Cart is not null) {
+                foreach (var (addr, value) in Cart.Bytes.Select((x, ind) => (ind, x))) {
+                    <tr>
+                        <td>0x@(addr.ToString("X4"))</td><td>@value</td><td>@if(ISA.TryFetchOperation(value, out var operation)){ <text>@operation.Name</text>  }</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+    <button @onclick=@(() => showDissassembly = true)>Disassemble</button>
+</div>
+
+@code {
+    private bool showDissassembly;
+
+    class NullMemory : Qkmaxware.Vm.LR35902.IMemory {
+        public int ReadByte(int address) {
+            throw new NotImplementedException();
+        }
+
+        public int ReadShort(int address) {
+            throw new NotImplementedException();
+        }
+
+        public void Reset() {
+            throw new NotImplementedException();
+        }
+
+        public void WriteByte(int address, int value) {
+            throw new NotImplementedException();
+        }
+
+        public void WriteShort(int address, int value) {
+            throw new NotImplementedException();
+        }
+    }
+
+    private static readonly Qkmaxware.Vm.LR35902.Cpu ISA = new Qkmaxware.Vm.LR35902.Cpu(new NullMemory());
+
+    [Parameter] public Cartridge? Cart {get; set;}
+}

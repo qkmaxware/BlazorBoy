@@ -1,0 +1,46 @@
+@using Qkmaxware.Vm.LR35902;
+
+<div>
+    <table>
+        <thead>
+            <tr>
+                <th>Register</th> <th>Value</th> <th>Register</th> <th>Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>PC</td><td>@Registry?.pc()</td> <td>SP</td><td>@Registry?.sp()</td>
+            </tr>
+            <tr>
+                <td>A</td><td>@Registry?.a()</td> <td>F (flags)</td>
+                <td>@Registry?.f() 
+                    (@if(Registry?.zero() ?? false) { <text>Z</text> } else { <text>_</text> }
+                    @if(Registry?.subtract() ?? false) { <text>N</text> } else { <text>_</text> }
+                    @if(Registry?.halfcarry() ?? false) { <text>H</text> } else { <text>_</text> }
+                    @if(Registry?.carry() ?? false) { <text>C</text> } else { <text>_</text> })
+                </td>
+            </tr>
+            <tr>
+                <td>B</td><td>@Registry?.b()</td> <td>C</td><td>@Registry?.c()</td>
+            </tr>
+            <tr>
+                <td>D</td><td>@Registry?.d()</td> <td>E</td><td>@Registry?.e()</td>
+            </tr>
+            <tr>
+                <td>H</td><td>@Registry?.h()</td> <td>L</td><td>@Registry?.l()</td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td>IME</td><td>@Registry?.ime()</td><td></td><td></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+@code {
+    [Parameter] public Registry? Registry {get; set;}
+
+    public void Refesh() {
+        this.StateHasChanged();
+    }
+}

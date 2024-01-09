@@ -1,0 +1,205 @@
+#play-area {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+}
+
+#gb {
+    margin-top: 32mm;
+    position: relative;
+    display: inline-block;
+    outline: none;
+
+    height: 80vh;
+    height: 80dvh;
+    width:  48.679vh;
+    width:  48.679dvh;
+}
+#gb:focus {
+    outline: none;
+}
+
+@media (orientation: landscape) {
+    /*1.64341085271 aspect ratio*/
+}
+
+@media (orientation: portrait) {
+    /*1.64341085271 aspect ratio*/
+    /*#gb {
+        width:  100vw;
+        width:  100dvw;
+        height: 164.341vw;
+        height: 164.341dvw;
+    }*/
+}
+
+#meta {
+    margin-top: 32mm;
+    display: inline-block;
+    width: 300px;
+    height: 80vh;
+    height: 80dvh;
+    overflow-y: auto;
+    overflow-x: auto;
+}
+
+#console {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+#cart-release {
+    position: absolute;
+    width: 100%;
+    top: -15mm;
+    left: 0;
+    cursor: pointer;
+}
+#cart-release:hover {
+    top: -32mm;
+}
+#cart-release span {
+    display: block;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 12px;
+    border-radius: 12px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 60%;
+}
+#cart {
+    width: 100%;
+}
+
+#screen {
+    position: absolute;
+    left: 22.5%;
+    top: 13.5%;
+    width: 54%;
+    height: 30%;
+}
+
+#power {
+    position: absolute;
+    left: 9%;
+    top: 14%;
+    width: 12%;
+    height: 7%;
+    padding: 2px;
+    overflow: visible;
+}
+#power > img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+#power > label {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 12px;
+    border-radius: 12px;
+    text-align: center;
+    position: absolute;
+    left: -65px;
+    top: -32px; 
+}
+
+#reset {
+    position: absolute;
+    left: 12%;
+    top: 22%;
+    width: 6%;
+    height: 3.5%;
+    padding: 0;
+    overflow: visible;
+}
+#reset > img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+#reset > label {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 6px;
+    border-radius: 12px;
+    text-align: center;
+    position: absolute;
+    font-size: small;
+    left: -16px;
+    top: 22px; 
+}
+
+#A {
+    position: absolute;
+    left: 79%;
+    top: 61.5%;
+    width: 15%;
+    height: 9%;
+}
+
+#B {
+    position: absolute;
+    left: 63%;
+    top: 66%;
+    width: 15%;
+    height: 9%;
+}
+
+#Select {
+    position: absolute;
+    left: 32%;
+    top: 82%;
+    width: 15%;
+    height: 9%;
+}
+
+#Start {
+    position: absolute;
+    left: 50%;
+    top: 82%;
+    width: 15%;
+    height: 9%;
+}
+
+#ArrowUp {
+    padding: 0;
+    position: absolute;
+    left: 15%;
+    top: 61%;
+    width: 11%;
+    height: 6%;
+}
+
+#ArrowDown {
+    padding: 0;
+    position: absolute; 
+    left: 15%;
+    top: 73%;
+    width: 11%;
+    height: 6%;
+}
+
+#ArrowLeft {
+    padding: 0;
+    position: absolute; 
+    left: 5%;
+    top: 67%;
+    width: 11%;
+    height: 6%;
+}
+
+#ArrowRight {
+    padding: 0;
+    position: absolute; 
+    left: 26%;
+    top: 67%;
+    width: 11%;
+    height: 6%;
+}

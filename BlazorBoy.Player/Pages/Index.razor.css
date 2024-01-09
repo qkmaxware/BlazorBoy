@@ -1,0 +1,15 @@
+img {
+    height: 3em;
+}
+
+h2 {
+    text-align: center;
+    margin-left: 2em;
+    margin-right: 2em;
+    border-bottom: 3px solid teal;
+}
+
+.w3-display-container {
+    height: 100vh;
+    height: 100dvh;
+}

@@ -1,0 +1,272 @@
+@using Qkmaxware.Emulators.Gameboy
+@using Qkmaxware.Emulators.Gameboy.Hardware
+@inject IJSRuntime js
+@inject AlertService alerts
+@inject RendererService renderer
+@implements IDisposable
+
+<div id="play-area">
+    <div id="gb" tabindex="0" @onkeydown=key_down @onkeydown:preventDefault @onkeyup=key_up @onkeyup:preventDefault>
+        <label id="cart-release" title="Select Cartridge">
+            <span>Select Cartridge</span>
+            <img id="cart" src="cart.svg">
+            <InputFile style="display:none;" OnChange=@(async (e) => await loadCart(e)) title="Select Cartridge" name="Cartridge" accept=".gb" />
+        </label>
+        <img id="cart" src="cart.svg" alt="Game Cart">
+        <img id="console" src="console.svg" alt="Console">
+        <canvas @ref=screen id="screen" width="@Gpu.LCD_WIDTH" height="@Gpu.LCD_HEIGHT"></canvas>
+        <div id="controls">
+            <button id="power" class="w3-button w3-circle" title="Power" @onclick=TogglePower>
+                @if (isPlaying) {
+                    <img src="power_button.on.svg" alt="ON">
+                } else {
+                    <img src="power_button.off.svg" alt="OFF">
+                }
+                @if(gb?.GetCartridge() is not null) {
+                    <label>Power</label>
+                }
+            </button>
+            <button id="reset" class="w3-button w3-circle" title="Reset" @onclick=Reset>
+                <img src="reset.svg" alt="Reset">
+                @if(gb?.GetCartridge() is not null) {
+                    <label>Reset</label>
+                }
+            </button>
+            <label id="A" class="w3-button w3-round" @onmousedown=@(() => button_down(KeyCodes.A)) @onmouseup=@(() => button_up(KeyCodes.A))>
+
+            </label>
+            <label id="B" class="w3-button w3-round" @onmousedown=@(() => button_down(KeyCodes.B)) @onmouseup=@(() => button_up(KeyCodes.B))>
+
+            </label>
+            <label id="Select" class="w3-button w3-round" @onmousedown=@(() => button_down(KeyCodes.Select)) @onmouseup=@(() => button_up(KeyCodes.Select))>
+
+            </label>
+            <label id="Start" class="w3-button w3-round" @onmousedown=@(() => button_down(KeyCodes.Start)) @onmouseup=@(() => button_up(KeyCodes.Start))>
+
+            </label>
+            <label id="ArrowUp" class="w3-button w3-round" @onmousedown=@(() => button_down(KeyCodes.Up)) @onmouseup=@(() => button_up(KeyCodes.Up))>
+
+            </label>
+            <label id="ArrowDown" class="w3-button w3-round" @onmousedown=@(() => button_down(KeyCodes.Down)) @onmouseup=@(() => button_up(KeyCodes.Down))>
+
+            </label>
+            <label id="ArrowLeft" class="w3-button w3-round" @onmousedown=@(() => button_down(KeyCodes.Left)) @onmouseup=@(() => button_up(KeyCodes.Left))>
+
+            </label>
+            <label id="ArrowRight" class="w3-button w3-round" @onmousedown=@(() => button_down(KeyCodes.Right)) @onmouseup=@(() => button_up(KeyCodes.Right))>
+
+            </label>
+        </div>
+    </div>
+    <div id="meta" class="w3-hide-small">
+        <CartridgeInfo Cart=@gb?.GetCartridge()></CartridgeInfo>
+    </div>
+</div>
+
+
+@code {
+    private Gameboy? gb;
+    private ElementReference? screen;
+
+    protected override void OnInitialized() {
+        gb = new Gameboy();
+        start();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender) {
+        if (firstRender) {
+            Bitmap intro = new Bitmap(Gpu.LCD_WIDTH, Gpu.LCD_HEIGHT);
+            intro.Fill(ColourPallet.BackgroundWhite);
+
+            var text = new Bitmap[]{ Bitmap.StampB, Bitmap.StampL, Bitmap.StampA, Bitmap.StampZ, Bitmap.StampO, Bitmap.StampR, Bitmap.StampB, Bitmap.StampO, Bitmap.StampY }.Select(stamp => stamp.Enlarge(4)).ToArray();
+            var width = text.Select(stamp => stamp.Width + 1).Sum();
+            var height = text.Select(stamp => stamp.Height).Max();
+
+            var startX = (intro.Width / 2) - (width / 2);
+            var startY = (intro.Height / 2) - (height / 2);
+            foreach (var stamp in text) {
+                intro.Stamp(startX, startY, stamp);
+                startX += stamp.Width + 1;
+            }
+
+            await Redraw(intro);
+        }
+    }
+
+    private async Task loadCart(InputFileChangeEventArgs e) {
+        try {
+            using MemoryStream ms = new MemoryStream();
+            foreach (var path in e.GetMultipleFiles(1)) {
+                await path.OpenReadStream(maxAllowedSize: 512000 * 4).CopyToAsync(ms);
+                var bytes = ms.ToArray();
+                gb?.LoadCartridge(new Cartridge(bytes));
+            }
+            StateHasChanged();
+        } catch (Exception ex) {
+            Console.WriteLine(ex);
+            await alerts.Alert(ex.Message);
+        }
+    }
+
+    private System.Timers.Timer? timer;
+    private void stop() {
+        if (timer != null) {
+            timer.Stop();
+            timer.Dispose();
+            timer = null;
+        } 
+    }
+
+    private bool isPlaying => timer is not null;
+
+    public void Dispose() {
+        stop();
+    }
+
+    public void TogglePower() {
+        if (isPlaying) {
+            stop();
+        } else {
+            start();
+        }
+    }
+    public void Reset() {
+        var was_playing = isPlaying;
+        stop();
+        gb?.Reset();
+        if (was_playing)
+            start();
+    }
+
+    private static readonly int FPS = 59; // Native GameBoy FPS was about 59.7
+    private static readonly int FrameSkipping = 1;
+    private void start() {
+        stop();
+        if (gb is null || !gb.IsCartridgeLoaded())
+            return;
+
+        gb.Reset();
+        var seconds_per_frame = 1.0f / (float)FPS;
+        Console.WriteLine("Playing at " + FPS + " FPS with " + seconds_per_frame + "s/frame.");
+        frame = FrameSkipping;
+        timer = new System.Timers.Timer(TimeSpan.FromSeconds(seconds_per_frame));
+        timer.Elapsed += gameTick;
+        timer.AutoReset = false;
+        timer.Enabled = true;
+        timer.Start();
+    }
+    private int frame;
+    private async void gameTick (object? source, System.Timers.ElapsedEventArgs args) {
+        try {
+            if (gb is null)
+                return;
+
+            gb.DispatchUntilBufferFlush();
+            
+            // ONLY DO THIS IF ITS NOT BEING REDRAWN RIGHT NOW OTHERWISE, SKIP THIS FRAME
+            if ((frame % FrameSkipping) == 0) {
+                await Redraw (gb.GPU.Canvas);
+            }
+            frame++;
+
+            var timer = ((System.Timers.Timer?)source);
+            if (timer is not null) {
+                timer.Stop();
+                timer.Start();
+            }
+        } catch (Exception ex) {
+            Console.WriteLine(ex);
+            await alerts.Alert(ex.Message);
+            stop();
+        }
+    }
+
+    private async Task Redraw(Bitmap bmp) {
+        // Convert bitmap to colours and tell js to redraw the canvas
+        await renderer.PushPixels(screen, bmp);
+    }
+
+    private void key_down(KeyboardEventArgs e) {
+        switch (e.Key) {
+            case "Enter":
+                button_down(KeyCodes.Start);
+                break;
+            case " ":
+                button_down(KeyCodes.Select);
+                break;
+
+            case "x":
+                button_down(KeyCodes.A);
+                break;
+            case "z":
+                button_down(KeyCodes.B);
+                break;
+
+            case "2":
+            case "s":
+            case "ArrowDown":
+                button_down(KeyCodes.Down);
+                break;
+            case "8":
+            case "w":
+            case "ArrowUp":
+                button_down(KeyCodes.Up);
+                break;
+            case "4":
+            case "a":
+            case "ArrowLeft":
+                button_down(KeyCodes.Left);
+                break;
+            case "6":
+            case "d":
+            case "ArrowRight":
+                button_down(KeyCodes.Right);
+                break;
+        }
+    }
+    private void button_down(KeyCodes key) {
+        gb?.Input?.KeyDown(key);
+    }
+
+    private void key_up(KeyboardEventArgs e) {
+        switch (e.Key) {
+            case "Enter":
+                button_up(KeyCodes.Start);
+                break;
+            case " ":
+                button_up(KeyCodes.Select);
+                break;
+
+            case "x":
+                button_up(KeyCodes.A);
+                break;
+            case "z":
+                button_up(KeyCodes.B);
+                break; 
+
+            case "2":
+            case "s":
+            case "ArrowDown":
+                button_up(KeyCodes.Down);
+                break;
+            case "8":
+            case "w":
+            case "ArrowUp":
+                button_up(KeyCodes.Up);
+                break;
+            case "4":
+            case "a":
+            case "ArrowLeft":
+                button_up(KeyCodes.Left);
+                break;
+            case "6":
+            case "d":
+            case "ArrowRight":
+                button_up(KeyCodes.Right);
+                break;
+        }
+    }
+    private void button_up(KeyCodes key) {
+        gb?.Input?.KeyUp(key);
+    }
+}

@@ -1,0 +1,11 @@
+table {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 12px;
+    border-radius: 12px;
+    width: 100%;
+}
+
+table th {
+    text-align: left;
+}
