@@ -80,22 +80,13 @@ public class Cpu : Qkmaxware.Vm.LR35902.Cpu {
         mmu.WriteByte(0xFFFF, 0x00);   //EI
     }
 
-    #if DEBUG
-    private Stopwatch? Stopwatch;
-    #endif
+    public PerformanceAnalyzer? PerformanceAnalyzer {get; set;}
+    private PerformanceAnalyzer.ActivePerformanceMeasure? measure;
     protected override void OnBeforeFetch(int address) {
-        #if DEBUG
-        Stopwatch = new Stopwatch();
-        Stopwatch.Start();
-        #endif
+        measure = PerformanceAnalyzer?.BeginMeasure(null);
     }
     protected override void OnAfterExecute(int address, Operation op) {
-        #if DEBUG
-        Stopwatch?.Stop();
-        if (Stopwatch is not null) {
-            PerformanceAnalyzer.Record(op, Stopwatch.Elapsed);
-        }
-        #endif
+        measure?.ChangeKey(op)?.Record();
         Trace?.Add(address, op);
     }
 

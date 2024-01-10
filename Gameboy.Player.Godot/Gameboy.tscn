@@ -1,0 +1,82 @@
+[gd_scene load_steps=7 format=3 uid="uid://bytv8v3jd4m0l"]
+
+[ext_resource type="Script" path="res://TextureRenderer.cs" id="1_hfp5s"]
+[ext_resource type="Texture2D" uid="uid://dfkwdfgk0dp8n" path="res://icon.svg" id="1_ptiq5"]
+[ext_resource type="Texture2D" uid="uid://cip0keh15srys" path="res://cart.png" id="3_gvrte"]
+[ext_resource type="Texture2D" uid="uid://byxxvldruom6j" path="res://play.png" id="4_lwet3"]
+[ext_resource type="Texture2D" uid="uid://cm332so38crqs" path="res://pause.png" id="5_5clxm"]
+[ext_resource type="Texture2D" uid="uid://d0dpxbrvr2bo7" path="res://stop.png" id="6_cecoo"]
+
+[node name="Gameboy" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LCD" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_ptiq5")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("1_hfp5s")
+
+[node name="Open ROM" type="Button" parent="."]
+layout_mode = 0
+offset_right = 48.0
+offset_bottom = 48.0
+focus_mode = 0
+icon = ExtResource("3_gvrte")
+expand_icon = true
+
+[node name="FileDialog" type="FileDialog" parent="Open ROM"]
+title = "Open a File"
+size = Vector2i(392, 159)
+ok_button_text = "Open"
+dialog_hide_on_ok = true
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.gb")
+use_native_dialog = true
+
+[node name="Top Right" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -144.0
+offset_bottom = 48.0
+grow_horizontal = 0
+
+[node name="Play" type="Button" parent="Top Right"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+icon = ExtResource("4_lwet3")
+expand_icon = true
+
+[node name="Pause" type="Button" parent="Top Right"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+icon = ExtResource("5_5clxm")
+expand_icon = true
+
+[node name="Stop" type="Button" parent="Top Right"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+icon = ExtResource("6_cecoo")
+expand_icon = true
+
+[connection signal="pressed" from="Open ROM" to="Open ROM/FileDialog" method="show"]
+[connection signal="file_selected" from="Open ROM/FileDialog" to="LCD" method="LoadCartFromPath"]
+[connection signal="pressed" from="Top Right/Play" to="LCD" method="Play"]
+[connection signal="pressed" from="Top Right/Pause" to="LCD" method="Pause"]
+[connection signal="pressed" from="Top Right/Stop" to="LCD" method="Stop"]

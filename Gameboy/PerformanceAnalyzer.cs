@@ -1,3 +1,5 @@
+using System.Diagnostics;
+
 namespace Qkmaxware.Emulators.Gameboy;
 
 public class PerformanceMetric {
@@ -8,12 +10,12 @@ public class PerformanceMetric {
     public long Count;
 }
 
-public static class PerformanceAnalyzer {
-    private static Dictionary<object, PerformanceMetric> records = new Dictionary<object, PerformanceMetric>();
+public class PerformanceAnalyzer {
+    private Dictionary<object, PerformanceMetric> records = new Dictionary<object, PerformanceMetric>();
 
-    public static IEnumerable<KeyValuePair<object, PerformanceMetric>> AllRecords => records;
+    public IEnumerable<KeyValuePair<object, PerformanceMetric>> AllMetrics => records;
 
-    public static void Record(object key, TimeSpan value) {
+    public void Record(object key, TimeSpan value) {
         PerformanceMetric? metric;
         if (!records.TryGetValue(key, out metric)) {
             metric = new PerformanceMetric();
@@ -26,7 +28,7 @@ public static class PerformanceAnalyzer {
         metric.Count += 1;
     }
 
-    public static PerformanceMetric GetPerformance (object key) {
+    public PerformanceMetric GetPerformance (object key) {
         PerformanceMetric? metric;
         if (!records.TryGetValue(key, out metric)) {
             return new PerformanceMetric();
@@ -34,4 +36,31 @@ public static class PerformanceAnalyzer {
             return metric;
         }
     }
+
+    public class ActivePerformanceMeasure {
+        private PerformanceAnalyzer analyzer;
+        private object? key;
+        private Stopwatch stopwatch;
+        public ActivePerformanceMeasure(PerformanceAnalyzer analyzer, object? key) {
+            this.analyzer = analyzer;
+            this.key = key;
+            stopwatch = new Stopwatch();
+            stopwatch.Start();
+        }
+
+        public void Record() {
+            this.stopwatch.Stop();
+            if (key is not null)
+                analyzer.Record(this.key, this.stopwatch.Elapsed);
+        }
+
+        public ActivePerformanceMeasure ChangeKey(object? key) {
+            this.key = key;
+            return this;
+        }
+    }
+    public ActivePerformanceMeasure? BeginMeasure(object? key) {
+        return new ActivePerformanceMeasure(this, key);
+    }
 }
+

@@ -55,7 +55,7 @@ public class TerminalTrace : ITrace {
     }
 }
 
-public class FileTrace : ITrace {
+public class FileTrace : ITrace, IDisposable {
     
     public string FileName {get; private set;}
     public OperationTrace? Last {get; private set;}
@@ -69,11 +69,7 @@ public class FileTrace : ITrace {
         this.DumpRegistry = dumpRegistry;
         writer = File.AppendText(FileName);
     }   
-
-    ~FileTrace() {
-        writer?.Dispose();
-    }
-
+    
     public void Add(int address, Operation op) {
         this.Last = new OperationTrace(address, op);
         writer.Write($"0x{address:X4}: {op.Name}".PadRight(25));
@@ -82,6 +78,10 @@ public class FileTrace : ITrace {
             writer.Write(DumpRegistry.ToString());
         }
         writer.WriteLine();
-        writer.Flush();
     }
+
+    public void Dispose() {
+        writer?.Dispose();
+    }
+
 }

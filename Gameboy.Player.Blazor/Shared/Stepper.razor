@@ -12,20 +12,6 @@
         @if(untilRenderTiming.HasValue && renderTiming.HasValue) { <text>@untilRenderTiming + @renderTiming</text>  } else { <text>-</text> }
     </button>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Component</th> <th>Total</th> <th>Avg</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    @foreach (var metric in PerformanceAnalyzer.AllRecords.OrderByDescending(kv => kv.Value.Sum)) {
-        <tr>
-            <td>@metric.Key</td> <td>@metric.Value.Sum</td> <td>@if (metric.Value.Count > 0) { <text>@metric.Value.Average</text> }</td>
-        </tr>
-    }
-    </table>
-
     @if (Gb?.CPU?.Trace is InstructionHistoryTrace trace) {
     <table>
         <thead>

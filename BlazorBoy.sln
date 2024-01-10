@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorBoy.Player", "BlazorBoy.Player\BlazorBoy.Player.csproj", "{60A50B90-7571-48CA-863D-60D67101777C}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gameboy", "Gameboy\Gameboy.csproj", "{40CCE48F-56BE-4403-B0B5-994CB84BBCA0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gameboy.Test", "Gameboy.Test\Gameboy.Test.csproj", "{0623A022-CF9E-455D-A8C5-2EC3D3F28118}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Qkmaxware.Vm.LR35902", "Qkmaxware.Vm.LR35902\Qkmaxware.Vm.LR35902.csproj", "{C2257361-4537-4863-9D5D-DA8393315067}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gameboy.Player.Cli", "Gameboy.Player.Cli\Gameboy.Player.Cli.csproj", "{38A0660C-4855-4642-92F5-8A25500E7003}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gameboy.Player.Blazor", "Gameboy.Player.Blazor\BlazorBoy.Player.csproj", "{C05C9750-5DA4-467F-AE0D-B14330885D87}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,10 +22,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{60A50B90-7571-48CA-863D-60D67101777C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{60A50B90-7571-48CA-863D-60D67101777C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{60A50B90-7571-48CA-863D-60D67101777C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{60A50B90-7571-48CA-863D-60D67101777C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{40CCE48F-56BE-4403-B0B5-994CB84BBCA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{40CCE48F-56BE-4403-B0B5-994CB84BBCA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{40CCE48F-56BE-4403-B0B5-994CB84BBCA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -36,5 +34,13 @@ Global
 		{C2257361-4537-4863-9D5D-DA8393315067}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C2257361-4537-4863-9D5D-DA8393315067}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C2257361-4537-4863-9D5D-DA8393315067}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38A0660C-4855-4642-92F5-8A25500E7003}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38A0660C-4855-4642-92F5-8A25500E7003}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38A0660C-4855-4642-92F5-8A25500E7003}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38A0660C-4855-4642-92F5-8A25500E7003}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C05C9750-5DA4-467F-AE0D-B14330885D87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C05C9750-5DA4-467F-AE0D-B14330885D87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C05C9750-5DA4-467F-AE0D-B14330885D87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C05C9750-5DA4-467F-AE0D-B14330885D87}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

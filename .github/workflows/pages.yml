@@ -23,7 +23,7 @@ jobs:
           dotnet-version: '8.0.x' # SDK Version to use
 
       - name: Change base-tag
-        run: sed -i 's/<base href="\/" \/>/<base href="\/BlazorBoy\/" \/>/g' BlazorBoy.Player/wwwroot/index.html
+        run: sed -i 's/<base href="\/" \/>/<base href="\/BlazorBoy\/" \/>/g' Gameboy.Player.Blazor/wwwroot/index.html
 
       - name: Restore Packages
         env: 
@@ -35,7 +35,7 @@ jobs:
         env: 
           GITHUB_USERNAME: qkmaxware
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: dotnet publish BlazorBoy.Player -c Release -o .site     
+        run: dotnet publish Gameboy.Player.Blazor -c Release -o .site     
 
       - name: Add .nojekyll file
         run: touch .site/wwwroot/.nojekyll

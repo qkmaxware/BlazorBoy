@@ -2631,6 +2631,7 @@ public partial class Cpu {
         
         //Adjust register A so that the correct represnetation of a binary coded decimal is obtained
         Operation DAA = new Operation(0x27, "DAA", map, () => {
+            // http://z80-heaven.wikidot.com/instructions-set:daa
             int a = reg.a();
             
             if(!reg.subtract()){
@@ -2694,6 +2695,7 @@ public partial class Cpu {
         
         //Power down the CPU
         Operation HALT = new Operation(0x76, "HALT", map, () => {
+            // http://z80-heaven.wikidot.com/instructions-set:halt
             clock.m(1);
             clock.t(4);
         });

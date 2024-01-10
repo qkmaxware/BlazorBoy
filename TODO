@@ -1,0 +1,12 @@
+CPU
+[ ] FIX DAA Instruction
+[ ] FIX HALT Instruction
+[ ] FIX whatever else fails the last unit test
+
+GPU 
+Too much to mention...
+
+Controllers
+[ ] Double check MBC2 implementation
+[ ] Double check MBC3 implementation
+[ ] Double check MBC5 implementation

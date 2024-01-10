@@ -43,6 +43,16 @@ public class Gameboy {
         CPU = new Cpu(mmu);
     }
 
+    public PerformanceAnalyzer? PerformanceAnalyzer {get; private set;}
+    public void AttachPerformanceAnalyzer(PerformanceAnalyzer? analyzer) {
+        this.PerformanceAnalyzer = analyzer;
+        this.CPU.PerformanceAnalyzer = analyzer;
+    }
+
+    public void AttachCpuTrace(ITrace? trace) {
+        this.CPU.Trace = trace;
+    }
+
     public void Reset(){
         mmu.Reset();
         GPU.Reset();
@@ -65,26 +75,14 @@ public class Gameboy {
 
     public void Dispatch(){
         //Step the cpu
-        #if DEBUG
-        Stopwatch stopwatch = new Stopwatch();
-        stopwatch.Start();
-        #endif
+        var measure = PerformanceAnalyzer?.BeginMeasure(CPU);
         int deltaTime = CPU.Step();
-        #if DEBUG
-        stopwatch.Stop();
-        PerformanceAnalyzer.Record(CPU, stopwatch.Elapsed);
-        #endif
+        measure?.Record();
 
         //Step the gpu
-        #if DEBUG
-        stopwatch = new Stopwatch();
-        stopwatch.Start();
-        #endif
+        measure = PerformanceAnalyzer?.BeginMeasure(GPU);
         GPU.Step(deltaTime);
-        #if DEBUG
-        stopwatch.Stop();
-        PerformanceAnalyzer.Record(GPU, stopwatch.Elapsed);
-        #endif
+        measure?.Record();
         
         //Step the timer
         timer.Increment(deltaTime);
