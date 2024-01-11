@@ -17,23 +17,23 @@ public class Cpu : Qkmaxware.Vm.LR35902.Cpu {
 
     public Cpu(MemoryMap map) : base(map) {
         this.RST_40h = new Operation(0xFF1, "RST 40H", (args) => {
-            rst(0x40);
+            rst(0x40, autoPushPc: false); // PC pushed by CPU interrupt procedure, don't push twice
         });
         
         this.RST_48h = new Operation(0xFF2, "RST 48H", (args) => {
-            rst(0x48);
+            rst(0x48, autoPushPc: false); // PC pushed by CPU interrupt procedure, don't push twice
         });
         
         this.RST_50h = new Operation(0xFF3, "RST 50H", (args) => {
-            rst(0x50);
+            rst(0x50, autoPushPc: false); // PC pushed by CPU interrupt procedure, don't push twice
         });
         
         this.RST_58h = new Operation(0xFF4, "RST 58H", (args) => {
-            rst(0x58);
+            rst(0x58, autoPushPc: false); // PC pushed by CPU interrupt procedure, don't push twice
         });
         
         this.RST_60h = new Operation(0xFF5, "RST 60H", (args) => {
-            rst(0x60);
+            rst(0x60, autoPushPc: false); // PC pushed by CPU interrupt procedure, don't push twice
         });
     }
 
@@ -86,12 +86,6 @@ public class Cpu : Qkmaxware.Vm.LR35902.Cpu {
         measure = PerformanceAnalyzer?.BeginMeasure(null);
     }
     protected override void OnAfterExecute(int address, Operation op) {
-        if (mmu.EnabledInterupts == 0 || mmu.InteruptFlags == 0) {
-        } else {
-            // HALT mode is exited when a flag in register IF is set and the corresponding flag in IE is also set, regardless of the value of IME
-            ExitHaltMode();
-        }
-
         measure?.ChangeKey(op)?.Record();
         Trace?.Add(address, op);
     }
@@ -99,9 +93,9 @@ public class Cpu : Qkmaxware.Vm.LR35902.Cpu {
     private static readonly int[] noArgs = new int[0];
     protected override int RegisterIE() => mmu.EnabledInterupts;
     protected override int RegisterIF() => mmu.InteruptFlags;
-    protected override void HandleInterrupts() {
+    protected override void HandleAdditionalInterrupts() {
         //Mask off ints that aren't enabled
-        int fired = mmu.EnabledInterupts & mmu.InteruptFlags;
+        int fired = RegisterIE() & RegisterIF();
         
         //INTERRUPT TABLE-------------------------------
         // Interrupt        ISR Address     Bit Value

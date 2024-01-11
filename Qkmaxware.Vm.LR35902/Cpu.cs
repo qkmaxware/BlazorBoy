@@ -54,9 +54,10 @@ public partial class Cpu : IResetable {
                 if (IsInHaltMode()) {
                     push(haltModeEnabledAt); // Push the instruction after the halt
                 } else {
-                    push(reg.pc());          // Push current pc
+                    push(reg.pc()); // push the pc pointer
                 }
-                HandleInterrupts();
+                HandleStdInterrupts();
+                HandleAdditionalInterrupts();
                 reg.ime(0);
                 int deltaMInterrupt = clock.delM();
                 clock.Accept();
@@ -103,9 +104,6 @@ public partial class Cpu : IResetable {
         // Increment the clock
         int deltaM = clock.delM();
         clock.Accept();
-
-        // Increment the clock in case interrupt has fired
-        clock.Accept();
     
         return deltaM;
     }
@@ -140,8 +138,11 @@ public partial class Cpu : IResetable {
     }
 
 
-    protected virtual void HandleInterrupts() {
+    protected virtual void HandleAdditionalInterrupts() {
         // Check the enabled flags, and what flags are triggered
         // Fire specific opcodes off
+    }
+    private void HandleStdInterrupts() {
+        
     }
 }

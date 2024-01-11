@@ -284,8 +284,10 @@ public partial class Cpu {
         return h << 8 | l;
     }
 
-    protected void rst(int loc){
-        push(reg.pc());
+    protected void rst(int loc, bool autoPushPc = true){
+        if (autoPushPc) {
+            push(reg.pc());
+        }
         reg.pc(loc);
         
         clock.m(3); //Maybe 8 and 32 or 4 or something
