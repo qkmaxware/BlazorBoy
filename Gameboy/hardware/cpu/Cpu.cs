@@ -16,23 +16,23 @@ public class Cpu : Qkmaxware.Vm.LR35902.Cpu {
     public Operation RST_60h;
 
     public Cpu(MemoryMap map) : base(map) {
-        this.RST_40h = new Operation(0xFF1, "RST 40H", () => {
+        this.RST_40h = new Operation(0xFF1, "RST 40H", (args) => {
             rst(0x40);
         });
         
-        this.RST_48h = new Operation(0xFF2, "RST 48H", () => {
+        this.RST_48h = new Operation(0xFF2, "RST 48H", (args) => {
             rst(0x48);
         });
         
-        this.RST_50h = new Operation(0xFF3, "RST 50H", () => {
+        this.RST_50h = new Operation(0xFF3, "RST 50H", (args) => {
             rst(0x50);
         });
         
-        this.RST_58h = new Operation(0xFF4, "RST 58H", () => {
+        this.RST_58h = new Operation(0xFF4, "RST 58H", (args) => {
             rst(0x58);
         });
         
-        this.RST_60h = new Operation(0xFF5, "RST 60H", () => {
+        this.RST_60h = new Operation(0xFF5, "RST 60H", (args) => {
             rst(0x60);
         });
     }
@@ -86,16 +86,21 @@ public class Cpu : Qkmaxware.Vm.LR35902.Cpu {
         measure = PerformanceAnalyzer?.BeginMeasure(null);
     }
     protected override void OnAfterExecute(int address, Operation op) {
+        if (mmu.EnabledInterupts == 0 || mmu.InteruptFlags == 0) {
+        } else {
+            // HALT mode is exited when a flag in register IF is set and the corresponding flag in IE is also set, regardless of the value of IME
+            ExitHaltMode();
+        }
+
         measure?.ChangeKey(op)?.Record();
         Trace?.Add(address, op);
     }
 
-    protected override void HandleInterupts() {
-        if (mmu.EnabledInterupts == 0 || mmu.InteruptFlags == 0) {
-            return;
-        }
-
-        //Mask off ints that arent enabled
+    private static readonly int[] noArgs = new int[0];
+    protected override int RegisterIE() => mmu.EnabledInterupts;
+    protected override int RegisterIF() => mmu.InteruptFlags;
+    protected override void HandleInterrupts() {
+        //Mask off ints that aren't enabled
         int fired = mmu.EnabledInterupts & mmu.InteruptFlags;
         
         //INTERRUPT TABLE-------------------------------
@@ -110,27 +115,27 @@ public class Cpu : Qkmaxware.Vm.LR35902.Cpu {
         if((fired & MemoryMap.INTERRUPT_VBLANK) != 0){
             //Vblank
             mmu.InteruptFlags &= 0xFE;
-            RST_40h.Invoke();
+            RST_40h.Invoke(noArgs);
         }
         if((fired & MemoryMap.INTERRUPT_LCDC) != 0){
             //LCDC stat
             mmu.InteruptFlags &= 0xFD;
-            RST_48h.Invoke();
+            RST_48h.Invoke(noArgs);
         }
         if((fired & MemoryMap.INTERRUPT_TIMEROVERFLOW) != 0){
             //Timer
             mmu.InteruptFlags &= 0xFB;
-            RST_50h.Invoke();
+            RST_50h.Invoke(noArgs);
         }
         if((fired & MemoryMap.INTERRUPT_SERIAl) != 0){
             //Serial
             mmu.InteruptFlags &= 0xF7;
-            RST_58h.Invoke();
+            RST_58h.Invoke(noArgs);
         }
         if((fired & MemoryMap.INTERRUPT_JOYPAD) != 0){
             //Joypad press
             mmu.InteruptFlags &= 0xEF;
-            RST_60h.Invoke();
+            RST_60h.Invoke(noArgs);
         }
     }
 }

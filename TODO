@@ -1,7 +1,8 @@
 CPU
 [ ] FIX DAA Instruction
 [ ] FIX HALT Instruction
-[ ] FIX whatever else fails the last unit test
+[ ] FIX E8 E8 F8 F8 (Test3)
+[ ] FIX 27 (Test11)
 
 GPU 
 Too much to mention...
