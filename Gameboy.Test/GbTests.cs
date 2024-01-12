@@ -50,6 +50,6 @@ public class GbTests {
                 return obj;
             }
         }
-        throw new ArgumentException("Json with pattern *" + filename + ".json not found");
+        throw new FileNotFoundException("Json with pattern *" + filename + ".json not found");
     }
 }

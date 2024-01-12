@@ -22,6 +22,7 @@
    <ItemGroup>
     <EmbeddedResource Include="Roms/instructions/*.gb" />
     <EmbeddedResource Include="Data/*.json" />
+    <EmbeddedResource Include="Data/opcode_tests/*.json" />
   </ItemGroup>
 
 </Project>

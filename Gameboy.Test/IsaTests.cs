@@ -130,6 +130,7 @@ public class IsaTests : GbTests {
         }
     }
 
+    #region Blargg Tests
     [TestMethod]
     public void Test01() {
         // Get GB
@@ -148,7 +149,7 @@ public class IsaTests : GbTests {
     }
 
     [TestMethod]
-    public void Test02() {
+    public void TestRom02() {
         // Get GB
         var gb = MakeGB(out var results);
 
@@ -165,7 +166,7 @@ public class IsaTests : GbTests {
     }
 
     [TestMethod]
-    public void Test03() {
+    public void TestRom03() {
         // Get GB
         var gb = MakeGB(out var results);
 
@@ -182,7 +183,7 @@ public class IsaTests : GbTests {
     }
 
     [TestMethod]
-    public void Test04() {
+    public void TestRom04() {
         // Get GB
         var gb = MakeGB(out var results);
 
@@ -199,7 +200,7 @@ public class IsaTests : GbTests {
     }
 
     [TestMethod]
-    public void Test05() {
+    public void TestRom05() {
         // Get GB
         var gb = MakeGB(out var results);
 
@@ -216,7 +217,7 @@ public class IsaTests : GbTests {
     }
 
     [TestMethod]
-    public void Test06() {
+    public void TestRom06() {
         // Get GB
         var gb = MakeGB(out var results);
 
@@ -233,7 +234,7 @@ public class IsaTests : GbTests {
     }
 
     [TestMethod]
-    public void Test07() {
+    public void TestRom07() {
         // Get GB
         var gb = MakeGB(out var results);
 
@@ -250,7 +251,7 @@ public class IsaTests : GbTests {
     }
 
     [TestMethod]
-    public void Test08() {
+    public void TestRom08() {
         // Get GB
         var gb = MakeGB(out var results);
 
@@ -267,7 +268,7 @@ public class IsaTests : GbTests {
     }
 
     [TestMethod]
-    public void Test09() {
+    public void TestRom09() {
         // Get GB
         var gb = MakeGB(out var results);
 
@@ -284,7 +285,7 @@ public class IsaTests : GbTests {
     }
 
     [TestMethod]
-    public void Test10() {
+    public void TestRom10() {
         // Get GB
         var gb = MakeGB(out var results);
 
@@ -301,7 +302,7 @@ public class IsaTests : GbTests {
     }
 
     [TestMethod]
-    public void Test11() {
+    public void TestRom11() {
         // Get GB
         var gb = MakeGB(out var results);
 
@@ -316,4 +317,133 @@ public class IsaTests : GbTests {
         // Validate results
         ValidateRomOutput(name, results);
     }
+    #endregion
+
+    #region Jsmoo Tests
+    private void setStateToModel(Cpu cpu, IMemory memory, OpcodeTestStateJsonModel model) {
+        // Registry state
+        var reg = cpu.Registry;
+        reg.pc(model.pc);
+        reg.sp(model.sp);
+        reg.a(model.a);
+        reg.b(model.b);
+        reg.c(model.c);
+        reg.d(model.d);
+        reg.e(model.e);
+        reg.f(model.f);
+        reg.h(model.h);
+        reg.l(model.l);
+        reg.ime(model.ime);
+        // TODO reg.ie
+
+        // Ram state
+        if (model.ram is not null) {
+            for (var i = 0; i < model.ram.Length; i++) {
+                var address = model.ram[i][0];
+                var value = model.ram[i][1];
+                memory.WriteByte(address, value);
+            }
+        }
+    }
+
+    private void validateStateWithModel(Operation op, string filename, int testId, Cpu cpu, IMemory memory, OpcodeTestStateJsonModel model) {
+        // Registry state
+        var reg = cpu.Registry;
+        Assert.AreEqual(model.pc, reg.pc()  , $"{filename}[{testId}] failed for \"{op.Name}({op.Opcode})\": PC state mismatch");
+        Assert.AreEqual(model.sp, reg.sp()  , $"{filename}[{testId}] failed for \"{op.Name}({op.Opcode})\": SP state mismatch");
+        Assert.AreEqual(model.a , reg.a()   , $"{filename}[{testId}] failed for \"{op.Name}({op.Opcode})\": A state mismatch");
+        Assert.AreEqual(model.b , reg.b()   , $"{filename}[{testId}] failed for \"{op.Name}({op.Opcode})\": B state mismatch");
+        Assert.AreEqual(model.c , reg.c()   , $"{filename}[{testId}] failed for \"{op.Name}({op.Opcode})\": C state mismatch");
+        Assert.AreEqual(model.d , reg.d()   , $"{filename}[{testId}] failed for \"{op.Name}({op.Opcode})\": D state mismatch");
+        Assert.AreEqual(model.e , reg.e()   , $"{filename}[{testId}] failed for \"{op.Name}({op.Opcode})\": E state mismatch");
+        Assert.AreEqual(model.f , reg.f()   , $"{filename}[{testId}] failed for \"{op.Name}({op.Opcode})\": F state mismatch");
+        Assert.AreEqual(model.h , reg.h()   , $"{filename}[{testId}] failed for \"{op.Name}({op.Opcode})\": H state mismatch");
+        Assert.AreEqual(model.l , reg.l()   , $"{filename}[{testId}] failed for \"{op.Name}({op.Opcode})\": L state mismatch");
+        Assert.AreEqual(model.ime, reg.ime(), $"{filename}[{testId}] failed for \"{op.Name}({op.Opcode})\": IME state mismatch");
+        // TODO reg.ie
+
+        // Ram state
+        if (model.ram is not null) {
+            for (var i = 0; i < model.ram.Length; i++) {
+                var address = model.ram[i][0];
+                var value = model.ram[i][1];
+                Assert.AreEqual(value, memory.ReadByte(address), $"{filename}[{testId}] failed for \"{op.Name}\": Memory @{address} incorrect");
+            }
+        }
+    }
+
+    private void doTestFor(Cpu cpu, IMemory memory, string hexName, Operation op, List<Exception> errors, List<Operation> missing) {
+        try {
+            var json = ReadJson<OpcodeTestJsonModel[]>(hexName);
+            for (var testId = 0; testId < json.Length; testId++) {
+                var test = json[testId];
+                if (test.initial is null)
+                    Assert.Fail("Missing initial state for instruction " + hexName);
+
+                if (test.final is null)
+                    Assert.Fail("Missing initial state for instruction " + hexName);
+
+                // Initialize the state
+                setStateToModel(cpu, memory, test.initial);
+                validateStateWithModel(op, hexName, testId, cpu, memory, test.initial);
+
+                // Run the program
+                cpu.Step();
+
+                // Validate the end state
+                try {
+                    validateStateWithModel(op, hexName, testId, cpu, memory, test.final);
+                } catch (UnitTestAssertException ex) {
+                    errors.Add(ex);
+                    break;
+                }
+            }
+        } catch (FileNotFoundException) {
+            // Have no tests for this instruction
+            missing.Add(op);
+        }
+    }
+
+    [TestMethod]
+
+    public void TestInstructionsBehaviors() {
+        var memory = new FlatRam(DataSize.Kibibytes(64), Endianness.LittleEndian);
+        Cpu cpu = new Cpu(memory);
+        List<Operation> operations_with_no_tests = new List<Operation>(256);
+        List<Exception> errors = new List<Exception>();
+        for (var i = 0; i < 256; i++) {
+            if (cpu.TryFetchOperation(i, out var op)) {
+                if (op is null)
+                    continue;
+                cpu.Reset();
+                memory.Reset();
+
+                // SKIP HALT, CB-PREFIX, and EI (I don't simulate lag), and DJNZn (which may be the wrong op) tests
+                if (op.Opcode == 0x76 || op.Opcode == 0xCB || op.Opcode == 251 || op.Opcode == 16)
+                    continue;
+
+                var hexName = "opcode_tests." + op.Opcode.ToString("x2");
+                doTestFor(cpu, memory, hexName, op, errors, operations_with_no_tests);
+            }
+        }
+        for (var i = 0; i < 256; i++) {
+            if (cpu.TryFetchCbPrefixedOperation(i, out var op)) {
+                if (op is null)
+                    continue;
+                cpu.Reset();
+                memory.Reset();
+
+                var hexName = "opcode_tests.cb " + op.Opcode.ToString("x2");
+                doTestFor(cpu, memory, hexName, op, errors, operations_with_no_tests);
+            }
+        }
+        Console.WriteLine(operations_with_no_tests.Count + " instructions are missing behavioral tests.");
+        if (errors.Count > 0) {
+            foreach (var error in errors) {
+                Console.WriteLine(error.Message);
+            }
+            Assert.Fail();
+        }
+    }
+    #endregion
 }

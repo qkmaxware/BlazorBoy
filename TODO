@@ -1,13 +1,15 @@
 CPU
-[ ] FIX DAA Instruction
-[ ] FIX HALT Instruction
-[ ] FIX E8 E8 F8 F8 (Test3)
-[ ] FIX 27 (Test11)
+[x] FIX DAA Instruction
+[x] FIX HALT Instruction
+[x] FIX E8 E8 F8 F8 (Test3)
+[x] FIX 27 (Test11)
 
 GPU 
 Too much to mention...
 
 Controllers
+[x] Double check No MBC implementation
+[ ] Double check MBC1 implementation
 [ ] Double check MBC2 implementation
 [ ] Double check MBC3 implementation
 [ ] Double check MBC5 implementation
