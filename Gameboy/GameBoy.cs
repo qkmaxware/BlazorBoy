@@ -6,7 +6,7 @@ namespace Qkmaxware.Emulators.Gameboy;
 public class Gameboy {
 
     public Cpu CPU {get; init;}
-    public Gpu GPU {get; init;}
+    public IPpu GPU {get; init;}
     private MemoryMap mmu {get; init;}
     public Input Input {get; init;}
     private Hardware.Timer timer {get; init;}
@@ -63,7 +63,7 @@ public class Gameboy {
     }
 
     public Cartridge? GetCartridge() {
-        return this.cart.LoadedCart();
+        return this.cart.LoadedCart;
     }
 
     public void LoadCartridge(Cartridge cart){
@@ -96,6 +96,51 @@ public class Gameboy {
                 hasVBlanked = true;
                 break;
             }
+        }
+    }
+
+    public ConsoleState GetState() {
+        ConsoleState state = new ConsoleState();
+
+        CpuState cpu = new CpuState();
+        state.Cpu = cpu;
+        cpu.A = this.CPU.Registry.a();
+        cpu.B = this.CPU.Registry.b();
+        cpu.C = this.CPU.Registry.c();
+        cpu.D = this.CPU.Registry.d();
+        cpu.E = this.CPU.Registry.e();
+        cpu.F = this.CPU.Registry.f();
+        cpu.Hi = this.CPU.Registry.h();
+        cpu.Lo = this.CPU.Registry.l();
+        cpu.Sp = this.CPU.Registry.sp();
+        cpu.Pc = this.CPU.Registry.pc();
+        cpu.Ime = this.CPU.Registry.ime();
+
+        CartState cart = new CartState();
+        state.Cart = cart;
+        cart.RamBanks = this.cart?.ActiveController?.GetRamBanks()?.Select(bytes => Convert.ToBase64String(bytes))?.ToArray() ?? new string[0];
+
+        return state;
+    }
+
+    public void SetState(ConsoleState state) {
+        if (state.Cpu is not null) {
+            this.CPU.Registry.a(state.Cpu.A);
+            this.CPU.Registry.b(state.Cpu.B);
+            this.CPU.Registry.c(state.Cpu.C);
+            this.CPU.Registry.d(state.Cpu.D);
+            this.CPU.Registry.e(state.Cpu.E);
+            this.CPU.Registry.f(state.Cpu.F);
+            this.CPU.Registry.h(state.Cpu.Hi);
+            this.CPU.Registry.l(state.Cpu.Lo);
+            this.CPU.Registry.sp(state.Cpu.Sp);
+            this.CPU.Registry.pc(state.Cpu.Pc);
+            this.CPU.Registry.ime(state.Cpu.Ime);
+        }
+
+        if (state.Cart is not null) {
+            if (state.Cart.RamBanks is not null)
+                this.cart?.ActiveController?.UpdateRamBanks(state.Cart.RamBanks.Select(b64 => Convert.FromBase64String(b64)));
         }
     }
 }

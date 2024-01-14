@@ -4,25 +4,34 @@ public class CartridgeAdapter : IMemorySegment {
     private Cartridge? cart;
     private IMbc? controller;
 
-    public CartridgeAdapter() {
+    public CartridgeAdapter() { }
 
-    }
-
-    public Cartridge? LoadedCart() => cart;
+    public Cartridge? LoadedCart => cart;
+    public IMbc? ActiveController => controller;
     public bool HasCart() => cart is not null && controller is not null;
 
     public void Reset() {
-        if(this.controller != null){
+        if(this.controller is not null){
             this.controller.Reset();
         }
     }
 
     
+    /// <summary>
+    /// Load a cartridge into the console. 
+    /// </summary>
+    /// <param name="cart">cart to load</param>
+    /// <returns>true if cart is loaded successfully, false otherwise</returns>
+    public bool LoadCart(Cartridge cart){
+        this.cart = null;
+        this.controller = null;
 
-    public void LoadCart(Cartridge cart){
-        this.cart = cart;
-        
+        bool recognized = true;
+        IMbc? controller = null;
         switch(cart.Info.cartType.MBC){
+            case CartType.MBCtype.ROM:
+                controller = (IMbc) new NoMbc(cart);
+                break;
             case CartType.MBCtype.MBC1:
                 controller = (IMbc) new Mbc1(cart);
                 break;
@@ -35,9 +44,18 @@ public class CartridgeAdapter : IMemorySegment {
             case CartType.MBCtype.MBC5:
                 controller = (IMbc) new Mbc5(cart);
                 break;
+            case CartType.MBCtype.Unknown:
             default:
-                controller = (IMbc) new RomOnlyMbc(cart);
+                recognized = false;
                 break;
+        }
+
+        if (recognized) {
+            this.cart = cart;
+            this.controller = controller;
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -76,13 +94,4 @@ public class CartridgeAdapter : IMemorySegment {
 
    public void SetMMU(MemoryMap mmu) { }
 
-    public int ReadShort(int address)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void WriteShort(int address, int value)
-    {
-        throw new NotImplementedException();
-    }
 }

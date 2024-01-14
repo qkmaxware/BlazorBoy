@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gameboy.Player.Cli", "Gameb
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gameboy.Player.Blazor", "Gameboy.Player.Blazor\BlazorBoy.Player.csproj", "{C05C9750-5DA4-467F-AE0D-B14330885D87}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gameboy.Database", "Gameboy.Database\Gameboy.Database.csproj", "{D85FB21E-22FE-4C1D-B8D3-2104E2F7CF44}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,5 +44,9 @@ Global
 		{C05C9750-5DA4-467F-AE0D-B14330885D87}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C05C9750-5DA4-467F-AE0D-B14330885D87}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C05C9750-5DA4-467F-AE0D-B14330885D87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D85FB21E-22FE-4C1D-B8D3-2104E2F7CF44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D85FB21E-22FE-4C1D-B8D3-2104E2F7CF44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D85FB21E-22FE-4C1D-B8D3-2104E2F7CF44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D85FB21E-22FE-4C1D-B8D3-2104E2F7CF44}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

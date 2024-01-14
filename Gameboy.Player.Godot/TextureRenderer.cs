@@ -6,12 +6,15 @@ using LcdBitmap = Qkmaxware.Emulators.Gameboy.Hardware.Bitmap;
 using System.Linq;
 using System.IO;
 
+namespace Qkmaxware.Emulators.Gameboy.Player;
+
 public partial class TextureRenderer : TextureRect {
 
 	public enum RendererState {
 		Stopped, Paused, Playing
 	}
 	private RendererState State {get; set;} = RendererState.Stopped;
+	public bool IsPlaying => State == RendererState.Playing;
 
 	[Export]
 	[ExportGroup("Colour Pallet/Background")]
@@ -47,11 +50,13 @@ public partial class TextureRenderer : TextureRect {
 
 	private Image pixels;
 	private ImageTexture texture;
+	private LcdBitmap intro;
 	private LcdBitmap white;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready() {
 		var intro = new LcdBitmap(Gpu.LCD_WIDTH, Gpu.LCD_HEIGHT);
+		this.intro = intro;
 		intro.Fill(ColourPallet.BackgroundWhite);
 
 		white = new LcdBitmap(Gpu.LCD_WIDTH, Gpu.LCD_HEIGHT);
@@ -153,8 +158,8 @@ public partial class TextureRenderer : TextureRect {
 		if (this.gb is not null && this.gb.IsCartridgeLoaded()) {
 			this.State = RendererState.Stopped;
 			this.gb.Reset();
-			if (white is not null) {
-				Redraw(white);
+			if (intro is not null) {
+				Redraw(intro);
 			}
 		}
 	}

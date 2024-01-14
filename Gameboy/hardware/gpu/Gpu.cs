@@ -5,7 +5,7 @@ namespace Qkmaxware.Emulators.Gameboy.Hardware;
 /// <summary>
 /// Conversion of https://github.com/qkmaxware/GBemu/blob/master/src/gameboy/gpu/Gpu.java
 /// </summary>
-public class Gpu : IMemorySegment {
+public class Gpu : IPpu {
     
     public static readonly int VRAM_SIZE = 8192;
     public static readonly int OAM_COUNT = 40;
@@ -475,6 +475,7 @@ public class Gpu : IMemorySegment {
         var temp = this.buffer;
         this.buffer = Canvas;
         this.Canvas = temp;
+        this.buffer.Fill(ColourPallet.BackgroundWhite);
         // Swap is faster than actually copying pixels
         /*for(int x = 0; x < Canvas.Width; x++){
             for(int y = 0; y < Canvas.Height; y++){

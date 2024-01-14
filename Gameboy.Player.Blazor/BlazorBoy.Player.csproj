@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Gameboy\Gameboy.csproj" />
+    <ProjectReference Include="..\Gameboy.Database\Gameboy.Database.csproj" />
   </ItemGroup>
 
 </Project>

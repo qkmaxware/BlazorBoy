@@ -13,6 +13,7 @@ config_version=5
 config/name="Gameboy.Player.Godot"
 run/main_scene="res://Gameboy.tscn"
 config/features=PackedStringArray("4.2", "C#", "GL Compatibility")
+run/max_fps=60
 boot_splash/bg_color=Color(0.141176, 0.141176, 0.141176, 1)
 config/icon="res://icon.svg"
 

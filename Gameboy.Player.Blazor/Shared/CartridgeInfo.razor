@@ -2,21 +2,32 @@
 @using Qkmaxware.Emulators.Gameboy.Hardware
 
 @if (Header is not null) {
+<div>
     <table>
         <thead>
             <tr>
-                <th>Title</th> <th>@Header.title</th>
+                <th class="w3-center">@(dbInfo?.Name ?? Header.title)</th>
             </tr>
         </thead>
+    </table>
+    @if (dbInfo?.BoxArtUrl is not null) {
+        <img src="@dbInfo.BoxArtUrl" alt="@dbInfo.BoxArtUrl" title="@dbInfo.BoxArtUrl">
+    }
+    <table>
         <tbody>
+            @if (dbInfo is not null) {
+            <tr>
+                <td>Developer</td> <td>@dbInfo.DeveloperName</td>
+            </tr>
+            <tr>
+                <td>Publisher</td> <td>@dbInfo.PublisherName</td>
+            </tr>
+            <tr>
+                <td>Released</td> <td>@dbInfo.ReleaseYear</td>
+            </tr>
+            }
             <tr>
                 <td>Region</td> <td>@Header.region</td>
-            </tr>
-            <tr>
-                <td>Manufacturer</td> <td>@Header.manufacturerCode</td>
-            </tr>
-            <tr>
-                <td>Licencee</td> <td>@Header.licencee</td>
             </tr>
             <tr>
                 <td>Cart Type</td> <td>@Header.cartType.MBC</td>
@@ -29,10 +40,28 @@
             </tr>
         </tbody>
     </table>
+</div>
 }
 
 @code { 
-    [Parameter] public Cartridge? Cart {get; set;}
+
+    private Cartridge? cart;
+    private GameInfo? dbInfo;
+    #pragma warning disable BL0007
+    [Parameter] public Cartridge? Cart{
+        get => cart;
+        set {
+            if (value != cart) {
+                this.cart = value;
+                if (value is not null) {
+                    this.dbInfo = GameDatabase.Instance().Where(x => x.CartTitle == value.Info.title).FirstOrDefault();
+                } else {
+                    this.dbInfo = null;
+                }
+            }
+        }
+    }
+    #pragma warning restore BL0007
 
     public CartridgeHeader? Header => Cart?.Info;
 }

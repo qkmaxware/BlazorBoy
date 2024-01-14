@@ -1,0 +1,28 @@
+[
+    {
+        "title": "TETRIS",
+        "name": "Tetris",
+        "boxart": "https://upload.wikimedia.org/wikipedia/en/thumb/4/4a/Tetris_Boxshot.jpg/220px-Tetris_Boxshot.jpg",
+        "description": "A portable version of Alexey Pajitnov's original tetris for the Nintendo Game Boy.",
+        "genres": [
+            "Puzzle"
+        ],
+        "released": 1989,
+        "developer": "Nintendo R&D1",
+        "publisher": "Nintendo"
+    },
+    {
+        "title": "POKEMON BLUE",
+        "name": "Pokémon Blue",
+        "boxart": "https://archives.bulbagarden.net/media/upload/thumb/5/5a/Blue_EN_boxart.png/250px-Blue_EN_boxart.png",
+        "description": "Along with Pokémon Red, Pokémon Blue was one of the first installments of the Pokémon series.",
+        "genres": [
+            "Role-playing",
+            "Adventure",
+            "Turn-based strategy"
+        ],
+        "released": 1996,
+        "developer": "Game Freak",
+        "publisher": "Nintendo"
+    }
+]

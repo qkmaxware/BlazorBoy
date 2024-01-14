@@ -17,9 +17,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Gameboy\Gameboy.csproj" />
+    <ProjectReference Include="..\Gameboy.Database\Gameboy.Database.csproj" />
   </ItemGroup>
 
-   <ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Include="Roms/instructions/*.gb" />
     <EmbeddedResource Include="Data/*.json" />
     <EmbeddedResource Include="Data/opcode_tests/*.json" />

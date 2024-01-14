@@ -24,16 +24,34 @@ public class Bitmap {
     } 
 
     public ColourPallet this[int x, int y] {
-        get => (ColourPallet)pixels[y * this.Width + x];
-        set => pixels[y * this.Width + x] = (byte)value;
+        get {
+            if (!IsValidCoordinate(x, y)) {
+                return ColourPallet.BackgroundDark;
+            }
+            return (ColourPallet)pixels[y * this.Width + x];
+        }
+        set {
+            if (!IsValidCoordinate(x, y)) {
+                return;
+            }
+            pixels[y * this.Width + x] = (byte)value;
+        }
     }
 
     public void Fill(ColourPallet colour) {
         Array.Fill(this.pixels, (byte)colour);
     }
 
+    public bool IsValidRow(int row) {
+        return row >= 0 && row < this.Height;
+    }
+
+    public bool IsValidColumn(int column) {
+        return column >= 0 && column < this.Width;
+    }
+
     public bool IsValidCoordinate(int x, int y) {
-        return x >= 0 && x < this.Width && y >= 0 && y < this.Height;
+        return IsValidColumn(x) && IsValidRow(y);
     }
 
     public void DrawRect(int xOrig, int yOrig, int width, int height, ColourPallet colour) {

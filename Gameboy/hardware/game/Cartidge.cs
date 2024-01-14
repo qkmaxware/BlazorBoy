@@ -25,6 +25,10 @@ public class Cartridge {
     }
     
     public int read(int addr){
-        return rom[addr];
+        if (addr >= 0 && addr < rom.Length) {
+            return rom[addr];
+        } else {
+            return 0;
+        }
     }
 }

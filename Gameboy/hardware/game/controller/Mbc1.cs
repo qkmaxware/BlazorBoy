@@ -1,129 +1,129 @@
+using Qkmaxware.Vm.LR35902;
+
 namespace Qkmaxware.Emulators.Gameboy.Hardware;
 
-public class Mbc1 : IMbc {
-    public static readonly int ERAM_SIZE = 32768;  //32KB eram
-    private byte[] eram = new byte[ERAM_SIZE];    //External Cartridge RAM
-    
-    private bool ramEnabled = false;
-    private bool ramSelected = true;
-    
-    private int rambank = 0;
-    private int rombank = 1;
- 
-    private Cartridge cart;
+/// <summary>
+/// MBC1 controller
+/// https://gbdev.io/pandocs/MBC1.html
+/// This is the first MBC chip for the Game Boy
+/// </summary>
+public class Mbc1 : BaseMbc {
 
-    public Mbc1(Cartridge cart){
-        this.cart = cart;
+    private List<byte[]> eram;
+
+    #region Registers
+    private bool ramEnable;
+    private int lowerRomBankNumber = 1;
+    private int higherRomBankNumber = 0;
+    private int romBankIndex => (higherRomBankNumber << 5) + lowerRomBankNumber;
+    private int ramBankIndex;
+    private BankingModeSelect bankingModeSelect;
+    #endregion
+
+    enum BankingModeSelect {
+        Simple = 0, Advanced = 1
     }
 
-    public void Reset(){
-        Array.Fill(eram, (byte)0);
-        
-        ramEnabled = false;
-        ramSelected = true;
-        
-        rambank = 0;
-        rombank = 1;
-    }
-    
-    private static bool between(int x, int lower, int upper) {
-        return lower <= x && x <= upper;
-    }
-
-    public bool IsRamEnabled(){
-        return this.ramEnabled;
-    }
-
-    public int GetRamOffset() => rambank * 0x2000;
-
-    public int GetRomOffset() => rombank * 0x4000;
-
-    public byte[] GetActiveRam() => this.eram;
-
-    public IEnumerable<byte[]> GetRamBanks() {
-        yield return GetActiveRam();
-    }
-
-    public int ReadByte(int addr) {
-        //Create the appropriate offsets if required
-        int romoff = GetRomOffset(); //Rom bank 1
-        int ramoff = GetRamOffset();
-        
-        if(between(addr, 0, 0x3FFF)){
-            //Cartridge ROM (fixed) (rom bank 0)
-            if(cart == null)
-                return 0;
-            return cart.read(addr);
+    public Mbc1(Cartridge cart) : base(cart) {
+        this.eram = new List<byte[]>();
+        for (var i = 0; i < Math.Max(1, cart.Info.eramClass.BankCount); i++) {
+            this.eram.Add(new byte[KiB_8.ByteCount]);
         }
-        else if(between(addr, 0x4000, 0x7FFF)){
-            //Cartridge ROM (switchable) (rom bank 1)
-            if(cart == null)
-                return 0;
-            return cart.read((romoff + (addr - 0x4000)));
+    }
+
+    public override void Reset() {
+        ramEnable = false;
+        lowerRomBankNumber = 1;
+        higherRomBankNumber = 0; 
+        ramBankIndex = 0;
+        bankingModeSelect = BankingModeSelect.Simple;
+        foreach (var bank in eram) {
+            Array.Fill(bank, (byte)0);
         }
-        else if(between(addr, 0xA000, 0xBFFF)){
-            //External cartridge RAM
-            if(!ramSelected){
-                return eram[addr - 0xA000];
-            }else{
-                return eram[(addr - 0xA000) + ramoff];
+    }
+
+    public override byte[] GetActiveRam() {
+        return this.eram[ramBankIndex];
+    }
+
+    public override IEnumerable<byte[]> GetRamBanks() {
+        foreach (var bank in this.eram)
+            yield return bank;
+    }
+
+    public override int ReadByte(int addr) {
+        // 0000–3FFF — ROM Bank X0 (Read Only)
+        if (between(addr, 0x0000, 0x3FFF)) {
+            // This area normally contains the first 16 KiB (bank 00) of the cartridge ROM.
+            if (Cart is null)
+                return LO;
+            return Cart.read(addr);
+        }
+
+        // 4000–7FFF — ROM Bank 01-7F
+        if (between(addr, 0x4000, 0x7FFF)) {
+            if (Cart is null)
+                return LO;
+            var offset = romBankIndex * KiB_16.ByteCount;
+            return Cart.read(offset + (addr - 0x4000));
+        }
+
+        // A000–BFFF — RAM Bank 00–03
+        if (between(addr, 0xA000, 0xBFFF)) {
+            if (!ramEnable) {
+                return 0xFF; // Otherwise reads return open bus values (often $FF, but not guaranteed) 
             }
+            return eram[ramBankIndex][addr - 0xA000];
         }
+
         return 0;
     }
 
-    public void WriteByte(int addr, int value) {
-        //Create the appropriate offsets if required
-        int romoff = GetRomOffset(); //Rom bank 1
-        int ramoff = GetRamOffset();
-        
-        this.HasOccurredWrite(addr, value);
-        
-        if(between(addr, 0xA000, 0xBFFF)){
-            //External cartridge RAM
-            if(!ramSelected){
-                eram[addr - 0xA000] = (byte)value;
-            }else{
-                eram[(addr - 0xA000) + ramoff] = (byte)value;
-            }
+    public override void WriteByte(int addr, int value)
+    {
+        // 0000–1FFF — RAM Enable (Write Only)
+        if (between(addr, 0x0000, 0x1FFF)) {
+            this.ramEnable = (value & 0xF) == 0xA;
         }
-    }
+        // 2000–3FFF — ROM Bank Number (Write Only)
+        if (between(addr, 0x2000, 0x3FFF)) {
+            var desiredBank = value & 0b11111; // Last 5 bits only
+            if (desiredBank == 0)
+                desiredBank = 1; // cannot duplicate bank $00 into both the 0000–3FFF and 4000–7FFF
+            // If the ROM Bank Number is set to a higher value than the number of banks in the cart, 
+            // the bank number is masked to the required number of bits
+            // TODO 
+            this.lowerRomBankNumber = desiredBank;
+        }
+        // 4000–5FFF — RAM Bank Number (Write Only)
+        if (between(addr, 0x4000, 0x5FFF)) {
+            if (this.bankingModeSelect == BankingModeSelect.Simple) {
+                // This second 2-bit register can be used to select a RAM Bank in range from $00–$03
+                this.ramBankIndex = value & 0b11;
+            } else {
+                // or to specify the upper two bits (bits 5-6) of the ROM Bank number
+                this.higherRomBankNumber = (value & 0b110000) >> 5;
+            }
+        }   
+        // 6000–7FFF — Banking Mode Select (Write Only)
+        if (between(addr, 0x6000, 0x7FFF)) {
+            /*
+            This 1-bit register selects between the two MBC1 banking modes, 
+            controlling the behaviour of the secondary 2-bit banking register (above). 
+            If the cart is not large enough to use the 2-bit register (≤ 8 KiB RAM and ≤ 512 KiB ROM) 
+            this mode select has no observable effect. 
+            The program may freely switch between the two modes at any time.
+            */
+            this.bankingModeSelect = (BankingModeSelect)(value & 0b1);
+        }
 
-    public void HasOccurredWrite(int addr, int value){
-        if(addr >= 0x0000 && addr <= 0x1FFF){
-            //Enable RAM. Any Value with 0x0AH in the lower 4 bits enables ram, other values disable ram
-            ramEnabled = (value & 0x0F) == 0x0A;
-        }else if(addr >= 0x2000 && addr <= 0x3FFF){
-            if(!ramSelected){
-                //If rammode not selected, this represents the lower 5 bits, preserve the upper 5 bits
-                rombank = (value & 0x1F) | ((rombank >> 5) << 5);
-            }else{
-                rombank = value & 0x1F;
+        // A000–BFFF — RAM Bank 00–03
+        if (between(addr, 0xA000, 0xBFFF)) {
+            if (!ramEnable) {
+                eram[0][addr - 0xA000] = (byte)value;
             }
-            
-            //Never select 0th rombank
-            if(rombank == 0x00 || rombank == 0x20 || rombank == 0x40 || rombank == 0x60){
-                rombank++;
-            }
-            
-            rombank &= (cart.Info.romClass.BankCount - 1);
-            
-        }else if(addr >= 0x4000 && addr <= 0x5FFF){
-            //This 2 bit register can be used to select a ram bank in the range 00-03 or specify the upper 2 bits of the bank number
-            //This behavior depends on the ROM/RAM mode select
-            if(!ramSelected){
-                rombank = (rombank & 0x1F) | ((value & 3) << 5);   //Set upper 2 bits
-                rombank &= (cart.Info.romClass.BankCount - 1);
-            
-            }else{
-                rambank = value & 3;          //Set rambank number
-                rambank &= (cart.Info.eramClass.BankCount - 1);
-            }
+            eram[ramBankIndex][addr - 0xA000] = (byte)value;
         }
-        else if(addr >= 6000 && addr <= 0x7FFF){
-            //This one bit register selects whether the two bits above should be used as the upper two bits of the rom bank
-            //or as the ram bank number
-            ramSelected = (value & 0x1) != 0; //Ram banking mode, else Rom banking mode
-        }
+
     }
 }

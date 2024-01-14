@@ -3,36 +3,35 @@ using Qkmaxware.Vm.LR35902;
 namespace Qkmaxware.Emulators.Gameboy.Hardware;
 
 public interface IMbc : IResetable {
-    /**
-     * Get the offset value to use for ram access
-     * @return 
-     */
-    public int GetRamOffset();
-    
-    /**
-     * Get the offset value to use for rom access
-     * @return 
-     */
-    public int GetRomOffset();
-    
-    /**
-     * Get a reference to the ram array for this controller
-     * @return 
-     */
+    /// <summary>
+    /// Get a reference to the ram array for this controller
+    /// </summary>
+    /// <returns>active ram array</returns>
     public byte[] GetActiveRam();
-    public IEnumerable<byte[]> GetRamBanks();
     
-    /**
-     * Read a byte from this controller
-     * @param addr
-     * @return 
-     */
+    /// <summary>
+    /// Get all RAM banks managed by this controller
+    /// </summary>
+    /// <returns>banks of RAM</returns>
+    public IEnumerable<byte[]> GetRamBanks();
+
+    /// <summary>
+    /// Update the value of each ram bank to those provided
+    /// </summary>
+    /// <param name="banks">banks of RAM</param>
+    public void UpdateRamBanks(IEnumerable<byte[]> banks);
+    
+    /// <summary>
+    /// Read a byte from this controller
+    /// </summary>
+    /// <param name="addr">address</param>
+    /// <returns>byte</returns>
     public int ReadByte(int addr);
     
-    /**
-     * Write a value to this controller (triggers side-effects)
-     * @param addr
-     * @param value 
-     */
+    /// <summary>
+    /// Write a value to this controller (triggers side-effects)
+    /// </summary>
+    /// <param name="addr">address to write to</param>
+    /// <param name="value">byte to write</param>
     public void WriteByte(int addr, int value);
 }
