@@ -13,33 +13,33 @@ public class Gameboy {
     private CartridgeAdapter cart {get; init;}
     public SerialConnection Serial {get; init;}
 
-    public Gameboy() {
+    public Gameboy(IPpu? gpu = null, Input? input = null, CartridgeAdapter? cartReader = null, Hardware.Timer? timer = null, SerialConnection? serialIO = null) {
         mmu = new MemoryMap();
 
         Hardrive onboard = new Hardrive();
-        GPU = new Gpu();
-        Input = new Input();
-        timer = new Hardware.Timer();
-        cart = new CartridgeAdapter();
-        SerialConnection sysio = new SerialConnection(null, null);
+        this.GPU = gpu ?? new Ppu();
+        this.Input = input ?? new Input();
+        this.timer = timer ?? new Hardware.Timer();
+        this.cart = cartReader ?? new CartridgeAdapter();
+        SerialConnection sysio = serialIO ?? new SerialConnection(null, null);
         this.Serial = sysio;
 
         mmu.SetMappedComponent(MemoryMap.INTERNAL_RAM, onboard);
         mmu.SetMappedComponent(MemoryMap.ZRAM, onboard);
-        
-        mmu.SetMappedComponent(MemoryMap.JOYSTICK, Input);
-        mmu.SetMappedComponent(MemoryMap.TIMER, timer);
-        
-        mmu.SetMappedComponent(MemoryMap.OAM, GPU);
-        mmu.SetMappedComponent(MemoryMap.VRAM, GPU);
-        mmu.SetMappedComponent(MemoryMap.GPU, GPU);
-        
-        mmu.SetMappedComponent(MemoryMap.ROM_BANK_0, cart);
-        mmu.SetMappedComponent(MemoryMap.ROM_BANK_1, cart);
-        mmu.SetMappedComponent(MemoryMap.EXTERNAL_RAM, cart);
-        
-        mmu.SetMappedComponent(MemoryMap.SERIALIO, sysio);
-        
+
+        mmu.SetMappedComponent(MemoryMap.JOYSTICK, this.Input);
+        mmu.SetMappedComponent(MemoryMap.TIMER, this.timer);
+
+        mmu.SetMappedComponent(MemoryMap.OAM, this.GPU);
+        mmu.SetMappedComponent(MemoryMap.VRAM, this.GPU);
+        mmu.SetMappedComponent(MemoryMap.GPU, this.GPU);
+
+        mmu.SetMappedComponent(MemoryMap.ROM_BANK_0, this.cart);
+        mmu.SetMappedComponent(MemoryMap.ROM_BANK_1, this.cart);
+        mmu.SetMappedComponent(MemoryMap.EXTERNAL_RAM, this.cart);
+
+        mmu.SetMappedComponent(MemoryMap.SERIALIO, this.Serial);
+
         CPU = new Cpu(mmu);
     }
 
@@ -115,6 +115,9 @@ public class Gameboy {
         cpu.Sp = this.CPU.Registry.sp();
         cpu.Pc = this.CPU.Registry.pc();
         cpu.Ime = this.CPU.Registry.ime();
+
+        PpuState ppu = this.GPU.GetState();
+        state.Ppu = ppu;
 
         CartState cart = new CartState();
         state.Cart = cart;

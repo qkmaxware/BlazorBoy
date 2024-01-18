@@ -21,4 +21,10 @@ public interface IPpu : IMemorySegment {
     /// </summary>
     /// <param name="step">cpu cycles</param>
     public void Step(int step);
+
+    /// <summary>
+    /// Get the current state of the PPU
+    /// </summary>
+    /// <returns>state</returns>
+    public PpuState GetState();
 }

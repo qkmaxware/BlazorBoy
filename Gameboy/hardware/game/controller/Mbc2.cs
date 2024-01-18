@@ -35,6 +35,8 @@ public class Mbc2 : IMbc {
         yield return GetActiveRam();
     }
 
+    public void UpdateRamBanks(IEnumerable<byte[]> banks) => throw new NotImplementedException();
+
     public int ReadByte(int addr) {
         //ROM BANK 0 (Read Only)
         if(addr >= 0x0000 && addr <= 0x3FFF){

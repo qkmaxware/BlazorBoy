@@ -702,4 +702,21 @@ public class Gpu : IPpu {
             }
         }
     }
+
+    public PpuState GetState() {
+        PpuState state = new PpuState();
+        state.Lcdc = this.ReadByte(0xFF40);
+        state.Stat = this.ReadByte(0xFF41);
+        state.ViewportX = this.ReadByte(0xFF43);
+        state.ViewportY = this.ReadByte(0xFF42);
+        state.WindowX = this.ReadByte(0xFF4B);
+        state.WindowY = this.ReadByte(0xFF4A);
+        state.Lyc = this.ReadByte(0xFF45);
+        state.Scanline = this.ReadByte(0xFF44);
+           
+        state.OamBytes = Convert.ToBase64String(this.oam.Select(x => (byte)x).ToArray());
+        state.VramBytes = Convert.ToBase64String(this.vram.Select(x => (byte)x).ToArray());
+
+        return state; 
+    }
 }

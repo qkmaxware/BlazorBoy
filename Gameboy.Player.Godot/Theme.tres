@@ -1,0 +1,40 @@
+[gd_resource type="Theme" load_steps=8 format=3 uid="uid://dcduu766csudy"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4axgg"]
+bg_color = Color(0.262745, 0.639216, 0.858824, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mxsf8"]
+bg_color = Color(0.105882, 0.105882, 0.105882, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ijqs4"]
+bg_color = Color(0.105882, 0.105882, 0.105882, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ek4ao"]
+content_margin_left = 10.0
+content_margin_right = 10.0
+bg_color = Color(0.0392157, 0.0392157, 0.0392157, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0wyvc"]
+content_margin_left = 10.0
+content_margin_right = 10.0
+bg_color = Color(0.262745, 0.639216, 0.858824, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uw56f"]
+content_margin_left = 10.0
+content_margin_right = 10.0
+bg_color = Color(0.105882, 0.105882, 0.105882, 1)
+border_width_top = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rr1t3"]
+content_margin_left = 10.0
+content_margin_right = 10.0
+bg_color = Color(0.0705882, 0.0705882, 0.0705882, 1)
+
+[resource]
+Button/styles/hover = SubResource("StyleBoxFlat_4axgg")
+Button/styles/normal = SubResource("StyleBoxFlat_mxsf8")
+TabContainer/styles/panel = SubResource("StyleBoxFlat_ijqs4")
+TabContainer/styles/tab_disabled = SubResource("StyleBoxFlat_ek4ao")
+TabContainer/styles/tab_hovered = SubResource("StyleBoxFlat_0wyvc")
+TabContainer/styles/tab_selected = SubResource("StyleBoxFlat_uw56f")
+TabContainer/styles/tab_unselected = SubResource("StyleBoxFlat_rr1t3")

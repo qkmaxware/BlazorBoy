@@ -1,3 +1,4 @@
+using System.Drawing;
 using static Qkmaxware.Emulators.Gameboy.Hardware.ColourPallet;
 namespace Qkmaxware.Emulators.Gameboy.Hardware;
 
@@ -92,6 +93,42 @@ public class Bitmap {
             }
         }
         return next;
+    }
+
+    public void ToTga(BinaryWriter writer) {
+        // Header
+        byte[] header = new byte[18];
+        header[0] = (byte)0; //ID Length
+        header[1] = (byte)0; //Colour map type (no colour map)
+        header[2] = (byte)2; //Image type (uncompressed true-colour image)
+        // Width (2 bytes)
+        header[12] = (byte)(255 & this.Width);
+        header[13] = (byte)(255 & (this.Width >> 8));
+        // Height (2 bytes)
+        header[14] = (byte)(255 & this.Height);
+        header[15] = (byte)(255 & (this.Height >> 8));
+        header[16] = (byte)24; //Pixel depth
+        header[17] = (byte)32; //
+        writer.Write(header);
+
+        // Body
+        var black = Color.Black;
+        var dark = Color.DarkGray;
+        var light = Color.LightGray;
+        var white = Color.White;
+        var colourMap = new Color[] {
+            black, dark, light, white, // Background
+            black, dark, light, white, // Palette 0
+            black, dark, light, white, // Palette 1
+        };
+        for(int row = 0; row < this.Height; row++) {
+            for(int column = 0; column < this.Width; column++){
+                var c = colourMap[(int)this[column, row]];
+                writer.Write(c.B);
+                writer.Write(c.G);
+                writer.Write(c.R);
+            }
+        }
     }
 
     public byte[] GetBytes() => this.pixels;

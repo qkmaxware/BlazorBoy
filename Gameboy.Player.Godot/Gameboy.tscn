@@ -1,12 +1,19 @@
-[gd_scene load_steps=8 format=3 uid="uid://bytv8v3jd4m0l"]
+[gd_scene load_steps=15 format=3 uid="uid://bytv8v3jd4m0l"]
 
 [ext_resource type="Script" path="res://TextureRenderer.cs" id="1_hfp5s"]
 [ext_resource type="Texture2D" uid="uid://dfkwdfgk0dp8n" path="res://icon.svg" id="1_ptiq5"]
+[ext_resource type="PackedScene" uid="uid://yis4daekext1" path="res://Debuggers/Sprite Debugger.tscn" id="3_1xhtv"]
+[ext_resource type="PackedScene" uid="uid://2uytp7r2ouod" path="res://Debuggers/Map Debugger.tscn" id="3_8v8ku"]
 [ext_resource type="Texture2D" uid="uid://cip0keh15srys" path="res://cart.png" id="3_gvrte"]
+[ext_resource type="Theme" uid="uid://dcduu766csudy" path="res://Theme.tres" id="3_kw20t"]
+[ext_resource type="Texture2D" uid="uid://bw2t0i8lwy22o" path="res://grabber.svg" id="3_w3ofc"]
+[ext_resource type="PackedScene" uid="uid://b5psa1c0pvkya" path="res://Debuggers/PaletteDebugger.tscn" id="4_80mls"]
 [ext_resource type="Texture2D" uid="uid://byxxvldruom6j" path="res://play.png" id="4_lwet3"]
 [ext_resource type="Texture2D" uid="uid://cm332so38crqs" path="res://pause.png" id="5_5clxm"]
 [ext_resource type="Script" path="res://FpsCounter.cs" id="5_rtd4o"]
 [ext_resource type="Texture2D" uid="uid://d0dpxbrvr2bo7" path="res://stop.png" id="6_cecoo"]
+[ext_resource type="PackedScene" uid="uid://ca3d3pani0rrj" path="res://Debuggers/Tile Debugger.tscn" id="7_ny0ae"]
+[ext_resource type="PackedScene" uid="uid://cs764ed0jafqu" path="res://Debuggers/Disassembler.tscn" id="9_q1hjn"]
 
 [node name="Gameboy" type="Control"]
 layout_mode = 3
@@ -15,18 +22,71 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("3_kw20t")
 
 [node name="LCD" type="TextureRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_bottom = -31.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_ptiq5")
 expand_mode = 1
 stretch_mode = 5
 script = ExtResource("1_hfp5s")
+
+[node name="Debug Menu" type="VSplitContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 48.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_kw20t")
+theme_override_icons/grabber = ExtResource("3_w3ofc")
+split_offset = 550
+
+[node name="Empty" type="Control" parent="Debug Menu"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Debuggers" type="TabContainer" parent="Debug Menu"]
+layout_mode = 2
+theme = ExtResource("3_kw20t")
+tab_focus_mode = 0
+
+[node name="Colour Palettes" parent="Debug Menu/Debuggers" node_paths=PackedStringArray("Player") instance=ExtResource("4_80mls")]
+layout_mode = 2
+Player = NodePath("../../../LCD")
+
+[node name="Sprites" parent="Debug Menu/Debuggers" node_paths=PackedStringArray("Player") instance=ExtResource("3_1xhtv")]
+visible = false
+layout_mode = 2
+Player = NodePath("../../../LCD")
+
+[node name="Tiles" parent="Debug Menu/Debuggers" node_paths=PackedStringArray("Player") instance=ExtResource("7_ny0ae")]
+visible = false
+layout_mode = 2
+Player = NodePath("../../../LCD")
+
+[node name="Background Map" parent="Debug Menu/Debuggers" node_paths=PackedStringArray("Player") instance=ExtResource("3_8v8ku")]
+visible = false
+layout_mode = 2
+Player = NodePath("../../../LCD")
+
+[node name="Window Map" parent="Debug Menu/Debuggers" node_paths=PackedStringArray("Player") instance=ExtResource("3_8v8ku")]
+visible = false
+layout_mode = 2
+Player = NodePath("../../../LCD")
+Map = 1
+
+[node name="Disassembler" parent="Debug Menu/Debuggers" node_paths=PackedStringArray("Player") instance=ExtResource("9_q1hjn")]
+visible = false
+layout_mode = 2
+Player = NodePath("../../../LCD")
 
 [node name="Open ROM" type="Button" parent="."]
 layout_mode = 0

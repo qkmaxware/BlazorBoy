@@ -24,6 +24,8 @@ public class Cartridge {
         return Info.cartType.HasRam;
     }
     
+    public byte[] GetBytes() => rom;
+
     public int read(int addr){
         if (addr >= 0 && addr < rom.Length) {
             return rom[addr];

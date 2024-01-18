@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://0jxwbr6l750m"]
+
+[ext_resource type="Script" path="res://BitmapTextureRect.cs" id="1_80e0p"]
+
+[node name="TileTemplate" type="TextureRect"]
+visible = false
+custom_minimum_size = Vector2(64, 64)
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("1_80e0p")

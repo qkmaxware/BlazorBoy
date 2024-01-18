@@ -1,0 +1,925 @@
+[gd_scene load_steps=5 format=3 uid="uid://yis4daekext1"]
+
+[ext_resource type="Texture2D" uid="uid://cip0keh15srys" path="res://cart.png" id="1_44h0a"]
+[ext_resource type="Script" path="res://Debuggers/SpriteDebugger.cs" id="1_kpo0v"]
+[ext_resource type="Script" path="res://BitmapTextureRect.cs" id="2_hqqgw"]
+[ext_resource type="Texture2D" uid="uid://divrqb47wvwvt" path="res://reload.png" id="4_26upw"]
+
+[node name="Sprite Debugger" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_kpo0v")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 59.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_scroll_mode = 0
+
+[node name="GridContainer" type="GridContainer" parent="ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/v_separation = 24
+columns = 10
+
+[node name="Sprite 0" type="TextureRect" parent="ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("1_44h0a")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("2_hqqgw")
+
+[node name="Label" type="Label" parent="ScrollContainer/GridContainer/Sprite 0"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = 22.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "0"
+horizontal_alignment = 1
+
+[node name="Sprite 1" type="TextureRect" parent="ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("1_44h0a")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("2_hqqgw")
+
+[node name="Label" type="Label" parent="ScrollContainer/GridContainer/Sprite 1"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = 22.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "0"
+horizontal_alignment = 1
+
+[node name="Sprite 2" type="TextureRect" parent="ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("1_44h0a")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("2_hqqgw")
+
+[node name="Label" type="Label" parent="ScrollContainer/GridContainer/Sprite 2"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = 22.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "0"
+horizontal_alignment = 1
+
+[node name="Sprite 3" type="TextureRect" parent="ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("1_44h0a")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("2_hqqgw")
+
+[node name="Label" type="Label" parent="ScrollContainer/GridContainer/Sprite 3"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = 22.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "0"
+horizontal_alignment = 1
+
+[node name="Sprite 4" type="TextureRect" parent="ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("1_44h0a")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("2_hqqgw")
+
+[node name="Label" type="Label" parent="ScrollContainer/GridContainer/Sprite 4"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = 22.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "0"
+horizontal_alignment = 1
+
+[node name="Sprite 5" type="TextureRect" parent="ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("1_44h0a")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("2_hqqgw")
+
+[node name="Label" type="Label" parent="ScrollContainer/GridContainer/Sprite 5"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = 22.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "0"
+horizontal_alignment = 1
+
+[node name="Sprite 6" type="TextureRect" parent="ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("1_44h0a")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("2_hqqgw")
+
+[node name="Label" type="Label" parent="ScrollContainer/GridContainer/Sprite 6"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = 22.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "0"
+horizontal_alignment = 1
+
+[node name="Sprite 7" type="TextureRect" parent="ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("1_44h0a")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("2_hqqgw")
+
+[node name="Label" type="Label" parent="ScrollContainer/GridContainer/Sprite 7"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = 22.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "0"
+horizontal_alignment = 1
+
+[node name="Sprite 8" type="TextureRect" parent="ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("1_44h0a")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("2_hqqgw")
+
+[node name="Label" type="Label" parent="ScrollContainer/GridContainer/Sprite 8"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = 22.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "0"
+horizontal_alignment = 1
+
+[node name="Sprite 9" type="TextureRect" parent="ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("1_44h0a")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("2_hqqgw")
+
+[node name="Label" type="Label" parent="ScrollContainer/GridContainer/Sprite 9"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = 22.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "0"
+horizontal_alignment = 1
+
+[node name="Sprite 10" type="TextureRect" parent="ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("1_44h0a")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("2_hqqgw")
+
+[node name="Label" type="Label" parent="ScrollContainer/GridContainer/Sprite 10"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = 22.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "0"
+horizontal_alignment = 1
+
+[node name="Sprite 11" type="TextureRect" parent="ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("1_44h0a")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("2_hqqgw")
+
+[node name="Label" type="Label" parent="ScrollContainer/GridContainer/Sprite 11"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = 22.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "0"
+horizontal_alignment = 1
+
+[node name="Sprite 12" type="TextureRect" parent="ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("1_44h0a")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("2_hqqgw")
+
+[node name="Label" type="Label" parent="ScrollContainer/GridContainer/Sprite 12"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = 22.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "0"
+horizontal_alignment = 1
+
+[node name="Sprite 13" type="TextureRect" parent="ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("1_44h0a")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("2_hqqgw")
+
+[node name="Label" type="Label" parent="ScrollContainer/GridContainer/Sprite 13"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = 22.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "0"
+horizontal_alignment = 1
+
+[node name="Sprite 14" type="TextureRect" parent="ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("1_44h0a")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("2_hqqgw")
+
+[node name="Label" type="Label" parent="ScrollContainer/GridContainer/Sprite 14"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = 22.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "0"
+horizontal_alignment = 1
+
+[node name="Sprite 15" type="TextureRect" parent="ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("1_44h0a")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("2_hqqgw")
+
+[node name="Label" type="Label" parent="ScrollContainer/GridContainer/Sprite 15"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = 22.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "0"
+horizontal_alignment = 1
+
+[node name="Sprite 16" type="TextureRect" parent="ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("1_44h0a")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("2_hqqgw")
+
+[node name="Label" type="Label" parent="ScrollContainer/GridContainer/Sprite 16"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = 22.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "0"
+horizontal_alignment = 1
+
+[node name="Sprite 17" type="TextureRect" parent="ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("1_44h0a")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("2_hqqgw")
+
+[node name="Label" type="Label" parent="ScrollContainer/GridContainer/Sprite 17"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = 22.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "0"
+horizontal_alignment = 1
+
+[node name="Sprite 18" type="TextureRect" parent="ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("1_44h0a")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("2_hqqgw")
+
+[node name="Label" type="Label" parent="ScrollContainer/GridContainer/Sprite 18"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = 22.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "0"
+horizontal_alignment = 1
+
+[node name="Sprite 19" type="TextureRect" parent="ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("1_44h0a")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("2_hqqgw")
+
+[node name="Label" type="Label" parent="ScrollContainer/GridContainer/Sprite 19"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = 22.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "0"
+horizontal_alignment = 1
+
+[node name="Sprite 20" type="TextureRect" parent="ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("1_44h0a")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("2_hqqgw")
+
+[node name="Label" type="Label" parent="ScrollContainer/GridContainer/Sprite 20"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = 22.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "0"
+horizontal_alignment = 1
+
+[node name="Sprite 21" type="TextureRect" parent="ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("1_44h0a")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("2_hqqgw")
+
+[node name="Label" type="Label" parent="ScrollContainer/GridContainer/Sprite 21"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = 22.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "0"
+horizontal_alignment = 1
+
+[node name="Sprite 22" type="TextureRect" parent="ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("1_44h0a")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("2_hqqgw")
+
+[node name="Label" type="Label" parent="ScrollContainer/GridContainer/Sprite 22"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = 22.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "0"
+horizontal_alignment = 1
+
+[node name="Sprite 23" type="TextureRect" parent="ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("1_44h0a")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("2_hqqgw")
+
+[node name="Label" type="Label" parent="ScrollContainer/GridContainer/Sprite 23"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = 22.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "0"
+horizontal_alignment = 1
+
+[node name="Sprite 24" type="TextureRect" parent="ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("1_44h0a")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("2_hqqgw")
+
+[node name="Label" type="Label" parent="ScrollContainer/GridContainer/Sprite 24"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = 22.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "0"
+horizontal_alignment = 1
+
+[node name="Sprite 25" type="TextureRect" parent="ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("1_44h0a")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("2_hqqgw")
+
+[node name="Label" type="Label" parent="ScrollContainer/GridContainer/Sprite 25"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = 22.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "0"
+horizontal_alignment = 1
+
+[node name="Sprite 26" type="TextureRect" parent="ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("1_44h0a")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("2_hqqgw")
+
+[node name="Label" type="Label" parent="ScrollContainer/GridContainer/Sprite 26"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = 22.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "0"
+horizontal_alignment = 1
+
+[node name="Sprite 27" type="TextureRect" parent="ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("1_44h0a")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("2_hqqgw")
+
+[node name="Label" type="Label" parent="ScrollContainer/GridContainer/Sprite 27"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = 22.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "0"
+horizontal_alignment = 1
+
+[node name="Sprite 28" type="TextureRect" parent="ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("1_44h0a")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("2_hqqgw")
+
+[node name="Label" type="Label" parent="ScrollContainer/GridContainer/Sprite 28"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = 22.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "0"
+horizontal_alignment = 1
+
+[node name="Sprite 29" type="TextureRect" parent="ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("1_44h0a")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("2_hqqgw")
+
+[node name="Label" type="Label" parent="ScrollContainer/GridContainer/Sprite 29"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = 22.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "0"
+horizontal_alignment = 1
+
+[node name="Sprite 30" type="TextureRect" parent="ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("1_44h0a")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("2_hqqgw")
+
+[node name="Label" type="Label" parent="ScrollContainer/GridContainer/Sprite 30"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = 22.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "0"
+horizontal_alignment = 1
+
+[node name="Sprite 31" type="TextureRect" parent="ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("1_44h0a")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("2_hqqgw")
+
+[node name="Label" type="Label" parent="ScrollContainer/GridContainer/Sprite 31"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = 22.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "0"
+horizontal_alignment = 1
+
+[node name="Sprite 32" type="TextureRect" parent="ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("1_44h0a")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("2_hqqgw")
+
+[node name="Label" type="Label" parent="ScrollContainer/GridContainer/Sprite 32"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = 22.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "0"
+horizontal_alignment = 1
+
+[node name="Sprite 33" type="TextureRect" parent="ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("1_44h0a")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("2_hqqgw")
+
+[node name="Label" type="Label" parent="ScrollContainer/GridContainer/Sprite 33"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = 22.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "0"
+horizontal_alignment = 1
+
+[node name="Sprite 34" type="TextureRect" parent="ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("1_44h0a")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("2_hqqgw")
+
+[node name="Label" type="Label" parent="ScrollContainer/GridContainer/Sprite 34"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = 22.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "0"
+horizontal_alignment = 1
+
+[node name="Sprite 35" type="TextureRect" parent="ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("1_44h0a")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("2_hqqgw")
+
+[node name="Label" type="Label" parent="ScrollContainer/GridContainer/Sprite 35"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = 22.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "0"
+horizontal_alignment = 1
+
+[node name="Sprite 36" type="TextureRect" parent="ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("1_44h0a")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("2_hqqgw")
+
+[node name="Label" type="Label" parent="ScrollContainer/GridContainer/Sprite 36"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = 22.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "0"
+horizontal_alignment = 1
+
+[node name="Sprite 37" type="TextureRect" parent="ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("1_44h0a")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("2_hqqgw")
+
+[node name="Label" type="Label" parent="ScrollContainer/GridContainer/Sprite 37"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = 22.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "0"
+horizontal_alignment = 1
+
+[node name="Sprite 38" type="TextureRect" parent="ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("1_44h0a")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("2_hqqgw")
+
+[node name="Label" type="Label" parent="ScrollContainer/GridContainer/Sprite 38"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = 22.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "0"
+horizontal_alignment = 1
+
+[node name="Sprite 39" type="TextureRect" parent="ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("1_44h0a")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("2_hqqgw")
+
+[node name="Label" type="Label" parent="ScrollContainer/GridContainer/Sprite 39"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = 22.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "0"
+horizontal_alignment = 1
+
+[node name="Reload" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -95.0
+offset_bottom = 31.0
+grow_horizontal = 0
+text = "Reload"
+icon = ExtResource("4_26upw")
+expand_icon = true
+
+[connection signal="pressed" from="Reload" to="." method="Refresh"]

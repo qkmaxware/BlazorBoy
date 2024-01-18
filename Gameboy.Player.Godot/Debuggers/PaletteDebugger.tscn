@@ -1,0 +1,128 @@
+[gd_scene load_steps=3 format=3 uid="uid://b5psa1c0pvkya"]
+
+[ext_resource type="Script" path="res://Debuggers/PaletteDebugger.cs" id="1_sor31"]
+[ext_resource type="Texture2D" uid="uid://divrqb47wvwvt" path="res://reload.png" id="2_wsgsr"]
+
+[node name="Palette Debugger" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_sor31")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 58.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_scroll_mode = 0
+
+[node name="HSplitContainer" type="HSplitContainer" parent="ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+split_offset = 512
+
+[node name="Background" type="MarginContainer" parent="ScrollContainer/HSplitContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = -10
+theme_override_constants/margin_bottom = -10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/HSplitContainer/Background"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ScrollContainer/HSplitContainer/Background/VBoxContainer"]
+layout_mode = 2
+text = "Backgrounds"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/HSplitContainer/Background/VBoxContainer"]
+layout_mode = 2
+
+[node name="00" type="ColorRect" parent="ScrollContainer/HSplitContainer/Background/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+
+[node name="01" type="ColorRect" parent="ScrollContainer/HSplitContainer/Background/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+
+[node name="10" type="ColorRect" parent="ScrollContainer/HSplitContainer/Background/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+
+[node name="11" type="ColorRect" parent="ScrollContainer/HSplitContainer/Background/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+
+[node name="Objects" type="MarginContainer" parent="ScrollContainer/HSplitContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = -10
+theme_override_constants/margin_bottom = -10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/HSplitContainer/Objects"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ScrollContainer/HSplitContainer/Objects/VBoxContainer"]
+layout_mode = 2
+text = "Objects"
+
+[node name="HBoxContainer1" type="HBoxContainer" parent="ScrollContainer/HSplitContainer/Objects/VBoxContainer"]
+layout_mode = 2
+
+[node name="00" type="ColorRect" parent="ScrollContainer/HSplitContainer/Objects/VBoxContainer/HBoxContainer1"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+
+[node name="01" type="ColorRect" parent="ScrollContainer/HSplitContainer/Objects/VBoxContainer/HBoxContainer1"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+
+[node name="10" type="ColorRect" parent="ScrollContainer/HSplitContainer/Objects/VBoxContainer/HBoxContainer1"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+
+[node name="11" type="ColorRect" parent="ScrollContainer/HSplitContainer/Objects/VBoxContainer/HBoxContainer1"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="ScrollContainer/HSplitContainer/Objects/VBoxContainer"]
+layout_mode = 2
+
+[node name="00" type="ColorRect" parent="ScrollContainer/HSplitContainer/Objects/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+
+[node name="01" type="ColorRect" parent="ScrollContainer/HSplitContainer/Objects/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+
+[node name="10" type="ColorRect" parent="ScrollContainer/HSplitContainer/Objects/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+
+[node name="11" type="ColorRect" parent="ScrollContainer/HSplitContainer/Objects/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+
+[node name="Reload" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -95.0
+offset_bottom = 31.0
+grow_horizontal = 0
+text = "Reload"
+icon = ExtResource("2_wsgsr")
+expand_icon = true
+
+[connection signal="pressed" from="Reload" to="." method="Refresh"]

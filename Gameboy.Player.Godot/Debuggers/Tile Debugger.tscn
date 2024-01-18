@@ -1,0 +1,43 @@
+[gd_scene load_steps=4 format=3 uid="uid://ca3d3pani0rrj"]
+
+[ext_resource type="Script" path="res://Debuggers/TileDebugger.cs" id="1_gbx3v"]
+[ext_resource type="PackedScene" uid="uid://0jxwbr6l750m" path="res://Debuggers/Tile Debugger.TileTemplate.tscn" id="2_3xqvo"]
+[ext_resource type="Texture2D" uid="uid://divrqb47wvwvt" path="res://reload.png" id="4_i77dr"]
+
+[node name="Tile Debugger" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_gbx3v")
+TileTemplate = ExtResource("2_3xqvo")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 59.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_scroll_mode = 0
+
+[node name="HFlowContainer" type="HFlowContainer" parent="ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Reload" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -95.0
+offset_bottom = 31.0
+grow_horizontal = 0
+text = "Reload"
+icon = ExtResource("4_i77dr")
+expand_icon = true
+
+[connection signal="pressed" from="Reload" to="." method="Refresh"]

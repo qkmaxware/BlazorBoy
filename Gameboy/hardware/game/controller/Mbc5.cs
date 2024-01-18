@@ -34,6 +34,7 @@ public class Mbc5 : IMbc {
     public IEnumerable<byte[]> GetRamBanks() {
         yield return GetActiveRam();
     }
+    public void UpdateRamBanks(IEnumerable<byte[]> banks) => throw new NotImplementedException();
 
     public int ReadByte(int addr)
     {
