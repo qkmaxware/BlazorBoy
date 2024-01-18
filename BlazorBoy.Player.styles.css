@@ -15,16 +15,25 @@ h2[b-w1pu1zzjxh] {
     height: 100dvh;
 }
 /* /Shared/CartridgeInfo.razor.rz.scp.css */
-table[b-7oqlzfzk3a] {
+div[b-7oqlzfzk3a] {
     background-color: rgba(0, 0, 0, 0.5);
     color: white;
     padding: 12px;
     border-radius: 12px;
     width: 100%;
 }
+table[b-7oqlzfzk3a] {
+    width: 100%;
+}
 
 table th[b-7oqlzfzk3a] {
     text-align: left;
+}
+
+img[b-7oqlzfzk3a] {
+    width: 100%;
+    max-height: 240px;
+    object-fit: contain;
 }
 /* /Shared/DebugTools.razor.rz.scp.css */
 .half[b-n6mexbp8e8] {
