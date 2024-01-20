@@ -32,19 +32,37 @@ public class BackgroundMapSpan {
         this.VramReference = vram;
     }
 
-    public byte TileIndexAt(int x, int y) {
+    protected int unsignedByteToSigned(int u8){
+        if(u8 > 127)
+            u8 = -((~u8+1)&255);
+        return u8;
+    }
+    public int TileIndexAt(int x, int y, TileDataSelect mode = TileDataSelect.Method8000) {
         // Row by row
-        return VramReference[StartIndex + (x + Width * y)];
+        var raw_index = VramReference[StartIndex + (x + Width * y)];
+        if (mode == TileDataSelect.Method8000) {
+            return raw_index;
+        } else {
+            return unsignedByteToSigned(raw_index);
+        }
     }
 
-    public Bitmap ToBitmap() {
+    public TileSpan TileAt(int x, int y, TileDataSelect mode = TileDataSelect.Method8000) {
+        var index = TileIndexAt(x, y, mode);
+        if (mode == TileDataSelect.Method8000) {
+            return new TileSpan(0x8000, index, this.VramReference);
+        } else {
+            return new TileSpan(0x8000, 256 + index, this.VramReference);
+        }
+    }
+
+    public Bitmap ToBitmap(TileDataSelect mode = TileDataSelect.Method8000) {
         var bitmap = new Bitmap(256, 256);
         var index = 0;
         for (var row = 0; row < 32; row++) {
             for (var col = 0; col < 32; col++) {
                 // Only works for method 1 0x8000 method (TODO method 2)
-                var tileIndex = this.TileIndexAt(col, row);
-                TileSpan tile = new TileSpan(0x8000, tileIndex, this.VramReference);
+                TileSpan tile = TileAt(col, row, mode);
                 var stamp = tile.ToBitmap();
                 bitmap.Stamp(col * 8, row * 8, stamp);
                 index++;

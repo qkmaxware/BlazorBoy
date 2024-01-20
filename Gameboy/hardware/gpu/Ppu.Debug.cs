@@ -26,6 +26,7 @@ public partial class Ppu : IPpu {
     }
     public IEnumerable<SpriteSpan> Sprites => Array.AsReadOnly(sprites);
     public IEnumerable<TileSpan> Tiles => Array.AsReadOnly(tiles);
+    public TileDataSelect TileSelectionMode => LCDC.TileDataSelect;
     public BackgroundMapSpan BackgroundMap => LCDC.BackgroundTileMapIndex == TileMapIndex.Map9800 ? Map9800 : Map9C00;
     public BackgroundMapSpan WindowMap => LCDC.WindowTileMapIndex == TileMapIndex.Map9800 ? Map9800 : Map9C00;
 }

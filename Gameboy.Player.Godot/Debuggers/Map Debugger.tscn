@@ -37,4 +37,10 @@ text = "Reload"
 icon = ExtResource("3_fd1ro")
 expand_icon = true
 
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Addressing Mode: Method8000"
+
 [connection signal="pressed" from="Reload" to="." method="Refresh"]

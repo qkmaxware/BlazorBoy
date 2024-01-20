@@ -8,6 +8,7 @@ public interface IDebuggablePpu : IPpu {
     public IEnumerable<ColourPallet[]> ObjectPalettes {get;} 
     public IEnumerable<SpriteSpan> Sprites {get;}
     public IEnumerable<TileSpan> Tiles {get;}
+    public TileDataSelect TileSelectionMode {get;}
     public BackgroundMapSpan BackgroundMap {get;}
     public BackgroundMapSpan WindowMap {get;}
 }
