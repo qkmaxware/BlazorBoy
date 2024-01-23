@@ -1,0 +1,49 @@
+[gd_scene load_steps=3 format=3 uid="uid://t7khq15qfjuw"]
+
+[ext_resource type="Texture2D" uid="uid://divrqb47wvwvt" path="res://reload.png" id="1_0a8i2"]
+[ext_resource type="Script" path="res://Debuggers/CartInfoDebug.cs" id="1_m4mxx"]
+
+[node name="Cartridge Info" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_m4mxx")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 44.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="RichTextLabel" type="RichTextLabel" parent="ScrollContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+fit_content = true
+
+[node name="Reload" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -95.0
+offset_bottom = 31.0
+grow_horizontal = 0
+text = "Reload"
+icon = ExtResource("1_0a8i2")
+expand_icon = true
+
+[connection signal="pressed" from="Reload" to="." method="Refresh"]

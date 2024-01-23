@@ -76,7 +76,7 @@ layout_mode = 2
 
 [node name="Background" type="Label" parent="ScrollContainer/VSplitContainer/Colours/VBoxContainer/HBoxContainer/Objects"]
 layout_mode = 2
-text = "Background
+text = "Objects
 "
 
 [node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/VSplitContainer/Colours/VBoxContainer/HBoxContainer/Objects"]
@@ -126,7 +126,6 @@ text = "Themes"
 
 [node name="OptionButton" type="OptionButton" parent="ScrollContainer/VSplitContainer/Colours/VBoxContainer/HBoxContainer/Themes"]
 layout_mode = 2
-selected = 0
 allow_reselect = true
 
 [node name="Change" type="Button" parent="ScrollContainer/VSplitContainer/Colours/VBoxContainer/HBoxContainer/Themes"]

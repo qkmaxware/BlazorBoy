@@ -63,7 +63,7 @@ public class CartridgeAdapter : IMemorySegment {
         if(this.cart is null || this.controller is null || !cart.Info.cartType.HasBattery)
             return;
         
-        throw new NotImplementedException();
+        this.controller.UpdateRamBanks(banks);
     }
 
     public byte[][] DumpRam() {

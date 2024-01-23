@@ -98,4 +98,23 @@ public class CartridgeHeader {
         //Global checksum
         this.globalChecksum = (romBank[0x014E] << 8) | romBank[0x014F];
     }
+
+    public override string ToString() {
+        return 
+$@"Title:           {title}
+Version:         {version}
+Manufacturer:    {manufacturerCode}
+Licencee:        {licencee}
+Region:          {region}
+
+Cart Type:       {cartType.MBC}
+SGB Support:     {sgb}
+CGB Support:     {cgb}
+Rom:             {romClass.Size} bytes in {romClass.BankCount} banks
+Ram:             {eramClass.Size} bytes in {eramClass.BankCount} banks
+
+Header Checksum: {headerChecksum}
+Global Checksum: {globalChecksum}
+";
+    }
 }

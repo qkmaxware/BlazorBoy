@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://cs764ed0jafqu"]
+[gd_scene load_steps=4 format=3 uid="uid://cs764ed0jafqu"]
 
 [ext_resource type="Script" path="res://Debuggers/Disassembler.cs" id="1_bgd2f"]
+[ext_resource type="PackedScene" uid="uid://c2fsn6ee6p522" path="res://Debuggers/Disassembler.Row.tscn" id="2_hoclf"]
 [ext_resource type="Texture2D" uid="uid://divrqb47wvwvt" path="res://reload.png" id="3_5ffph"]
 
 [node name="Disassembler" type="Control"]
@@ -11,6 +12,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_bgd2f")
+RowPrefab = ExtResource("2_hoclf")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 layout_mode = 1
@@ -22,11 +24,53 @@ grow_horizontal = 2
 grow_vertical = 2
 horizontal_scroll_mode = 0
 
-[node name="RichTextLabel" type="RichTextLabel" parent="ScrollContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-fit_content = true
-autowrap_mode = 0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="Header" type="HBoxContainer" parent="ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Address" type="HBoxContainer" parent="ScrollContainer/MarginContainer/VBoxContainer/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/Header/Address"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Address"
+horizontal_alignment = 1
+
+[node name="Instruction" type="HBoxContainer" parent="ScrollContainer/MarginContainer/VBoxContainer/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/Header/Instruction"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Instruction"
+horizontal_alignment = 1
+
+[node name="Args" type="HBoxContainer" parent="ScrollContainer/MarginContainer/VBoxContainer/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/Header/Args"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Arguments"
+horizontal_alignment = 1
+
+[node name="Row" parent="ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("2_hoclf")]
+layout_mode = 2
 
 [node name="Reload" type="Button" parent="."]
 layout_mode = 1
@@ -40,4 +84,28 @@ text = "Reload"
 icon = ExtResource("3_5ffph")
 expand_icon = true
 
+[node name="Navigator" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -41.0
+offset_right = 41.0
+offset_bottom = 40.0
+grow_horizontal = 2
+
+[node name="Prev" type="Button" parent="Navigator"]
+layout_mode = 2
+text = "   <   "
+
+[node name="Label" type="Label" parent="Navigator"]
+layout_mode = 2
+text = "Page"
+
+[node name="Next" type="Button" parent="Navigator"]
+layout_mode = 2
+text = "   >   "
+
 [connection signal="pressed" from="Reload" to="." method="Refresh"]
+[connection signal="pressed" from="Navigator/Prev" to="." method="PrevPage"]
+[connection signal="pressed" from="Navigator/Next" to="." method="NextPage"]

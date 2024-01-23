@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://bytv8v3jd4m0l"]
+[gd_scene load_steps=16 format=3 uid="uid://bytv8v3jd4m0l"]
 
 [ext_resource type="Script" path="res://TextureRenderer.cs" id="1_hfp5s"]
 [ext_resource type="Texture2D" uid="uid://dfkwdfgk0dp8n" path="res://icon.svg" id="1_ptiq5"]
@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://byxxvldruom6j" path="res://play.png" id="4_lwet3"]
 [ext_resource type="Texture2D" uid="uid://cm332so38crqs" path="res://pause.png" id="5_5clxm"]
 [ext_resource type="Script" path="res://FpsCounter.cs" id="5_rtd4o"]
+[ext_resource type="PackedScene" uid="uid://t7khq15qfjuw" path="res://Debuggers/CartInfoDebug.tscn" id="5_x5b4b"]
 [ext_resource type="Texture2D" uid="uid://d0dpxbrvr2bo7" path="res://stop.png" id="6_cecoo"]
 [ext_resource type="PackedScene" uid="uid://ca3d3pani0rrj" path="res://Debuggers/Tile Debugger.tscn" id="7_ny0ae"]
 [ext_resource type="PackedScene" uid="uid://cs764ed0jafqu" path="res://Debuggers/Disassembler.tscn" id="9_q1hjn"]
@@ -24,7 +25,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("3_kw20t")
 
-[node name="LCD" type="TextureRect" parent="."]
+[node name="LCD" type="TextureRect" parent="." node_paths=PackedStringArray("SaveSlot")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -36,6 +37,7 @@ texture = ExtResource("1_ptiq5")
 expand_mode = 1
 stretch_mode = 5
 script = ExtResource("1_hfp5s")
+SaveSlot = NodePath("../Top Left/Save Slot")
 
 [node name="Debug Menu" type="VSplitContainer" parent="."]
 layout_mode = 1
@@ -56,7 +58,13 @@ mouse_filter = 2
 [node name="Debuggers" type="TabContainer" parent="Debug Menu"]
 layout_mode = 2
 theme = ExtResource("3_kw20t")
+current_tab = 1
 tab_focus_mode = 0
+
+[node name="Cartridge Info" parent="Debug Menu/Debuggers" node_paths=PackedStringArray("Player") instance=ExtResource("5_x5b4b")]
+visible = false
+layout_mode = 2
+Player = NodePath("../../../LCD")
 
 [node name="Colour Palettes" parent="Debug Menu/Debuggers" node_paths=PackedStringArray("Player") instance=ExtResource("4_80mls")]
 layout_mode = 2
@@ -88,15 +96,19 @@ visible = false
 layout_mode = 2
 Player = NodePath("../../../LCD")
 
-[node name="Open ROM" type="Button" parent="."]
+[node name="Top Left" type="HBoxContainer" parent="."]
 layout_mode = 0
-offset_right = 48.0
-offset_bottom = 48.0
+offset_right = 186.0
+offset_bottom = 60.0
+
+[node name="Open ROM" type="Button" parent="Top Left"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
 focus_mode = 0
 icon = ExtResource("3_gvrte")
 expand_icon = true
 
-[node name="FileDialog" type="FileDialog" parent="Open ROM"]
+[node name="FileDialog" type="FileDialog" parent="Top Left/Open ROM"]
 title = "Open a File"
 size = Vector2i(392, 159)
 ok_button_text = "Open"
@@ -106,18 +118,35 @@ access = 2
 filters = PackedStringArray("*.gb")
 use_native_dialog = true
 
+[node name="Save Slot" type="OptionButton" parent="Top Left"]
+layout_mode = 2
+focus_mode = 0
+item_count = 5
+selected = 0
+popup/item_0/text = "No Save"
+popup/item_0/id = 0
+popup/item_1/text = "Save Slot 1"
+popup/item_1/id = 1
+popup/item_2/text = "Save Slot 2"
+popup/item_2/id = 2
+popup/item_3/text = "Save Slot 3"
+popup/item_3/id = 3
+popup/item_4/text = "Save Slot 4"
+popup/item_4/id = 4
+
 [node name="Top Right" type="HBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -144.0
+offset_left = -266.0
 offset_bottom = 48.0
 grow_horizontal = 0
+alignment = 2
 
 [node name="Play" type="Button" parent="Top Right"]
+custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
-size_flags_horizontal = 3
 focus_mode = 0
 icon = ExtResource("4_lwet3")
 expand_icon = true
@@ -141,21 +170,21 @@ script = ExtResource("5_rtd4o")
 Renderer = NodePath("../../../LCD")
 
 [node name="Pause" type="Button" parent="Top Right"]
+custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
-size_flags_horizontal = 3
 focus_mode = 0
 icon = ExtResource("5_5clxm")
 expand_icon = true
 
 [node name="Stop" type="Button" parent="Top Right"]
+custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
-size_flags_horizontal = 3
 focus_mode = 0
 icon = ExtResource("6_cecoo")
 expand_icon = true
 
-[connection signal="pressed" from="Open ROM" to="Open ROM/FileDialog" method="show"]
-[connection signal="file_selected" from="Open ROM/FileDialog" to="LCD" method="LoadCartFromPath"]
+[connection signal="pressed" from="Top Left/Open ROM" to="Top Left/Open ROM/FileDialog" method="show"]
+[connection signal="file_selected" from="Top Left/Open ROM/FileDialog" to="LCD" method="LoadCartFromPath"]
 [connection signal="pressed" from="Top Right/Play" to="LCD" method="Play"]
 [connection signal="pressed" from="Top Right/Pause" to="LCD" method="Pause"]
 [connection signal="pressed" from="Top Right/Stop" to="LCD" method="Stop"]

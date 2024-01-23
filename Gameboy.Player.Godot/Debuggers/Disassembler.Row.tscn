@@ -1,0 +1,71 @@
+[gd_scene load_steps=2 format=3 uid="uid://c2fsn6ee6p522"]
+
+[ext_resource type="Script" path="res://Debuggers/DisassemblerRow.cs" id="1_1mo4q"]
+
+[node name="Row" type="HBoxContainer"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 31.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+script = ExtResource("1_1mo4q")
+
+[node name="Address" type="HBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Decimal" type="Button" parent="Address"]
+layout_mode = 2
+text = "x10"
+
+[node name="Hex" type="Button" parent="Address"]
+layout_mode = 2
+text = "x16"
+
+[node name="Label" type="Label" parent="Address"]
+layout_mode = 2
+text = "0x900"
+
+[node name="Instruction" type="HBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Decimal" type="Button" parent="Instruction"]
+layout_mode = 2
+text = "x10"
+
+[node name="Hex" type="Button" parent="Instruction"]
+layout_mode = 2
+text = "x16"
+
+[node name="Name" type="Button" parent="Instruction"]
+layout_mode = 2
+text = "Inst"
+
+[node name="Label" type="Label" parent="Instruction"]
+layout_mode = 2
+text = "Jump"
+
+[node name="Args" type="HBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Decimal" type="Button" parent="Args"]
+layout_mode = 2
+text = "x10"
+
+[node name="Hex" type="Button" parent="Args"]
+layout_mode = 2
+text = "x16"
+
+[node name="Label" type="Label" parent="Args"]
+layout_mode = 2
+text = "120"
+
+[connection signal="pressed" from="Address/Decimal" to="." method="AddressModeDecimal"]
+[connection signal="pressed" from="Address/Hex" to="." method="AddressModeHex"]
+[connection signal="pressed" from="Instruction/Decimal" to="." method="InstructionModeDecimal"]
+[connection signal="pressed" from="Instruction/Hex" to="." method="InstructionModeHex"]
+[connection signal="pressed" from="Instruction/Name" to="." method="InstructionModeName"]
+[connection signal="pressed" from="Args/Decimal" to="." method="ArgModeDecimal"]
+[connection signal="pressed" from="Args/Hex" to="." method="ArgModeHex"]

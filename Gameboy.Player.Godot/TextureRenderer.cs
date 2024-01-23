@@ -16,6 +16,8 @@ public partial class TextureRenderer : BitmapTextureRect {
 	private RendererState State {get; set;} = RendererState.Stopped;
 	public bool IsPlaying => State == RendererState.Playing;
 	
+	[Export] public OptionButton SaveSlot;
+
 	private Gameboy gb = new Gameboy();
 
 	public Gameboy Console => gb;
@@ -85,9 +87,13 @@ public partial class TextureRenderer : BitmapTextureRect {
 		}
 	}
 
+	private string LastCartPath;
 	public void LoadCartFromPath(string filepath) {
 		try {
-			LoadCart(new Cartridge(File.ReadAllBytes(filepath)));
+			LastCartPath = filepath;
+			var cart = new Cartridge(File.ReadAllBytes(filepath));
+			Stop();
+			this.gb?.LoadCartridge(cart);
 		} catch (Exception e) {
 			GD.PushError(e);
 		}
@@ -95,12 +101,29 @@ public partial class TextureRenderer : BitmapTextureRect {
 
 	public void LoadCart(Cartridge cart) {
 		Stop();
+		this.LastCartPath = null;
 		this.gb?.LoadCartridge(cart);
 	}
 
 	public void Start() {
 		if (this.gb is not null && this.gb.IsCartridgeLoaded()) {
 			this.gb.Reset();
+
+			// If we have a save slot selected, a cart loaded, and that cart has a battery then...
+			if (SaveSlot is not null) {
+				var index = SaveSlot.GetItemId(SaveSlot.Selected);
+
+				// Load save
+				if (!string.IsNullOrEmpty(LastCartPath) && index > 0) {
+					var saveSlotPath = LastCartPath + ".sav" + index;
+					if (File.Exists(saveSlotPath)) {
+						var saveData = File.ReadAllBytes(saveSlotPath);
+						this.gb.RestoreCartRam(saveData);
+						GD.Print("Loaded eRAM from: " + saveSlotPath);
+					}
+				}
+			}
+
 			if (white is not null) {
 				Redraw(white);
 			}
@@ -127,6 +150,13 @@ public partial class TextureRenderer : BitmapTextureRect {
 	public void Stop() {
 		if (this.gb is not null && this.gb.IsCartridgeLoaded()) {
 			this.State = RendererState.Stopped;
+			if (this.gb.SupportsSaves() && !string.IsNullOrEmpty(LastCartPath) && SaveSlot is not null) {
+				var index = SaveSlot.GetItemId(SaveSlot.Selected);
+				if (index > 0) {
+					var saveSlotPath = LastCartPath + ".sav" + index;
+					File.WriteAllBytes(saveSlotPath, this.gb.DumpCartRam().ToArray());
+				}
+			}
 			this.gb.Reset();
 			if (intro is not null) {
 				Redraw(intro);

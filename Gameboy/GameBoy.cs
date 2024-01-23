@@ -73,6 +73,36 @@ public class Gameboy {
 
     public bool IsCartridgeLoaded() => this.cart.HasCart();
 
+    public bool SupportsSaves() {
+        var loaded = GetCartridge();
+        if (loaded is not null) {
+            return loaded.Info.cartType.HasBattery;
+        } else {
+            return false;
+        }
+    }
+
+    public void RestoreCartRam(IEnumerable<byte> bytes) {
+        var enumerator = bytes.GetEnumerator();
+        foreach (var bank in this.cart.DumpRam()) {
+            for (var i = 0; i < bank.Length; i++) {
+                if (enumerator.MoveNext()) {
+                    bank[i] = enumerator.Current;
+                } else {
+                    bank[i] = default(byte);
+                }
+            }
+        }
+    }
+
+    public IEnumerable<byte> DumpCartRam() {
+        foreach (var bank in this.cart.DumpRam()) {
+            foreach (var value in bank) {
+                yield return value;
+            }
+        }
+    }
+
     public void Dispatch(){
         //Step the cpu
         var measure = PerformanceAnalyzer?.BeginMeasure(CPU);

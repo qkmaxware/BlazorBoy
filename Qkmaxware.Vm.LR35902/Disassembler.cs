@@ -51,6 +51,7 @@ public class Disassembler {
         uint addr = 0u;
         var enumerator = bytes.GetEnumerator();
         while (enumerator.MoveNext()) {
+            var address = addr;
             var opcode = enumerator.Current;
             Operation? operation;
             if (!cpu.TryFetchOperation(opcode, out operation)) {
@@ -89,7 +90,7 @@ public class Disassembler {
                 }
             }
 
-            yield return new InstructionInfo(addr, operation, args);
+            yield return new InstructionInfo(address, operation, args);
         }
     }
 }
