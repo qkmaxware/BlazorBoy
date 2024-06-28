@@ -21,7 +21,7 @@ Automated unit tests for the emulated hardware.
 The main renderer for the emulated hardware. A Blazor app which runs the emulated console and displays the graphics as well as handles user input. Runs entirely in the browser thanks to WebAssembly.
 
 ### Gameboy.Player.Cli
-An example renderer that prints the images to the terminal's console. Doesn't support any input.
+An example renderer that prints the images to the terminal's console. Does technically have input, but I wouldn't recommend playing anything in this (rendering is too slow and input is inconsistent).
 
 ### Gameboy.Player.Godot
 A simple Godot 4 project running the emulated hardware. 

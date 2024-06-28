@@ -92,16 +92,27 @@ public partial class TextureRenderer : BitmapTextureRect {
 		try {
 			LastCartPath = filepath;
 			var cart = new Cartridge(File.ReadAllBytes(filepath));
-			Stop();
-			this.gb?.LoadCartridge(cart);
+			insertCart(cart);
 		} catch (Exception e) {
 			GD.PushError(e);
 		}
 	}
 
 	public void LoadCart(Cartridge cart) {
-		Stop();
 		this.LastCartPath = null;
+		insertCart(cart);
+	}
+
+
+	public void insertCart(Cartridge cart) {
+		/*
+		1. Check the manufacture code for 01 or 33h (if 33h, also check the new manufacture code for 01).
+		2. Add together the characters of the game title.
+		3. Look up the value of the sum in a big list of known sums. if it's found in one of the 65 first entries, the position in the list will be used as pointer in the list of palette setups. If the sum is found later in the list, then the 4th character of the game title is looked up in the corresponding column of a table of known 4th game-title-characters. The position in the table + 65 will be used as pointer in the list of palette setups.
+		4.The given palette setup is decoded and the color scheme is set.
+		var hash = cart.Info.title.Select(character => (int)character).Sum();
+		*/
+		Stop();
 		this.gb?.LoadCartridge(cart);
 	}
 

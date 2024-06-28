@@ -60,6 +60,27 @@ public class Input : IMemorySegment {
         return false;
     }
 
+    public void ClearKeys() {
+        KeyUp(KeyCodes.Up);
+        KeyUp(KeyCodes.Down);
+        KeyUp(KeyCodes.Left);
+        KeyUp(KeyCodes.Right);
+
+        KeyUp(KeyCodes.Select);
+        KeyUp(KeyCodes.Start);
+
+        KeyUp(KeyCodes.A);
+        KeyUp(KeyCodes.B);
+    }
+
+    public void SetKeyState(KeyCodes keycode, bool isDown) {
+        if (isDown) {
+            KeyDown(keycode);
+        } else {
+            KeyUp(keycode);
+        }
+    }
+
     public void KeyDown(KeyCodes keycode){
         if(keycode == KeyCodes.Up){
             rows[1] &= 0xB;

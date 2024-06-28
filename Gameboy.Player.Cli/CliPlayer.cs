@@ -9,6 +9,7 @@ public class CliPlayer {
 
     private bool CpuTrace;
     private bool Benchmark;
+    private float Scale = 1;
 
     private Gameboy gb;
 
@@ -23,46 +24,51 @@ public class CliPlayer {
     /// <summary>
     /// Main entrypoint for the program
     /// </summary>
+    /// <param name="rom">Path to a rom file</param>
+    /// <param name="width">Width of the screen on the terminal (default is usually too large for default font)</param>
     /// <param name="cpuTrace">Print out a log of executed CPU instructions</param>
     /// <param name="benchmark">Record timing metrics for instructions and hardware components</param>
-    static void Main(bool cpuTrace = false, bool benchmark = false) {
+    static void Main(string? rom = null, int width = 160, bool cpuTrace = false, bool benchmark = false) {
         CliPlayer player = new CliPlayer() {
             CpuTrace = cpuTrace,
-            Benchmark = benchmark
+            Benchmark = benchmark,
+            Scale = (float)width / (float)Gpu.LCD_WIDTH
         };
-        player.Start();
+        player.Start(rom);
     }
 
     /// <summary>
     /// Start the emulator interface
     /// </summary>
-    public void Start() {
+    public void Start(string? rom) {
         // ---------------------------------------------------------------------------------------
         // Browse for ROM
         // ---------------------------------------------------------------------------------------
-        FileBrowser browser = new FileBrowser();
         FileInfo? gameFile = null;
-        while (gameFile is null) {
-            Console.Clear();
-            browser.ToConsole();
+        if (string.IsNullOrEmpty(rom)) {
+            FileBrowser browser = new FileBrowser();
+            while (gameFile is null) {
+                Console.Clear();
+                browser.ToConsole();
 
-            var key = Console.ReadKey();
-            switch (key.Key) {
-                case ConsoleKey.Enter:
-                    gameFile = browser.Accept();
-                    break;
-                case ConsoleKey.UpArrow:
-                    browser.PrevEntry();
-                    break;
-                case ConsoleKey.DownArrow:
-                    browser.NextEntry();
-                    break;
+                var key = Console.ReadKey();
+                switch (key.Key) {
+                    case ConsoleKey.Enter:
+                        gameFile = browser.Accept();
+                        break;
+                    case ConsoleKey.UpArrow:
+                        browser.PrevEntry();
+                        break;
+                    case ConsoleKey.DownArrow:
+                        browser.NextEntry();
+                        break;
+                }
             }
+            Console.Clear();
+        } else {
+            gameFile = new FileInfo(rom);
         }
-        Console.Clear();
         // ---------------------------------------------------------------------------------------
-
-        CliRenderer renderer = new CliRenderer(CliRendererCharacterSet.Ascii);
         Gameboy gb = new Gameboy();
 
         // ---------------------------------------------------------------------------------------
@@ -85,22 +91,59 @@ public class CliPlayer {
         // ---------------------------------------------------------------------------------------
         Cartridge cart = new Cartridge(File.ReadAllBytes(gameFile.FullName));
         gb.LoadCartridge(cart);
-        var position = Console.GetCursorPosition();
         bool running = true;
         Console.CancelKeyPress += new ConsoleCancelEventHandler((object? sender, ConsoleCancelEventArgs e) => {
             e.Cancel = true;
             Console.WriteLine();
-            Console.WriteLine("SIGINT Recieved, shutting down emulator");
             running = false;
         });
 
+        Console.Title = cart.Info.title;
+        var renderer = new CliRenderer(CliRendererCharacterSet.Ascii, Scale);
         while (running) {
-            // TODO somehow handle user input without cancelling or pausing?
+            // Run CPU until flush
             gb.DispatchUntilBufferFlush();
+            // Draw screen
             var metric = gb.PerformanceAnalyzer?.BeginMeasure(renderer);
-            Console.SetCursorPosition(position.Left, position.Top);
             renderer.ToConsole(gb.GPU.Canvas);
             metric?.Record();
+            // Handle user input without cancelling or pausing?
+            gb.Input.ClearKeys();
+            if (Console.KeyAvailable) {
+                var key = Console.ReadKey(true); // Read key without printing to console
+                switch (key.Key) {
+                    //case ConsoleKey.UpArrow:
+                    case ConsoleKey.W:
+                        gb.Input.SetKeyState(KeyCodes.Up, true);
+                        break;
+                    //case ConsoleKey.DownArrow:
+                    case ConsoleKey.S:
+                        gb.Input.SetKeyState(KeyCodes.Down, true);
+                        break;
+                    //case ConsoleKey.LeftArrow:
+                    case ConsoleKey.A:
+                        gb.Input.SetKeyState(KeyCodes.Left, true);
+                        break;
+                    //case ConsoleKey.RightArrow:
+                    case ConsoleKey.D:
+                        gb.Input.SetKeyState(KeyCodes.Right, true);
+                        break;
+
+                    case ConsoleKey.Enter:
+                        gb.Input.SetKeyState(KeyCodes.Start, true);
+                        break;
+                    case ConsoleKey.Tab:
+                        gb.Input.SetKeyState(KeyCodes.Select, true);
+                        break;
+
+                    case ConsoleKey.Spacebar:
+                        gb.Input.SetKeyState(KeyCodes.A, true);
+                        break;
+                    case ConsoleKey.Escape:
+                        gb.Input.SetKeyState(KeyCodes.B, true);
+                        break;
+                }
+            }
         }
         // ---------------------------------------------------------------------------------------
         
