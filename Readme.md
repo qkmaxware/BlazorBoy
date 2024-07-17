@@ -14,7 +14,7 @@ The following table shows each front-end inluded in this repository and the hard
 
 | Front-End | Download | Speed | Display | Input | Sound | Serial |
 |-----------|----------|-------|---------|-------|-------|--------|
-| CLI       | [nuget](https://github.com/qkmaxware/BlazorBoy/pkgs/nuget/Gameboy.Player.Cli) | SLOW 		| Mono/Symbolic ASCII	| Keyboard<sup>(1)</sup> 	| -- | -- |
+| CLI       | [nuget](https://github.com/qkmaxware/BlazorBoy/pkgs/nuget/Blazorboy.Cli) | SLOW 		| Mono/Symbolic ASCII	| Keyboard<sup>(1)</sup> 	| -- | -- |
 | Blazor    | [link](https://qkmaxware.github.io/BlazorBoy/) 					| MEDIUM 	| Mono    				| Touch/Keyboard 			| -- | -- |
 | Godot     | [exe](https://github.com/qkmaxware/BlazorBoy/releases/latest) 	| FAST 		| Colour 				| Touch/Keyboard/Gamepad 	| -- | -- | 
 

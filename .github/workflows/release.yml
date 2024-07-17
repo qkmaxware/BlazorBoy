@@ -24,6 +24,7 @@ jobs:
       run: dotnet test
 
   godot:
+    needs: [ test ]
     name: Upload Binaries
     runs-on: ${{ matrix.os }}
     strategy: 
@@ -42,8 +43,9 @@ jobs:
       with:
         dotnet-version: '8.0.x' # SDK Version to use
     - name: Download Godot
-      run:  
-        curl -LO https://github.com/godotengine/godot-builds/releases/download/${{ matrix.godot }}/Godot_v${{ matrix.godot }}_mono_linux_x86_64.zip -o godot.zip && mkdir Godot && unzip godot.zip -d Godot && mv Godot/Godot_v${{ matrix.godot }}_mono_linux_x86_64 Godot/Engine && mv Godot/Engine/Godot_v${{ matrix.godot }}_mono_linux.x86_64 Godot/Engine/godot
+      run: curl -LO https://github.com/godotengine/godot-builds/releases/download/${{ matrix.godot }}/Godot_v${{ matrix.godot }}_mono_linux_x86_64.zip -o godot.zip
+    - name: Extract Godot
+      run: mkdir Godot && unzip godot.zip -d Godot && mv Godot/Godot_v${{ matrix.godot }}_mono_linux_x86_64 Godot/Engine && mv Godot/Engine/Godot_v${{ matrix.godot }}_mono_linux.x86_64 Godot/Engine/godot
     - name: Build Binary
       run: mkdir -p ./bin/${{ matrix.platform }} && ./Godot/Engine/godot --path ./Gameboy.Player.Godot/project.godot --export ${{ matrix.platform }} ./bin/${{ matrix.platform }}
 
