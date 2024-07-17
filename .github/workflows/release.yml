@@ -45,14 +45,8 @@ jobs:
       shell: cmd
       run: nuget source Add -Name "GitHub" -Source %GITHUB_SOURCE% -UserName %GITHUB_USERNAME% -Password %GITHUB_TOKEN%
     - name: Pack Nuget Package
-      env:
-        # Work around https://github.com/actions/setup-dotnet/issues/29
-        #DOTNET_ROOT: ${{ runner.tool_cache }}/dncs/${{ matrix.dotnet }}/x64
       run: dotnet pack Gameboy.Player.Cli --configuration Release --output nupkg
     - name: Publish Nuget Package
-      env:
-        # Work around https://github.com/actions/setup-dotnet/issues/29
-        #DOTNET_ROOT: ${{ runner.tool_cache }}/dncs/${{ matrix.dotnet }}/x64
       run: nuget push nupkg\*.nupkg -Source "GitHub" --skip-duplicate
 
   blazor:
