@@ -9,6 +9,7 @@ jobs:
     strategy: 
       fail-fast: false
       matrix: 
+        godot: [ 4.2.2-stable ]
         os: [ windows-latest, ubuntu-latest, macOS-latest ]
     steps:
     - name: Checkout Code
@@ -22,32 +23,59 @@ jobs:
     - name: Run Unit Tests
       run: dotnet test
 
+  godot:
+    name: Upload Binaries
+    runs-on: ${{ matrix.os }}
+    strategy: 
+      fail-fast: false
+      matrix: 
+        godot: [ '4.2.2-stable' ]
+        os: [ 'ubuntu-latest' ]
+        platform: [ 'Windows x64' ]
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@master
+      with:
+        lfs: true
+    - name: Setup Dotnet
+      uses: actions/setup-dotnet@v3 
+      with:
+        dotnet-version: '8.0.x' # SDK Version to use
+    - name: Download Godot
+      run:  
+        curl -LO https://github.com/godotengine/godot-builds/releases/download/${{ matrix.godot }}/Godot_v${{ matrix.godot }}_mono_linux_x86_64.zip -o godot.zip && mkdir Godot && unzip godot.zip -d Godot && mv Godot/Godot_v${{ matrix.godot }}_mono_linux_x86_64 Godot/Engine && mv Godot/Engine/Godot_v${{ matrix.godot }}_mono_linux.x86_64 Godot/Engine/godot
+    - name: Build Binary
+      run: mkdir -p ./bin/${{ matrix.platform }} && ./Godot/Engine/godot --path ./Gameboy.Player.Godot/project.godot --export ${{ matrix.platform }} ./bin/${{ matrix.platform }}
+
   cli:
     needs: [ test ]
     name: Publish Nuget
     permissions:
       packages: write
-    runs-on: windows-latest
+    strategy: 
+      fail-fast: false
+      matrix: 
+        os: [ windows-latest ]
+        dotnet: [ '8.0.x' ]
+    runs-on: ${{ matrix.os }}
     steps:
     - name: Checkout Code
       uses: actions/checkout@master
     - name: Setup Dotnet
       uses: actions/setup-dotnet@v3 
       with:
-        dotnet-version: '8.0.x' # SDK Version to use
-    - name: Setup Nuget
-      uses: warrenbuckley/Setup-Nuget@v1
-    - name: Register Nuget Source
-      env:
-        GITHUB_SOURCE: https://nuget.pkg.github.com/qkmaxware/index.json
-        GITHUB_USERNAME: qkmaxware
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      shell: cmd
-      run: nuget source Add -Name "GitHub" -Source %GITHUB_SOURCE% -UserName %GITHUB_USERNAME% -Password %GITHUB_TOKEN%
+        dotnet-version: '${{ matrix.dotnet }}' # SDK Version to use
     - name: Pack Nuget Package
+      env:
+        # Work around https://github.com/actions/setup-dotnet/issues/29
+        DOTNET_ROOT: ${{ runner.tool_cache }}/dncs/${{ matrix.dotnet }}/x64
       run: dotnet pack Gameboy.Player.Cli --configuration Release --output nupkg
     - name: Publish Nuget Package
-      run: nuget push nupkg\*.nupkg -Source "GitHub" --skip-duplicate
+      env:
+        # Work around https://github.com/actions/setup-dotnet/issues/29
+        DOTNET_ROOT: ${{ runner.tool_cache }}/dncs/${{ matrix.dotnet }}/x64
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: dotnet nuget push nupkg\*.nupkg --source "https://nuget.pkg.github.com/qkmaxware/index.json" --skip-duplicate --api-key $Env:GITHUB_TOKEN
 
   blazor:
     name: Deploy Github Pages
