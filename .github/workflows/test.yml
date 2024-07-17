@@ -3,22 +3,23 @@ on:
   push:
     branches: 
     - "*"
+  workflow_call:
 jobs:
-    test:
-        name: Test
-        runs-on: ${{ matrix.os }}
-        strategy: 
-          fail-fast: false
-          matrix: 
-            os: [ windows-latest, ubuntu-latest, macOS-latest ]
-        steps:
-        - name: Checkout Code
-          uses: actions/checkout@master
-        - name: Setup Dotnet
-          uses: actions/setup-dotnet@v3 
-          with:
-            dotnet-version: '8.0.x' # SDK Version to use
-        - name: .Net Core Info
-          run: dotnet --info
-        - name: Run Unit Tests
-          run: dotnet test
+  test:
+    name: Test
+    runs-on: ${{ matrix.os }}
+    strategy: 
+      fail-fast: false
+      matrix: 
+        os: [ windows-latest, ubuntu-latest, macOS-latest ]
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@master
+    - name: Setup Dotnet
+      uses: actions/setup-dotnet@v3 
+      with:
+        dotnet-version: '8.0.x' # SDK Version to use
+    - name: .Net Core Info
+      run: dotnet --info
+    - name: Run Unit Tests
+      run: dotnet test

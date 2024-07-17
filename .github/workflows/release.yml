@@ -1,0 +1,106 @@
+name: Release
+on:
+  release: 
+    types: [ published, edited ]
+jobs:
+  test:
+    name: Test
+    runs-on: ${{ matrix.os }}
+    strategy: 
+      fail-fast: false
+      matrix: 
+        os: [ windows-latest, ubuntu-latest, macOS-latest ]
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@master
+    - name: Setup Dotnet
+      uses: actions/setup-dotnet@v3 
+      with:
+        dotnet-version: '8.0.x' # SDK Version to use
+    - name: .Net Core Info
+      run: dotnet --info
+    - name: Run Unit Tests
+      run: dotnet test
+
+  cli:
+    needs: [ test ]
+    name: Publish Nuget
+    permissions:
+      packages: write
+    runs-on: windows-latest
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@master
+    - name: Setup Dotnet
+      uses: actions/setup-dotnet@v3 
+      with:
+        dotnet-version: '8.0.x' # SDK Version to use
+    - name: Setup Nuget
+      uses: warrenbuckley/Setup-Nuget@v1
+    - name: Register Nuget Source
+      env:
+        GITHUB_SOURCE: https://nuget.pkg.github.com/qkmaxware/index.json
+        GITHUB_USERNAME: qkmaxware
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      shell: cmd
+      run: nuget source Add -Name "GitHub" -Source %GITHUB_SOURCE% -UserName %GITHUB_USERNAME% -Password %GITHUB_TOKEN%
+    - name: Pack Nuget Package
+      env:
+        # Work around https://github.com/actions/setup-dotnet/issues/29
+        DOTNET_ROOT: ${{ runner.tool_cache }}/dncs/${{ matrix.dotnet }}/x64
+      run: dotnet pack Gameboy.Player.Cli --configuration Release --output nupkg
+    - name: Publish Nuget Package
+      env:
+        # Work around https://github.com/actions/setup-dotnet/issues/29
+        DOTNET_ROOT: ${{ runner.tool_cache }}/dncs/${{ matrix.dotnet }}/x64
+      run: nuget push nupkg\*.nupkg -Source "GitHub" --skip-duplicate
+
+  blazor:
+    name: Deploy Github Pages
+    needs: [ test ]
+    permissions:
+      packages: read
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@master
+        with:
+          submodules: "recursive"
+          fetch-depth: 0
+
+      - name: Setup Dotnet
+        uses: actions/setup-dotnet@v3 
+        with:
+          dotnet-version: '8.0.x' # SDK Version to use
+
+      - name: Testing
+        run: dotnet test Gameboy.Test
+
+      - name: Change base-tag
+        run: sed -i 's/<base href="\/" \/>/<base href="\/BlazorBoy\/" \/>/g' Gameboy.Player.Blazor/wwwroot/index.html
+
+      - name: Restore Packages
+        env: 
+          GITHUB_USERNAME: qkmaxware
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: dotnet restore
+
+      - name: Build Site
+        env: 
+          GITHUB_USERNAME: qkmaxware
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: dotnet publish Gameboy.Player.Blazor -c Release -o .site     
+
+      - name: Add .nojekyll file
+        run: touch .site/wwwroot/.nojekyll
+
+      - name: Custom 404
+        run: cp .site/wwwroot/index.html .site/wwwroot/404.html
+
+      - name: Commit to Github Pages
+        uses: JamesIves/github-pages-deploy-action@4.1.3
+        with:
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: gh-pages
+          FOLDER: .site/wwwroot

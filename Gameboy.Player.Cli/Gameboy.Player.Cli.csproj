@@ -5,6 +5,22 @@
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+
+    <PackageId>Blazorboy.Cli</PackageId>
+    <AssemblyName>Blazorboy.Cli</AssemblyName>
+    <Version>0.1.0</Version>
+    <Authors>qkmaxware</Authors>
+    <PackageTags>emulator</PackageTags>
+    <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
+    <RepositoryUrl>https://github.com/qkmaxware/BlazorBoy</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageDescription>
+      CLI front-end for BlazorBoy emulator
+    </PackageDescription>
+    
+    <PackAsTool>true</PackAsTool>
+    <ToolCommandName>blazorboy</ToolCommandName>
+    <PackageOutputPath>./nupkg</PackageOutputPath>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -20,10 +36,11 @@
 
   <ItemGroup>
     <PackageReference Include="System.CommandLine.DragonFruit" Version="0.4.0-alpha.22272.1" />
+    <ProjectReference Include="..\Gameboy\Gameboy.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Gameboy\Gameboy.csproj" />
+    <None Include="..\LICENSE.md" CopyToOutputDirectory="Always" Pack="true" PackagePath="$(PackageLicenseFile)"/>
   </ItemGroup>
 
 </Project>
