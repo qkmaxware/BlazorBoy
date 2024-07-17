@@ -95,8 +95,9 @@ public class CliRenderer {
     /// Create a new renderer with the given characters
     /// </summary>
     /// <param name="characters">drawing character set</param>
-    /// <param name="scale">scale of the renderer relative to normal dimensions</param>
-    public CliRenderer(CliRendererCharacterSet characters, float scale = 1) {
+    /// <param name="scaleX">scale of the renderer relative to normal width</param>
+    /// <param name="scaleY">scale of the renderer relative to normal hight</param>
+    public CliRenderer(CliRendererCharacterSet characters, float scaleX = 1, float scaleY = 1) {
         this.CharacterSet = characters;
         Console.Clear();
         Console.SetCursorPosition(0, 0);
@@ -104,9 +105,10 @@ public class CliRenderer {
         var position = Console.GetCursorPosition();
         this.WindowX = (short)position.Left;
         this.WindowY = (short)position.Top;
-        this.scale = scale;
-        this.charsWidth = (short)(Gpu.LCD_WIDTH  * scale);
-        this.charsHeight = (short)(Gpu.LCD_HEIGHT * scale);
+        this.scaleX = scaleX;
+        this.scaleY = scaleY;
+        this.charsWidth = (short)(Gpu.LCD_WIDTH  * this.scaleX);
+        this.charsHeight = (short)(Gpu.LCD_HEIGHT * this.scaleY);
         chars = new CharInfo[charsHeight * charsWidth];
         changed = new bool[chars.Length];
         for (var i = 0; i < chars.Length; i++) {
@@ -128,7 +130,8 @@ public class CliRenderer {
         ToConsoleAsConsoleWrite(bmp);      
     }
 
-    private float scale;
+    private float scaleX;
+    private float scaleY;
     private short charsWidth;
     private short charsHeight;
     private CharInfo[] chars;
@@ -145,8 +148,8 @@ public class CliRenderer {
         return (char)chars[addr].Char;
     }
     private void setChar(short x, short y, char new_value) {
-        var xOnWindow = (short)MathF.Round(x * scale);
-        var yOnWindow = (short)MathF.Round(y * scale);
+        var xOnWindow = (short)MathF.Round(x * scaleX);
+        var yOnWindow = (short)MathF.Round(y * scaleY);
         var addr = charsWidth * yOnWindow + xOnWindow;
         if (addr < 0 || addr >= chars.Length)
             return;

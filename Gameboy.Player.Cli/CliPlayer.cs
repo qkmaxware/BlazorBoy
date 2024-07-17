@@ -9,7 +9,8 @@ public class CliPlayer {
 
     private bool CpuTrace;
     private bool Benchmark;
-    private float Scale = 1;
+    private float ScaleX = 1;
+    private float ScaleY = 1;
 
     private Gameboy gb;
 
@@ -22,17 +23,19 @@ public class CliPlayer {
     
 
     /// <summary>
-    /// Main entrypoint for the program
+    /// Run a GB file in your terminal.
     /// </summary>
     /// <param name="rom">Path to a rom file</param>
-    /// <param name="width">Width of the screen on the terminal (default is usually too large for default font)</param>
+    /// <param name="width">Width of the screen on the terminal</param>
+    /// <param name="height">Height of the screen on the terminal (default is usually too large for default font)</param>
     /// <param name="cpuTrace">Print out a log of executed CPU instructions</param>
     /// <param name="benchmark">Record timing metrics for instructions and hardware components</param>
-    static void Main(string? rom = null, int width = 160, bool cpuTrace = false, bool benchmark = false) {
+    static void Main(string? rom = null, int width = 160, int height = 144, bool cpuTrace = false, bool benchmark = false) {
         CliPlayer player = new CliPlayer() {
             CpuTrace = cpuTrace,
             Benchmark = benchmark,
-            Scale = (float)width / (float)Gpu.LCD_WIDTH
+            ScaleX = (float)width / (float)Gpu.LCD_WIDTH,
+            ScaleY = (float)height / (float)Gpu.LCD_HEIGHT
         };
         player.Start(rom);
     }
@@ -99,7 +102,7 @@ public class CliPlayer {
         });
 
         Console.Title = cart.Info.title;
-        var renderer = new CliRenderer(CliRendererCharacterSet.Ascii, Scale);
+        var renderer = new CliRenderer(CliRendererCharacterSet.Ascii, ScaleX, ScaleY);
         while (running) {
             // Run CPU until flush
             gb.DispatchUntilBufferFlush();
