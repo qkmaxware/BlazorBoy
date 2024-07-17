@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "BlazorBoy.Player",
   "resources": {
-    "hash": "sha256-lSYVVbg/wL7gTBYtCcGpkqYvS5O8uIY6PxLlyF2DBzE=",
+    "hash": "sha256-mQbgS2+Qnbfb24KBTwdkFyIoYrslhDQlTTPBg20ibFM=",
     "jsModuleNative": {
       "dotnet.native.8.0.7.pvkr2na9g4.js": "sha256-tFsxPBbhkdn6GKNBKvCRLzrfAHdyM86odYTe0MtrwMk="
     },
@@ -17,9 +17,9 @@
       "icudt_no_CJK.dat": "sha256-L7sV7NEYP37/Qr2FPCePo5cJqRgTXRwGHuwF5Q+0Nfs="
     },
     "assembly": {
-      "BlazorBoy.Player.wasm": "sha256-GdtCL+tFQ3ZB4Os2blHJP0yAZ5uan9yjXAlVHbA8UdA=",
-      "Gameboy.Database.wasm": "sha256-jdI39x4mMNb7naSqp7TYg4Q1HR14E6kzGW5mZdAuLCM=",
-      "Gameboy.wasm": "sha256-/tP0GEp9QB42Lf3mLmrwEmn31pO9wyct+UYqPH7fUzI=",
+      "BlazorBoy.Player.wasm": "sha256-mR8b7j2G0ZUvxKTq7N27rBAN0j3Tnsvwp6WcTsF/cgs=",
+      "Gameboy.Database.wasm": "sha256-9ryeGefI89YgNu6wlMYyCrsIDLwovlcokyjb60uaagk=",
+      "Gameboy.wasm": "sha256-K7aXAtaCMWRBlUrwONiJ2EQtv+ESa3dXBFyEfSCy3uM=",
       "Microsoft.AspNetCore.Components.wasm": "sha256-52iThhKtGuOyh6Hc9OMfFRyzuuXgU6XGEvs3ZYwIwBQ=",
       "Microsoft.AspNetCore.Components.Web.wasm": "sha256-B70e0ysaho4YX8g1M7+MTemfV82MFXpcO4SeDZ6BP4E=",
       "Microsoft.AspNetCore.Components.WebAssembly.wasm": "sha256-5FaflSk4l761sg/eVrAb3FIdwbplaj7pDCyFzPHZ2Cc=",
@@ -34,7 +34,7 @@
       "Microsoft.Extensions.Primitives.wasm": "sha256-6187ynEahDlSLMBvD4vAmiLpZ3clRb5xu6rM7O8AxNo=",
       "Microsoft.JSInterop.wasm": "sha256-46ISrKZtHoqFTL4haLcjkvz5lrkP1CmIPYY73Bc8nIY=",
       "Microsoft.JSInterop.WebAssembly.wasm": "sha256-CQVLCKiSxLN5ghyJZG3mhnMGRROdqrbNUjtAXB0nWb8=",
-      "Qkmaxware.Vm.LR35902.wasm": "sha256-ir+KRcfa8+em5jdlLfoq1RPfDJDpuG1qOdlZ30LdrzU=",
+      "Qkmaxware.Vm.LR35902.wasm": "sha256-3sCZTfoCagsdU4V6KJsRYN/2Tg1305Zh2EV6aKnmoPo=",
       "System.Collections.Concurrent.wasm": "sha256-QZJVeY1OKlQXK6UzEhUtlwU7RuoN8fI3xGVQqO/O1hI=",
       "System.Collections.wasm": "sha256-LsLcGFcmM1kmyXlRpbhoaPONymIasPlv9PaZDYTyK3c=",
       "System.ComponentModel.Primitives.wasm": "sha256-rl/xkO+EMHuOYrNdWnEddnCm6PXdrCq8BdSFtdCpnOQ=",
