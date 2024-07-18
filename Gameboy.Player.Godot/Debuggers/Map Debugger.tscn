@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Debuggers/MapDebugger.cs" id="1_gnyfy"]
 [ext_resource type="Script" path="res://BitmapTextureRect.cs" id="2_0ayh7"]
-[ext_resource type="Texture2D" uid="uid://divrqb47wvwvt" path="res://reload.png" id="3_fd1ro"]
+[ext_resource type="Texture2D" uid="uid://divrqb47wvwvt" path="res://Prefabs/GodotBoy/UI/reload.png" id="3_fd1ro"]
 
 [node name="Map Debugger" type="Control"]
 layout_mode = 3

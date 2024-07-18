@@ -7,7 +7,7 @@ namespace Qkmaxware.Emulators.Gameboy.Player;
 
 public partial class TileDebugger : Control {
 
-	[Export] public TextureRenderer Player;
+	[Export] public GodotBoy Player;
 
 	private HFlowContainer container;
 	[Export]

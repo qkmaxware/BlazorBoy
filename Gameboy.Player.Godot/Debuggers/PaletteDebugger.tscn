@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://b5psa1c0pvkya"]
 
 [ext_resource type="Script" path="res://Debuggers/PaletteDebugger.cs" id="1_sor31"]
-[ext_resource type="Texture2D" uid="uid://divrqb47wvwvt" path="res://reload.png" id="2_wsgsr"]
+[ext_resource type="Texture2D" uid="uid://divrqb47wvwvt" path="res://Prefabs/GodotBoy/UI/reload.png" id="2_wsgsr"]
 
 [node name="Palette Debugger" type="Control"]
 layout_mode = 3

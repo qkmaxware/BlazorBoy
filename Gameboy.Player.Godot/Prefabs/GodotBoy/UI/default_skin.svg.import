@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://byxxvldruom6j"
-path="res://.godot/imported/play.png-50de493e98049fad870da9de2a2dfd65.ctex"
+uid="uid://ddnjngordtat1"
+path="res://.godot/imported/default_skin.svg-857290d6a2fc00d89533e16813fdb109.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://play.png"
-dest_files=["res://.godot/imported/play.png-50de493e98049fad870da9de2a2dfd65.ctex"]
+source_file="res://Prefabs/GodotBoy/UI/default_skin.svg"
+dest_files=["res://.godot/imported/default_skin.svg-857290d6a2fc00d89533e16813fdb109.ctex"]
 
 [params]
 
@@ -32,3 +32,6 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
+svg/scale=4.0
+editor/scale_with_editor_scale=false
+editor/convert_colors_with_editor_theme=false

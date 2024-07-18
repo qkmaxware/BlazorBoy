@@ -39,6 +39,37 @@ public class Bitmap {
         }
     }
 
+    public Bitmap Invert() {
+        var bitmap = new Bitmap(this.Width, this.Height);
+        for (var y = 0; y < this.Height; y++) {
+            for (var x = 0; x < this.Width; x++) {
+                bitmap[x, y] = invert(this[x,y]);
+            }
+        }
+        return bitmap;
+    }
+    private static ColourPallet invert(ColourPallet x) {
+        return x switch {
+            ColourPallet.BackgroundDark => ColourPallet.BackgroundWhite,
+            ColourPallet.Object0Dark => ColourPallet.Object0White,
+            ColourPallet.Object1Dark => ColourPallet.Object1White,
+
+            ColourPallet.BackgroundMedium => ColourPallet.BackgroundLight,
+            ColourPallet.Object0Medium => ColourPallet.Object0Light,
+            ColourPallet.Object1Medium => ColourPallet.Object1Light,
+
+            ColourPallet.BackgroundLight => ColourPallet.BackgroundMedium,
+            ColourPallet.Object0Light => ColourPallet.Object0Medium ,
+            ColourPallet.Object1Light => ColourPallet.Object1Medium,
+
+            ColourPallet.BackgroundWhite => ColourPallet.BackgroundDark,
+            ColourPallet.Object0White => ColourPallet.Object0Dark,
+            ColourPallet.Object1White => ColourPallet.Object1Dark,
+
+            _ => ColourPallet.BackgroundDark,
+        };
+    }
+
     public void Fill(ColourPallet colour) {
         Array.Fill(this.pixels, (byte)colour);
     }

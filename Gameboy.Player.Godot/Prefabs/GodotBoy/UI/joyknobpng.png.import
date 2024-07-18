@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d0dpxbrvr2bo7"
-path="res://.godot/imported/stop.png-5d09e73e8435d35574ee90426acf1e35.ctex"
+uid="uid://dc2kgxdwvesdo"
+path="res://.godot/imported/joyknobpng.png-766889e6568f60814cdefc24141a659f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://stop.png"
-dest_files=["res://.godot/imported/stop.png-5d09e73e8435d35574ee90426acf1e35.ctex"]
+source_file="res://Prefabs/GodotBoy/UI/joyknobpng.png"
+dest_files=["res://.godot/imported/joyknobpng.png-766889e6568f60814cdefc24141a659f.ctex"]
 
 [params]
 

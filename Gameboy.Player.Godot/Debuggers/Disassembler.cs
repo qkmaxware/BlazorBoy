@@ -8,7 +8,7 @@ namespace Qkmaxware.Emulators.Gameboy.Player;
 
 public partial class Disassembler : Control {
 
-	[Export] public TextureRenderer Player;
+	[Export] public GodotBoy Player;
 
 	[Export] public PackedScene RowPrefab;
 

@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://yis4daekext1"]
 
-[ext_resource type="Texture2D" uid="uid://cip0keh15srys" path="res://cart.png" id="1_44h0a"]
+[ext_resource type="Texture2D" uid="uid://cip0keh15srys" path="res://Prefabs/GodotBoy/UI/cart.png" id="1_44h0a"]
 [ext_resource type="Script" path="res://Debuggers/SpriteDebugger.cs" id="1_kpo0v"]
 [ext_resource type="Script" path="res://BitmapTextureRect.cs" id="2_hqqgw"]
-[ext_resource type="Texture2D" uid="uid://divrqb47wvwvt" path="res://reload.png" id="4_26upw"]
+[ext_resource type="Texture2D" uid="uid://divrqb47wvwvt" path="res://Prefabs/GodotBoy/UI/reload.png" id="4_26upw"]
 
 [node name="Sprite Debugger" type="Control"]
 layout_mode = 3

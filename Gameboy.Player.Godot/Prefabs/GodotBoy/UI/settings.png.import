@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://divrqb47wvwvt"
-path="res://.godot/imported/reload.png-17f917f262bb5696bd39267f6e625492.ctex"
+uid="uid://xgxq8becl7om"
+path="res://.godot/imported/settings.png-97ca68a33b577529734dbbe54c3425e5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://reload.png"
-dest_files=["res://.godot/imported/reload.png-17f917f262bb5696bd39267f6e625492.ctex"]
+source_file="res://Prefabs/GodotBoy/UI/settings.png"
+dest_files=["res://.godot/imported/settings.png-97ca68a33b577529734dbbe54c3425e5.ctex"]
 
 [params]
 

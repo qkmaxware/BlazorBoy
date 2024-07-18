@@ -8,7 +8,7 @@ namespace Qkmaxware.Emulators.Gameboy.Player;
 
 public partial class PaletteDebugger : Control {
 
-	[Export] public TextureRenderer Player;
+	[Export] public GodotBoy Player;
 
 	private ColorPickerButton bg0Black;
 	private ColorPickerButton bg0DarkGrey;
@@ -30,31 +30,31 @@ public partial class PaletteDebugger : Control {
 	public override void _Ready() {
 		// Colours
 		bg0Black = GetNode<ColorPickerButton>("ScrollContainer/VSplitContainer/Colours/VBoxContainer/HBoxContainer/Bg/HBoxContainer/BgBlack");
-		bg0Black.Color = Player?.BgBlack ?? new Color(0,0,0,1);
+		bg0Black.Color = Player?.Screen?.BgBlack ?? new Color(0,0,0,1);
 		bg0DarkGrey = GetNode<ColorPickerButton>("ScrollContainer/VSplitContainer/Colours/VBoxContainer/HBoxContainer/Bg/HBoxContainer/BgDarkGrey");
-		bg0DarkGrey.Color = Player?.BgDarkGrey ?? new Color(0.3f,0.3f,0.3f,1);
+		bg0DarkGrey.Color = Player?.Screen?.BgDarkGrey ?? new Color(0.3f,0.3f,0.3f,1);
 		bg0LightGrey = GetNode<ColorPickerButton>("ScrollContainer/VSplitContainer/Colours/VBoxContainer/HBoxContainer/Bg/HBoxContainer/BgLightGrey");
-		bg0LightGrey.Color = Player?.BgLightGrey ?? new Color(0.6f,0.6f,0.6f,1);
+		bg0LightGrey.Color = Player?.Screen?.BgLightGrey ?? new Color(0.6f,0.6f,0.6f,1);
 		bg0White = GetNode<ColorPickerButton>("ScrollContainer/VSplitContainer/Colours/VBoxContainer/HBoxContainer/Bg/HBoxContainer/BgWhite");
-		bg0White.Color = Player?.BgWhite ?? new Color(1,1,1,1);
+		bg0White.Color = Player?.Screen?.BgWhite ?? new Color(1,1,1,1);
 
 		obj0Black = GetNode<ColorPickerButton>("ScrollContainer/VSplitContainer/Colours/VBoxContainer/HBoxContainer/Objects/HBoxContainer/Obj0Black");
-		obj0Black.Color = Player?.Obj0Black ?? new Color(0,0,0,1);
+		obj0Black.Color = Player?.Screen?.Obj0Black ?? new Color(0,0,0,1);
 		obj0DarkGrey = GetNode<ColorPickerButton>("ScrollContainer/VSplitContainer/Colours/VBoxContainer/HBoxContainer/Objects/HBoxContainer/Obj0DarkGrey");
-		obj0DarkGrey.Color = Player?.Obj0DarkGrey ?? new Color(0.3f,0.3f,0.3f,1);
+		obj0DarkGrey.Color = Player?.Screen?.Obj0DarkGrey ?? new Color(0.3f,0.3f,0.3f,1);
 		obj0LightGrey = GetNode<ColorPickerButton>("ScrollContainer/VSplitContainer/Colours/VBoxContainer/HBoxContainer/Objects/HBoxContainer/Obj0LightGrey");
-		obj0LightGrey.Color = Player?.Obj0LightGrey ?? new Color(0.6f,0.6f,0.6f,1);
+		obj0LightGrey.Color = Player?.Screen?.Obj0LightGrey ?? new Color(0.6f,0.6f,0.6f,1);
 		obj0White = GetNode<ColorPickerButton>("ScrollContainer/VSplitContainer/Colours/VBoxContainer/HBoxContainer/Objects/HBoxContainer/Obj0White");
-		obj0White.Color = Player?.Obj0White ?? new Color(1,1,1,1);
+		obj0White.Color = Player?.Screen?.Obj0White ?? new Color(1,1,1,1);
 
 		obj1Black = GetNode<ColorPickerButton>("ScrollContainer/VSplitContainer/Colours/VBoxContainer/HBoxContainer/Objects/HBoxContainer2/Obj1Black");
-		obj1Black.Color = Player?.Obj1Black ?? new Color(0,0,0,1);
+		obj1Black.Color = Player?.Screen?.Obj1Black ?? new Color(0,0,0,1);
 		obj1DarkGrey = GetNode<ColorPickerButton>("ScrollContainer/VSplitContainer/Colours/VBoxContainer/HBoxContainer/Objects/HBoxContainer2/Obj1DarkGrey");
-		obj1DarkGrey.Color = Player?.Obj1DarkGrey ?? new Color(0.3f,0.3f,0.3f,1);
+		obj1DarkGrey.Color = Player?.Screen?.Obj1DarkGrey ?? new Color(0.3f,0.3f,0.3f,1);
 		obj1LightGrey = GetNode<ColorPickerButton>("ScrollContainer/VSplitContainer/Colours/VBoxContainer/HBoxContainer/Objects/HBoxContainer2/Obj1LightGrey");
-		obj1LightGrey.Color = Player?.Obj1LightGrey ?? new Color(0.6f,0.6f,0.6f,1);
+		obj1LightGrey.Color = Player?.Screen?.Obj1LightGrey ?? new Color(0.6f,0.6f,0.6f,1);
 		obj1White = GetNode<ColorPickerButton>("ScrollContainer/VSplitContainer/Colours/VBoxContainer/HBoxContainer/Objects/HBoxContainer2/Obj1White");
-		obj1White.Color = Player?.Obj1White ?? new Color(1,1,1,1);
+		obj1White.Color = Player?.Screen?.Obj1White ?? new Color(1,1,1,1);
 
 		var themePicker = GetNode<OptionButton>("ScrollContainer/VSplitContainer/Colours/VBoxContainer/HBoxContainer/Themes/OptionButton");
 		foreach (var theme in LcdColorTheme.Named) {
@@ -80,20 +80,20 @@ public partial class PaletteDebugger : Control {
 	}
 
 	public void Refresh() {
-		bg0Black.Color = Player?.BgBlack ?? new Color(0,0,0,1);
-		bg0DarkGrey.Color = Player?.BgDarkGrey ?? new Color(0.3f,0.3f,0.3f,1);
-		bg0LightGrey.Color = Player?.BgLightGrey ?? new Color(0.6f,0.6f,0.6f,1);
-		bg0White.Color = Player?.BgWhite ?? new Color(1,1,1,1);
+		bg0Black.Color = Player?.Screen?.BgBlack ?? new Color(0,0,0,1);
+		bg0DarkGrey.Color = Player?.Screen?.BgDarkGrey ?? new Color(0.3f,0.3f,0.3f,1);
+		bg0LightGrey.Color = Player?.Screen?.BgLightGrey ?? new Color(0.6f,0.6f,0.6f,1);
+		bg0White.Color = Player?.Screen?.BgWhite ?? new Color(1,1,1,1);
 
-		obj0Black.Color = Player?.Obj0Black ?? new Color(0,0,0,1);
-		obj0DarkGrey.Color = Player?.Obj0DarkGrey ?? new Color(0.3f,0.3f,0.3f,1);
-		obj0LightGrey.Color = Player?.Obj0LightGrey ?? new Color(0.6f,0.6f,0.6f,1);
-		obj0White.Color = Player?.Obj0White ?? new Color(1,1,1,1);
+		obj0Black.Color = Player?.Screen?.Obj0Black ?? new Color(0,0,0,1);
+		obj0DarkGrey.Color = Player?.Screen?.Obj0DarkGrey ?? new Color(0.3f,0.3f,0.3f,1);
+		obj0LightGrey.Color = Player?.Screen?.Obj0LightGrey ?? new Color(0.6f,0.6f,0.6f,1);
+		obj0White.Color = Player?.Screen?.Obj0White ?? new Color(1,1,1,1);
 
-		obj1Black.Color = Player?.Obj1Black ?? new Color(0,0,0,1);
-		obj1DarkGrey.Color = Player?.Obj1DarkGrey ?? new Color(0.3f,0.3f,0.3f,1);
-		obj1LightGrey.Color = Player?.Obj1LightGrey ?? new Color(0.6f,0.6f,0.6f,1);
-		obj1White.Color = Player?.Obj1White ?? new Color(1,1,1,1);
+		obj1Black.Color = Player?.Screen?.Obj1Black ?? new Color(0,0,0,1);
+		obj1DarkGrey.Color = Player?.Screen?.Obj1DarkGrey ?? new Color(0.3f,0.3f,0.3f,1);
+		obj1LightGrey.Color = Player?.Screen?.Obj1LightGrey ?? new Color(0.6f,0.6f,0.6f,1);
+		obj1White.Color = Player?.Screen?.Obj1White ?? new Color(1,1,1,1);
 
 		var ppu = Player?.Console?.GPU;
 		if (ppu is IDebuggablePpu debug) {
@@ -102,23 +102,23 @@ public partial class PaletteDebugger : Control {
 				foreach (var pair in palette.First.Zip(palette.Second)) {
 					var palettedColour = pair.First;
 					var rgb = palettedColour switch {
-						ColourPallet.BackgroundDark => Player.BgBlack,
-						ColourPallet.Object0Dark => Player.BgBlack,
-						ColourPallet.Object1Dark => Player.BgBlack,
+						ColourPallet.BackgroundDark => Player.Screen.BgBlack,
+						ColourPallet.Object0Dark => Player.Screen.BgBlack,
+						ColourPallet.Object1Dark => Player.Screen.BgBlack,
 
-						ColourPallet.BackgroundMedium => Player.BgDarkGrey,
-						ColourPallet.Object0Medium => Player.BgDarkGrey,
-						ColourPallet.Object1Medium => Player.BgDarkGrey,
+						ColourPallet.BackgroundMedium => Player.Screen.BgDarkGrey,
+						ColourPallet.Object0Medium => Player.Screen.BgDarkGrey,
+						ColourPallet.Object1Medium => Player.Screen.BgDarkGrey,
 
-						ColourPallet.BackgroundLight => Player.BgLightGrey,
-						ColourPallet.Object0Light => Player.BgLightGrey,
-						ColourPallet.Object1Light => Player.BgLightGrey,
+						ColourPallet.BackgroundLight => Player.Screen.BgLightGrey,
+						ColourPallet.Object0Light => Player.Screen.BgLightGrey,
+						ColourPallet.Object1Light => Player.Screen.BgLightGrey,
 
-						ColourPallet.BackgroundWhite => Player.BgWhite,
-						ColourPallet.Object0White => Player.BgWhite,
-						ColourPallet.Object1White => Player.BgWhite,
+						ColourPallet.BackgroundWhite => Player.Screen.BgWhite,
+						ColourPallet.Object0White => Player.Screen.BgWhite,
+						ColourPallet.Object1White => Player.Screen.BgWhite,
 
-						_ => Player.BgBlack,
+						_ => Player.Screen.BgBlack,
 					};
 					bgcolours.Add(palettedColour);
 					pair.Second.Color = rgb;
@@ -131,10 +131,10 @@ public partial class PaletteDebugger : Control {
 			HashSet<ColourPallet> objcolours = new HashSet<ColourPallet>();
 			var colourSetIndex = 0;
 			foreach (var palette in debug.ObjectPalettes.Zip(obj)) {
-				var black = colourSetIndex == 0 ? Player.Obj0Black : Player.Obj1Black;
-				var dg = colourSetIndex == 0 ? Player.Obj0DarkGrey : Player.Obj1DarkGrey;
-				var lg = colourSetIndex == 0 ? Player.Obj0LightGrey : Player.Obj1LightGrey;
-				var white = colourSetIndex == 0 ? Player.Obj0White : Player.Obj1White;
+				var black = colourSetIndex == 0 ? Player.Screen.Obj0Black : Player.Screen.Obj1Black;
+				var dg = colourSetIndex == 0 ? Player.Screen.Obj0DarkGrey : Player.Screen.Obj1DarkGrey;
+				var lg = colourSetIndex == 0 ? Player.Screen.Obj0LightGrey : Player.Screen.Obj1LightGrey;
+				var white = colourSetIndex == 0 ? Player.Screen.Obj0White : Player.Screen.Obj1White;
 
 				foreach (var pair in palette.First.Zip(palette.Second)) {
 					var palettedColour = pair.First;
@@ -192,20 +192,20 @@ public partial class PaletteDebugger : Control {
 
 	public void UpdatePlayerColours() {
 		if (Player is not null) {
-			Player.BgBlack = bg0Black.Color;
-			Player.BgDarkGrey = bg0DarkGrey.Color;
-			Player.BgLightGrey = bg0LightGrey.Color;
-			Player.BgWhite = bg0White.Color;
+			Player.Screen.BgBlack = bg0Black.Color;
+			Player.Screen.BgDarkGrey = bg0DarkGrey.Color;
+			Player.Screen.BgLightGrey = bg0LightGrey.Color;
+			Player.Screen.BgWhite = bg0White.Color;
 			
-			Player.Obj0Black = obj0Black.Color;
-			Player.Obj0DarkGrey = obj0DarkGrey.Color;
-			Player.Obj0LightGrey = obj0LightGrey.Color;
-			Player.Obj0White = obj0White.Color;
+			Player.Screen.Obj0Black = obj0Black.Color;
+			Player.Screen.Obj0DarkGrey = obj0DarkGrey.Color;
+			Player.Screen.Obj0LightGrey = obj0LightGrey.Color;
+			Player.Screen.Obj0White = obj0White.Color;
 			
-			Player.Obj1Black = obj1Black.Color;
-			Player.Obj1DarkGrey = obj1DarkGrey.Color;
-			Player.Obj1LightGrey = obj1LightGrey.Color;
-			Player.Obj1White = obj1White.Color;
+			Player.Screen.Obj1Black = obj1Black.Color;
+			Player.Screen.Obj1DarkGrey = obj1DarkGrey.Color;
+			Player.Screen.Obj1LightGrey = obj1LightGrey.Color;
+			Player.Screen.Obj1White = obj1White.Color;
 		}
 	}
 }

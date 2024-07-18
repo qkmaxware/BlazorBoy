@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cip0keh15srys"
-path="res://.godot/imported/cart.png-c0d5895155eac46d26ac9947ca1d6fe3.ctex"
+uid="uid://cgwofjnfpool2"
+path="res://.godot/imported/joyring.png-75f23ef480e465c6c29666903c73c30c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://cart.png"
-dest_files=["res://.godot/imported/cart.png-c0d5895155eac46d26ac9947ca1d6fe3.ctex"]
+source_file="res://Prefabs/GodotBoy/UI/joyring.png"
+dest_files=["res://.godot/imported/joyring.png-75f23ef480e465c6c29666903c73c30c.ctex"]
 
 [params]
 

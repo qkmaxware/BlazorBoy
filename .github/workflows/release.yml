@@ -31,7 +31,7 @@ jobs:
       fail-fast: false
       matrix: 
         godot: [ '4.2.2-stable' ]
-        os: [ 'ubuntu-latest' ]
+        os: [ 'windows-latest' ]
         platform: [ 'Windows x64' ]
     steps:
     - name: Checkout Code
@@ -43,11 +43,13 @@ jobs:
       with:
         dotnet-version: '8.0.x' # SDK Version to use
     - name: Download Godot
-      run: curl -LO https://github.com/godotengine/godot-builds/releases/download/${{ matrix.godot }}/Godot_v${{ matrix.godot }}_mono_linux_x86_64.zip -o godot.zip
+      run: curl https://github.com/godotengine/godot-builds/releases/download/${{ matrix.godot }}/Godot_v${{ matrix.godot }}_mono_win64.zip -o godot.zip; curl https://github.com/godotengine/godot-builds/releases/download/${{ matrix.godot }}/Godot_v${{ matrix.godot }}_mono_export_templates.tpz -o godot_export_templates.tpz
     - name: Extract Godot
-      run: mkdir Godot && unzip godot.zip -d Godot && mv Godot/Godot_v${{ matrix.godot }}_mono_linux_x86_64 Godot/Engine && mv Godot/Engine/Godot_v${{ matrix.godot }}_mono_linux.x86_64 Godot/Engine/godot
+      run: Expand-Archive -Path godot.zip -DestinationPath Godot; Rename-Item Godot/Godot_v${{ matrix.godot }}_mono_win64 -NewName Engine; Rename-Item Godot/Engine/Godot_v${{ matrix.godot }}_mono_win64.exe -NewName "godot.exe"; Rename-Item Godot/Engine/Godot_v${{ matrix.godot }}_mono_win64_console.exe -NewName "godot_console.exe"  
+    - name: Extract Build Templates
+      run: echo 1
     - name: Build Binary
-      run: mkdir -p ./bin/${{ matrix.platform }} && ./Godot/Engine/godot --path ./Gameboy.Player.Godot/project.godot --export ${{ matrix.platform }} ./bin/${{ matrix.platform }}
+      run: New-Item -Force -Path "./bin/${{ matrix.platform }}" -ItemType "directory"; ./Godot/Engine/godot_console.exe --build-solutions --export-release ${{ matrix.platform }} ../bin/${{ matrix.platform }}/BlazorBoy.exe ./Gameboy.Player.Godot/project.godot
 
   cli:
     needs: [ test ]

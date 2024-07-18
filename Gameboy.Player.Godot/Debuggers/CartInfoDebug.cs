@@ -7,7 +7,7 @@ using Qkmaxware.Emulators.Gameboy.Hardware;
 namespace Qkmaxware.Emulators.Gameboy.Player;
 public partial class CartInfoDebug : Control {
 
-	[Export] public TextureRenderer Player;
+	[Export] public GodotBoy Player;
 
 	private RichTextLabel text;
 

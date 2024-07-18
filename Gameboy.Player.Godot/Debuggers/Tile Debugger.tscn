@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Debuggers/TileDebugger.cs" id="1_gbx3v"]
 [ext_resource type="PackedScene" uid="uid://0jxwbr6l750m" path="res://Debuggers/Tile Debugger.TileTemplate.tscn" id="2_3xqvo"]
-[ext_resource type="Texture2D" uid="uid://divrqb47wvwvt" path="res://reload.png" id="4_i77dr"]
+[ext_resource type="Texture2D" uid="uid://divrqb47wvwvt" path="res://Prefabs/GodotBoy/UI/reload.png" id="4_i77dr"]
 
 [node name="Tile Debugger" type="Control"]
 layout_mode = 3

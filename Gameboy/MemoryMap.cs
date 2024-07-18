@@ -34,11 +34,12 @@ public class MemoryMap : IMemory {
     public static readonly int OAM = 5;
     public static readonly int GPU = 6;
     public static readonly int ZRAM = 7;
+    public static readonly int SERIALIO = 8;
     public static readonly int JOYSTICK = 9;
     public static readonly int TIMER = 10;
-    public static readonly int SERIALIO = 8;
+    public static readonly int SOUND = 11;
 
-    private IMemorySegment[] mappedComponents = new IMemorySegment[11];
+    private IMemorySegment[] mappedComponents = new IMemorySegment[12];
     public IMemorySegment GetMappedComponent(int i){
         return this.mappedComponents[i];
     }
@@ -49,7 +50,7 @@ public class MemoryMap : IMemory {
     }
     #endregion
 
-    #region Interupts
+    #region Interrupts
     public int EnabledInterupts = 0;
     public int InteruptFlags = 0;
     public static readonly int INTERRUPT_VBLANK = 0b1;
@@ -127,9 +128,9 @@ public class MemoryMap : IMemory {
            //Interrupt Flags
            return InteruptFlags;
        }
-       else if(between(addr, 0xFF10, 0xFF39)){
+       else if(between(addr, 0xFF10, 0xFF3F)){
            //Sound control, envelope ect
-           return 0;
+           return mappedComponents[SOUND].ReadByte(addr);
        }
        else if(between(addr, 0xFF40, 0xFF7F)){
            return mappedComponents[GPU].ReadByte(addr);
@@ -193,8 +194,9 @@ public class MemoryMap : IMemory {
             //Interrupt Flags
             InteruptFlags = value;
        }
-       else if(between(addr, 0xFF10, 0xFF39)){
+       else if(between(addr, 0xFF10, 0xFF3F)){
            //Sound control, envelope ect
+           mappedComponents[SOUND].WriteByte(addr, value);
        }
        else if(between(addr, 0xFF40, 0xFF7F)){
            mappedComponents[GPU].WriteByte(addr, value);

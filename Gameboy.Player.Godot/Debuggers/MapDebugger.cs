@@ -10,7 +10,7 @@ public enum MapType {
 
 public partial class MapDebugger : Control {
 
-	[Export] public TextureRenderer Player;
+	[Export] public GodotBoy Player;
 	[Export] public MapType Map; 
 
 	private BitmapTextureRect rect;

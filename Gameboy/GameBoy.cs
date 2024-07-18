@@ -11,9 +11,10 @@ public class Gameboy {
     public Input Input {get; init;}
     private Hardware.Timer timer {get; init;}
     private CartridgeAdapter cart {get; init;}
+    public Hardware.Sound Sound {get; init;}
     public SerialConnection Serial {get; init;}
 
-    public Gameboy(IPpu? gpu = null, Input? input = null, CartridgeAdapter? cartReader = null, Hardware.Timer? timer = null, SerialConnection? serialIO = null) {
+    public Gameboy(IPpu? gpu = null, Input? input = null, CartridgeAdapter? cartReader = null, Hardware.Timer? timer = null, Hardware.Sound? sound = null, SerialConnection? serialIO = null) {
         mmu = new MemoryMap();
 
         Hardrive onboard = new Hardrive();
@@ -23,12 +24,14 @@ public class Gameboy {
         this.cart = cartReader ?? new CartridgeAdapter();
         SerialConnection sysio = serialIO ?? new SerialConnection(null, null);
         this.Serial = sysio;
+        this.Sound = sound ?? new Hardware.Sound();
 
         mmu.SetMappedComponent(MemoryMap.INTERNAL_RAM, onboard);
         mmu.SetMappedComponent(MemoryMap.ZRAM, onboard);
 
         mmu.SetMappedComponent(MemoryMap.JOYSTICK, this.Input);
         mmu.SetMappedComponent(MemoryMap.TIMER, this.timer);
+        mmu.SetMappedComponent(MemoryMap.SOUND, this.Sound);
 
         mmu.SetMappedComponent(MemoryMap.OAM, this.GPU);
         mmu.SetMappedComponent(MemoryMap.VRAM, this.GPU);
@@ -60,6 +63,7 @@ public class Gameboy {
         timer.Reset();
         cart.Reset();
         CPU.Reset();
+        Sound.Reset();
     }
 
     public Cartridge? GetCartridge() {

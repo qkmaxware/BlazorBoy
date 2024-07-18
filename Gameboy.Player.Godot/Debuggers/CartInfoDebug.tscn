@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://t7khq15qfjuw"]
 
-[ext_resource type="Texture2D" uid="uid://divrqb47wvwvt" path="res://reload.png" id="1_0a8i2"]
+[ext_resource type="Texture2D" uid="uid://divrqb47wvwvt" path="res://Prefabs/GodotBoy/UI/reload.png" id="1_0a8i2"]
 [ext_resource type="Script" path="res://Debuggers/CartInfoDebug.cs" id="1_m4mxx"]
 
 [node name="Cartridge Info" type="Control"]

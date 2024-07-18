@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://7wdw54d0sdlj"]
+
+[ext_resource type="Script" path="res://Prefabs/ThemePicker/ThemePicker.cs" id="1_tdy1j"]
+
+[node name="OptionButton" type="OptionButton" node_paths=PackedStringArray("Screen")]
+allow_reselect = true
+script = ExtResource("1_tdy1j")
+Screen = NodePath("")
+
+[connection signal="item_selected" from="." to="." method="SelectTheme"]

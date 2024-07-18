@@ -7,7 +7,7 @@ namespace Qkmaxware.Emulators.Gameboy.Player;
 
 public partial class SpriteDebugger : Control {
 
-	[Export] public TextureRenderer Player;
+	[Export] public GodotBoy Player;
 
 	private BitmapTextureRect[] spriteTextures;
 
