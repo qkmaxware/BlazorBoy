@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://lagkciw3arws"]
+[gd_scene load_steps=39 format=3 uid="uid://lagkciw3arws"]
 
 [ext_resource type="Script" path="res://Prefabs/GodotBoy/GodotBoy.cs" id="1_807qv"]
 [ext_resource type="Texture2D" uid="uid://dfkwdfgk0dp8n" path="res://icon.svg" id="1_fcyi5"]
@@ -20,6 +20,7 @@
 [ext_resource type="Texture2D" uid="uid://dma6vgdj4ntir" path="res://Prefabs/GodotBoy/UI/layout_screen_control.svg" id="17_arug4"]
 [ext_resource type="Texture2D" uid="uid://5ynu1mc2abvi" path="res://Prefabs/GodotBoy/UI/layout_skin.svg" id="18_sw6ge"]
 [ext_resource type="Theme" uid="uid://dcduu766csudy" path="res://Theme.tres" id="20_0wny8"]
+[ext_resource type="PackedScene" uid="uid://c51yw0q5xqybk" path="res://Prefabs/KeyRebind/keybind.tscn" id="21_1cq1c"]
 [ext_resource type="PackedScene" uid="uid://7wdw54d0sdlj" path="res://Prefabs/ThemePicker/ThemePicker.tscn" id="21_xltfd"]
 [ext_resource type="PackedScene" uid="uid://t7khq15qfjuw" path="res://Debuggers/CartInfoDebug.tscn" id="21_y5t5s"]
 [ext_resource type="PackedScene" uid="uid://b5psa1c0pvkya" path="res://Debuggers/PaletteDebugger.tscn" id="22_e37a5"]
@@ -77,12 +78,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_o72x6")
-current_tab = 2
 tabs_visible = false
 script = ExtResource("2_36eiy")
 
 [node name="Screen Only" type="Control" parent="Screen Layouts"]
-visible = false
 layout_mode = 2
 
 [node name="Background" type="ColorRect" parent="Screen Layouts/Screen Only"]
@@ -234,6 +233,7 @@ ignore_texture_size = true
 stretch_mode = 5
 
 [node name="Skinned Controls" type="Control" parent="Screen Layouts"]
+visible = false
 layout_mode = 2
 
 [node name="Background" type="ColorRect" parent="Screen Layouts/Skinned Controls"]
@@ -433,6 +433,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 3
 theme_override_constants/margin_left = 6
 theme_override_constants/margin_right = 6
 
@@ -503,6 +504,58 @@ layout_mode = 2
 layout_mode = 2
 text = "Keybindings"
 
+[node name="Heading" type="HBoxContainer" parent="Options/MarginContainer/ScrollContainer/ScrollContents/Keybinds"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Options/MarginContainer/ScrollContainer/ScrollContents/Keybinds/Heading"]
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+text = "Key"
+vertical_alignment = 1
+text_overrun_behavior = 3
+
+[node name="Label2" type="Label" parent="Options/MarginContainer/ScrollContainer/ScrollContents/Keybinds/Heading"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Primary Key"
+
+[node name="Label3" type="Label" parent="Options/MarginContainer/ScrollContainer/ScrollContents/Keybinds/Heading"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Secondary Key"
+
+[node name="Keybind" parent="Options/MarginContainer/ScrollContainer/ScrollContents/Keybinds" instance=ExtResource("21_1cq1c")]
+layout_mode = 2
+ActionName = "move_left"
+
+[node name="Keybind2" parent="Options/MarginContainer/ScrollContainer/ScrollContents/Keybinds" instance=ExtResource("21_1cq1c")]
+layout_mode = 2
+ActionName = "move_right"
+
+[node name="Keybind3" parent="Options/MarginContainer/ScrollContainer/ScrollContents/Keybinds" instance=ExtResource("21_1cq1c")]
+layout_mode = 2
+ActionName = "move_up"
+
+[node name="Keybind4" parent="Options/MarginContainer/ScrollContainer/ScrollContents/Keybinds" instance=ExtResource("21_1cq1c")]
+layout_mode = 2
+ActionName = "move_down"
+
+[node name="Keybind5" parent="Options/MarginContainer/ScrollContainer/ScrollContents/Keybinds" instance=ExtResource("21_1cq1c")]
+layout_mode = 2
+ActionName = "button_a"
+
+[node name="Keybind6" parent="Options/MarginContainer/ScrollContainer/ScrollContents/Keybinds" instance=ExtResource("21_1cq1c")]
+layout_mode = 2
+ActionName = "button_b"
+
+[node name="Keybind7" parent="Options/MarginContainer/ScrollContainer/ScrollContents/Keybinds" instance=ExtResource("21_1cq1c")]
+layout_mode = 2
+ActionName = "button_start"
+
+[node name="Keybind8" parent="Options/MarginContainer/ScrollContainer/ScrollContents/Keybinds" instance=ExtResource("21_1cq1c")]
+layout_mode = 2
+ActionName = "button_select"
+
 [node name="Developer" type="VBoxContainer" parent="Options/MarginContainer/ScrollContainer/ScrollContents"]
 layout_mode = 2
 
@@ -537,6 +590,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 3
 theme_override_constants/margin_left = 6
 theme_override_constants/margin_right = 6
 
@@ -586,8 +640,9 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -116.0
+offset_top = 12.0
 offset_right = 116.0
-offset_bottom = 48.0
+offset_bottom = 60.0
 grow_horizontal = 2
 
 [node name="Open ROM" type="Button" parent="Loader"]

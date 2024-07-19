@@ -48,6 +48,17 @@ public partial class GodotBoy : Control, IDebugable {
 		}
 
 		this.Screen = this.GetNode<Screen>("Screen Layouts");
+		const int DesktopLayout = 0;
+		const int TouchDesktopLayout = 1;
+		const int SkinnedLayout = 2;
+		this.Screen.CurrentTab = OS.GetName().ToLower() switch {
+			string s when s.Contains("android")		=> SkinnedLayout,
+			string s when s.Contains("ios")			=> SkinnedLayout,
+			_ => DisplayServer.IsTouchscreenAvailable() switch {
+				true								=> TouchDesktopLayout,
+				_ 									=> DesktopLayout
+			}
+		};
 		this.Screen.Redraw(intro);
 	}
 

@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3 uid="uid://c51yw0q5xqybk"]
+
+[ext_resource type="Script" path="res://Prefabs/KeyRebind/Keybind.cs" id="1_wcb04"]
+[ext_resource type="Theme" uid="uid://cm80ju1d6rsye" path="res://Prefabs/KeyRebind/RebindButtonTheme.tres" id="2_phmuq"]
+
+[node name="Keybind" type="HBoxContainer"]
+script = ExtResource("1_wcb04")
+
+[node name="Label" type="Label" parent="."]
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+text = "KeyName"
+vertical_alignment = 1
+text_overrun_behavior = 3
+
+[node name="Primary" type="Button" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("2_phmuq")
+toggle_mode = true
+
+[node name="Secondary" type="Button" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("2_phmuq")
+toggle_mode = true
