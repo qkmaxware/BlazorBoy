@@ -27,6 +27,9 @@ public partial class Keybind : HBoxContainer {
 	private InputEventKey key_primary;
 	private InputEventKey key_secondary;
 
+	public Key GetPrimaryKey() => EventKey(key_primary);
+	public Key GetSecondaryKey() => EventKey(key_secondary);
+
 	public void MakeAction(string name) {
 		InputMap.AddAction(name);
 		this.action = name;
@@ -65,6 +68,28 @@ public partial class Keybind : HBoxContainer {
 		if (key.PhysicalKeycode != Key.None)
 			return key.AsTextPhysicalKeycode();
 		return "(Unset)";
+	}
+
+	private static Key EventKey(InputEventKey key) {
+		if (key is null)
+			return Key.None;
+		if (key.Keycode != Key.None)
+			return key.Keycode;
+		if (key.PhysicalKeycode != Key.None)
+			return key.PhysicalKeycode;
+		return Key.None;
+	}
+
+	public void SetKeys(Key primary, Key secondary) {
+		if (this.key_primary is not null) {
+			this.key_primary.Keycode = primary;
+			this.key_primary.PhysicalKeycode = primary;
+		}
+
+		if (this.key_secondary is not null) {
+			this.key_secondary.Keycode = secondary;
+			this.key_secondary.PhysicalKeycode = secondary;
+		}
 	}
 
     public override void _Input(InputEvent @event) {

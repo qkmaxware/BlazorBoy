@@ -15,36 +15,17 @@ public partial class GodotBoy : Control, IDebugable {
 	public bool IsPlaying => State == ControlState.Playing;
 
 	[Export] public Control CartControl;
+	[Export] public Control PlaybackControl;
 	[Export] public OptionButton SaveSlot;
 	[Export] public OnscreenControls[] OnscreenControls;
 
 	public Screen Screen {get; private set;}
 	public Gameboy Console {get; init;} = new Gameboy();
 
-	private LcdBitmap intro;
-	private LcdBitmap blank; 
-
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready() {
 		if (OnscreenControls is null) {
 			OnscreenControls = new OnscreenControls[0];
-		}
-		var intro = new LcdBitmap(Gpu.LCD_WIDTH, Gpu.LCD_HEIGHT);
-		this.intro = intro;
-		intro.Fill(ColourPallet.BackgroundDark);
-
-		blank = new LcdBitmap(Gpu.LCD_WIDTH, Gpu.LCD_HEIGHT);
-		blank.Fill(ColourPallet.BackgroundDark);
-
-		var text = new LcdBitmap[]{ LcdBitmap.StampB, LcdBitmap.StampL, LcdBitmap.StampA, LcdBitmap.StampZ, LcdBitmap.StampO, LcdBitmap.StampR, LcdBitmap.StampB, LcdBitmap.StampO, LcdBitmap.StampY }.Select(stamp => stamp.Invert().Enlarge(4)).ToArray();
-		var width = text.Select(stamp => stamp.Width + 1).Sum();
-		var height = text.Select(stamp => stamp.Height).Max();
-
-		var startX = (intro.Width / 2) - (width / 2);
-		var startY = (intro.Height / 2) - (height / 2);
-		foreach (var stamp in text) {
-			intro.Stamp(startX, startY, stamp);
-			startX += stamp.Width + 1;
 		}
 
 		this.Screen = this.GetNode<Screen>("Screen Layouts");
@@ -59,15 +40,23 @@ public partial class GodotBoy : Control, IDebugable {
 				_ 									=> DesktopLayout
 			}
 		};
-		this.Screen.Redraw(intro);
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta) {
-		if (State == ControlState.Stopped) {
-			CartControl.Visible = true;
-		} else {
-			CartControl.Visible = false;
+		if (CartControl is not null) {
+			if (State == ControlState.Stopped) {
+				CartControl.Visible = true;
+			} else {
+				CartControl.Visible = false;
+			}
+		} 
+		if (PlaybackControl is not null) {
+			if (State == ControlState.Stopped) {
+				PlaybackControl.Visible = false;
+			} else {
+				PlaybackControl.Visible = true;
+			}
 		}
 		
 		if (State == ControlState.Playing) {
@@ -155,9 +144,7 @@ public partial class GodotBoy : Control, IDebugable {
 				}
 			}
 
-			if (blank is not null) {
-				this.Screen.Redraw(blank);
-			}
+			this.Screen.Blank();
 			this.State = ControlState.Playing;
 		} else {
 			GD.PushError("No cartridge loaded");
@@ -178,6 +165,14 @@ public partial class GodotBoy : Control, IDebugable {
 		}
 	}
 
+	public void TogglePause() {
+		if (State == ControlState.Playing) {
+			State = ControlState.Paused;
+		} else if (State == ControlState.Paused) {
+			State = ControlState.Playing;
+		}
+	}
+
 	public void Stop() {
 		if (this.Console is not null && this.Console.IsCartridgeLoaded()) {
 			this.State = ControlState.Stopped;
@@ -189,10 +184,13 @@ public partial class GodotBoy : Control, IDebugable {
 				}
 			}
 			this.Console.Reset();
-			if (intro is not null) {
-				this.Screen.Redraw(intro);
-			}
+			this.Screen.ShowIntro();
 		}
+	}
+
+	public void Restart() {
+		Stop();
+		Play();
 	}
 
 }

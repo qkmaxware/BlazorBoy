@@ -1,9 +1,10 @@
-[gd_scene load_steps=39 format=3 uid="uid://lagkciw3arws"]
+[gd_scene load_steps=48 format=3 uid="uid://lagkciw3arws"]
 
 [ext_resource type="Script" path="res://Prefabs/GodotBoy/GodotBoy.cs" id="1_807qv"]
 [ext_resource type="Texture2D" uid="uid://dfkwdfgk0dp8n" path="res://icon.svg" id="1_fcyi5"]
 [ext_resource type="Script" path="res://Prefabs/GodotBoy/Screen.cs" id="2_36eiy"]
 [ext_resource type="PackedScene" uid="uid://bcvv8417hthjf" path="res://Prefabs/OnscreenControls/Joystick.tscn" id="4_drwt1"]
+[ext_resource type="Texture2D" uid="uid://c1grnn67kto6b" path="res://Prefabs/GodotBoy/UI/transparent.png" id="4_yyevs"]
 [ext_resource type="Texture2D" uid="uid://dubx3mrt06u5p" path="res://Prefabs/GodotBoy/UI/switch_button_a_outline.png" id="5_5ygii"]
 [ext_resource type="Texture2D" uid="uid://bw2mb47r4ud7" path="res://Prefabs/GodotBoy/UI/switch_button_a.png" id="6_883pa"]
 [ext_resource type="Texture2D" uid="uid://it7a6pssev4k" path="res://Prefabs/GodotBoy/UI/switch_button_b_outline.png" id="7_o3yvv"]
@@ -18,18 +19,26 @@
 [ext_resource type="Script" path="res://Prefabs/OnscreenControls/OnscreenControls.cs" id="16_ffynx"]
 [ext_resource type="Texture2D" uid="uid://trhljjy16es1" path="res://Prefabs/GodotBoy/UI/layout_screen.svg" id="16_s0175"]
 [ext_resource type="Texture2D" uid="uid://dma6vgdj4ntir" path="res://Prefabs/GodotBoy/UI/layout_screen_control.svg" id="17_arug4"]
+[ext_resource type="Texture2D" uid="uid://bqimngayey7nv" path="res://Prefabs/GodotBoy/UI/default_skin_header.svg" id="17_var3s"]
+[ext_resource type="Script" path="res://Prefabs/GodotBoy/Options.cs" id="17_yhmc5"]
+[ext_resource type="Texture2D" uid="uid://gixtpgxdg6fd" path="res://Prefabs/GodotBoy/UI/default_skin_logo.svg" id="18_bpf3f"]
 [ext_resource type="Texture2D" uid="uid://5ynu1mc2abvi" path="res://Prefabs/GodotBoy/UI/layout_skin.svg" id="18_sw6ge"]
+[ext_resource type="Texture2D" uid="uid://dye1lrylf76q3" path="res://Prefabs/GodotBoy/UI/default_skin_speaker.svg" id="19_2f425"]
 [ext_resource type="Theme" uid="uid://dcduu766csudy" path="res://Theme.tres" id="20_0wny8"]
 [ext_resource type="PackedScene" uid="uid://c51yw0q5xqybk" path="res://Prefabs/KeyRebind/keybind.tscn" id="21_1cq1c"]
 [ext_resource type="PackedScene" uid="uid://7wdw54d0sdlj" path="res://Prefabs/ThemePicker/ThemePicker.tscn" id="21_xltfd"]
 [ext_resource type="PackedScene" uid="uid://t7khq15qfjuw" path="res://Debuggers/CartInfoDebug.tscn" id="21_y5t5s"]
 [ext_resource type="PackedScene" uid="uid://b5psa1c0pvkya" path="res://Debuggers/PaletteDebugger.tscn" id="22_e37a5"]
+[ext_resource type="Texture2D" uid="uid://dsfu4d554womr" path="res://Prefabs/GodotBoy/UI/controller.svg" id="22_wkh71"]
 [ext_resource type="PackedScene" uid="uid://yis4daekext1" path="res://Debuggers/Sprite Debugger.tscn" id="23_01ypf"]
 [ext_resource type="PackedScene" uid="uid://ca3d3pani0rrj" path="res://Debuggers/Tile Debugger.tscn" id="24_cepwr"]
 [ext_resource type="PackedScene" uid="uid://2uytp7r2ouod" path="res://Debuggers/Map Debugger.tscn" id="25_i7c8m"]
 [ext_resource type="PackedScene" uid="uid://cs764ed0jafqu" path="res://Debuggers/Disassembler.tscn" id="26_1mdrh"]
 [ext_resource type="Texture2D" uid="uid://cip0keh15srys" path="res://Prefabs/GodotBoy/UI/cart.png" id="28_f1kbb"]
 [ext_resource type="Texture2D" uid="uid://byxxvldruom6j" path="res://Prefabs/GodotBoy/UI/play.png" id="29_f4os1"]
+[ext_resource type="Texture2D" uid="uid://divrqb47wvwvt" path="res://Prefabs/GodotBoy/UI/reload.png" id="32_agcku"]
+[ext_resource type="Texture2D" uid="uid://cm332so38crqs" path="res://Prefabs/GodotBoy/UI/pause.png" id="32_eqyyb"]
+[ext_resource type="Texture2D" uid="uid://d0dpxbrvr2bo7" path="res://Prefabs/GodotBoy/UI/stop.png" id="32_qkn52"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_o72x6"]
 
@@ -58,7 +67,7 @@ unicode = 105
 [sub_resource type="Shortcut" id="Shortcut_2ct1q"]
 events = [SubResource("InputEventKey_mhgt7"), SubResource("InputEventKey_wrprd")]
 
-[node name="GodotBoy" type="Control" node_paths=PackedStringArray("CartControl", "SaveSlot", "OnscreenControls")]
+[node name="GodotBoy" type="Control" node_paths=PackedStringArray("CartControl", "PlaybackControl", "SaveSlot", "OnscreenControls")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -67,6 +76,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_807qv")
 CartControl = NodePath("Loader")
+PlaybackControl = NodePath("Playback")
 SaveSlot = NodePath("Loader/Save Slot")
 OnscreenControls = [NodePath("Screen Layouts/Onscreen Controls/Control"), NodePath("Screen Layouts/Skinned Controls/Control")]
 
@@ -102,6 +112,22 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_fcyi5")
 expand_mode = 1
+stretch_mode = 5
+
+[node name="Settings" type="TextureButton" parent="Screen Layouts/Screen Only"]
+custom_minimum_size = Vector2(75, 75)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -75.0
+offset_bottom = 75.0
+grow_horizontal = 0
+focus_mode = 0
+texture_normal = ExtResource("4_yyevs")
+texture_pressed = ExtResource("10_um660")
+texture_hover = ExtResource("9_t6atn")
+ignore_texture_size = true
 stretch_mode = 5
 
 [node name="Onscreen Controls" type="Control" parent="Screen Layouts"]
@@ -272,6 +298,43 @@ grow_vertical = 2
 texture = ExtResource("15_43iv6")
 expand_mode = 1
 
+[node name="Skin Header" type="TextureRect" parent="Screen Layouts/Skinned Controls/Skin"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 41.0
+grow_horizontal = 2
+texture = ExtResource("17_var3s")
+expand_mode = 1
+
+[node name="Skin Logo" type="TextureRect" parent="Screen Layouts/Skinned Controls/Skin/Skin Header"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("18_bpf3f")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Skin Speaker" type="TextureRect" parent="Screen Layouts/Skinned Controls/Skin"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -108.0
+offset_top = -95.0
+offset_right = -33.0
+offset_bottom = -24.0
+grow_horizontal = 0
+grow_vertical = 0
+texture = ExtResource("19_2f425")
+expand_mode = 1
+stretch_mode = 5
+
 [node name="Control" type="Control" parent="Screen Layouts/Skinned Controls" node_paths=PackedStringArray("Arrows", "A", "B", "Select", "Start")]
 layout_mode = 1
 anchor_top = 0.501
@@ -282,13 +345,21 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("16_ffynx")
 Arrows = NodePath("Joystick")
-A = NodePath("Buttons/A")
-B = NodePath("Buttons/B")
+A = NodePath("Buttons/Face/A")
+B = NodePath("Buttons/Face/B")
 Select = NodePath("Buttons/Select")
 Start = NodePath("Buttons/Start")
 
 [node name="Joystick" parent="Screen Layouts/Skinned Controls/Control" instance=ExtResource("4_drwt1")]
 layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 42.0
+offset_top = -100.0
+offset_right = 242.0
+offset_bottom = 100.0
+grow_vertical = 2
 
 [node name="Buttons" type="Control" parent="Screen Layouts/Skinned Controls/Control"]
 texture_filter = 1
@@ -300,7 +371,20 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="A" type="TextureButton" parent="Screen Layouts/Skinned Controls/Control/Buttons"]
+[node name="Face" type="Control" parent="Screen Layouts/Skinned Controls/Control/Buttons"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -20.0
+offset_bottom = 20.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="A" type="TextureButton" parent="Screen Layouts/Skinned Controls/Control/Buttons/Face"]
 custom_minimum_size = Vector2(75, 75)
 layout_mode = 1
 anchors_preset = 3
@@ -309,9 +393,9 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -116.0
-offset_top = -189.0
+offset_top = -82.2655
 offset_right = -41.0
-offset_bottom = -114.0
+offset_bottom = -7.26547
 grow_horizontal = 0
 grow_vertical = 0
 focus_mode = 0
@@ -320,7 +404,7 @@ texture_pressed = ExtResource("6_883pa")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="B" type="TextureButton" parent="Screen Layouts/Skinned Controls/Control/Buttons"]
+[node name="B" type="TextureButton" parent="Screen Layouts/Skinned Controls/Control/Buttons/Face"]
 custom_minimum_size = Vector2(75, 75)
 layout_mode = 1
 anchors_preset = 3
@@ -328,10 +412,10 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -193.0
-offset_top = -106.0
-offset_right = -118.0
-offset_bottom = -31.0
+offset_left = -161.0
+offset_top = -4.26547
+offset_right = -86.0
+offset_bottom = 70.7345
 grow_horizontal = 0
 grow_vertical = 0
 focus_mode = 0
@@ -349,9 +433,9 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -81.5
-offset_top = -99.0
+offset_top = -89.0
 offset_right = -6.5
-offset_bottom = -24.0
+offset_bottom = -14.0
 grow_horizontal = 2
 grow_vertical = 0
 focus_mode = 0
@@ -369,9 +453,9 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = 3.5
-offset_top = -100.0
+offset_top = -90.0
 offset_right = 78.5
-offset_bottom = -25.0
+offset_bottom = -15.0
 grow_horizontal = 2
 grow_vertical = 0
 focus_mode = 0
@@ -383,17 +467,14 @@ stretch_mode = 5
 [node name="Settings" type="TextureButton" parent="Screen Layouts/Skinned Controls/Control/Buttons"]
 custom_minimum_size = Vector2(75, 75)
 layout_mode = 1
-anchors_preset = 8
+anchors_preset = 5
 anchor_left = 0.5
-anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 0.5
 offset_left = -37.5
-offset_top = -37.5
+offset_top = 47.0
 offset_right = 37.5
-offset_bottom = 37.5
+offset_bottom = 122.0
 grow_horizontal = 2
-grow_vertical = 2
 focus_mode = 0
 texture_normal = ExtResource("9_t6atn")
 texture_pressed = ExtResource("10_um660")
@@ -419,13 +500,17 @@ focus_mode = 0
 mouse_filter = 2
 shortcut = SubResource("Shortcut_54dsp")
 
-[node name="Options" type="Window" parent="."]
+[node name="Options" type="Window" parent="." node_paths=PackedStringArray("DisplayColourPicker", "SkinColourPicker", "KeyBindings")]
 title = "Options"
 initial_position = 2
 size = Vector2i(640, 480)
 visible = false
 exclusive = true
 popup_window = true
+script = ExtResource("17_yhmc5")
+DisplayColourPicker = NodePath("MarginContainer/ScrollContainer/ScrollContents/Colours/Themes/OptionButton")
+SkinColourPicker = NodePath("MarginContainer/ScrollContainer/ScrollContents/Colours/ColorRect")
+KeyBindings = [NodePath("MarginContainer/ScrollContainer/ScrollContents/Keybinds/Keybind"), NodePath("MarginContainer/ScrollContainer/ScrollContents/Keybinds/Keybind2"), NodePath("MarginContainer/ScrollContainer/ScrollContents/Keybinds/Keybind3"), NodePath("MarginContainer/ScrollContainer/ScrollContents/Keybinds/Keybind4"), NodePath("MarginContainer/ScrollContainer/ScrollContents/Keybinds/Keybind5"), NodePath("MarginContainer/ScrollContainer/ScrollContents/Keybinds/Keybind6"), NodePath("MarginContainer/ScrollContainer/ScrollContents/Keybinds/Keybind7"), NodePath("MarginContainer/ScrollContainer/ScrollContents/Keybinds/Keybind8")]
 
 [node name="MarginContainer" type="MarginContainer" parent="Options"]
 anchors_preset = 15
@@ -443,14 +528,16 @@ size_flags_vertical = 3
 
 [node name="ScrollContents" type="VBoxContainer" parent="Options/MarginContainer/ScrollContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
 theme_override_constants/separation = 24
+
+[node name="Label" type="Label" parent="Options/MarginContainer/ScrollContainer/ScrollContents"]
+layout_mode = 2
+text = "Layout"
+horizontal_alignment = 1
 
 [node name="Display" type="VBoxContainer" parent="Options/MarginContainer/ScrollContainer/ScrollContents"]
 layout_mode = 2
-
-[node name="Label" type="Label" parent="Options/MarginContainer/ScrollContainer/ScrollContents/Display"]
-layout_mode = 2
-text = "Layout"
 
 [node name="GridContainer" type="GridContainer" parent="Options/MarginContainer/ScrollContainer/ScrollContents/Display"]
 layout_mode = 2
@@ -470,6 +557,14 @@ texture_normal = ExtResource("17_arug4")
 layout_mode = 2
 tooltip_text = "Faux device with onscreen controls"
 texture_normal = ExtResource("18_sw6ge")
+
+[node name="HSeparator" type="HSeparator" parent="Options/MarginContainer/ScrollContainer/ScrollContents"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="Options/MarginContainer/ScrollContainer/ScrollContents"]
+layout_mode = 2
+text = "Theme"
+horizontal_alignment = 1
 
 [node name="Colours" type="VBoxContainer" parent="Options/MarginContainer/ScrollContainer/ScrollContents"]
 layout_mode = 2
@@ -497,6 +592,14 @@ layout_mode = 2
 color = Color(0.803922, 0.392157, 0.129412, 1)
 edit_alpha = false
 
+[node name="HSeparator2" type="HSeparator" parent="Options/MarginContainer/ScrollContainer/ScrollContents"]
+layout_mode = 2
+
+[node name="Label3" type="Label" parent="Options/MarginContainer/ScrollContainer/ScrollContents"]
+layout_mode = 2
+text = "Controls"
+horizontal_alignment = 1
+
 [node name="Keybinds" type="VBoxContainer" parent="Options/MarginContainer/ScrollContainer/ScrollContents"]
 layout_mode = 2
 
@@ -510,7 +613,7 @@ layout_mode = 2
 [node name="Label" type="Label" parent="Options/MarginContainer/ScrollContainer/ScrollContents/Keybinds/Heading"]
 custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
-text = "Key"
+text = "Action Name"
 vertical_alignment = 1
 text_overrun_behavior = 3
 
@@ -556,12 +659,29 @@ ActionName = "button_start"
 layout_mode = 2
 ActionName = "button_select"
 
-[node name="Developer" type="VBoxContainer" parent="Options/MarginContainer/ScrollContainer/ScrollContents"]
+[node name="Controller" type="VBoxContainer" parent="Options/MarginContainer/ScrollContainer/ScrollContents"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Options/MarginContainer/ScrollContainer/ScrollContents/Developer"]
+[node name="Label" type="Label" parent="Options/MarginContainer/ScrollContainer/ScrollContents/Controller"]
+layout_mode = 2
+text = "Controller"
+
+[node name="TextureRect" type="TextureRect" parent="Options/MarginContainer/ScrollContainer/ScrollContents/Controller"]
+layout_mode = 2
+texture = ExtResource("22_wkh71")
+expand_mode = 5
+stretch_mode = 5
+
+[node name="HSeparator3" type="HSeparator" parent="Options/MarginContainer/ScrollContainer/ScrollContents"]
+layout_mode = 2
+
+[node name="Label4" type="Label" parent="Options/MarginContainer/ScrollContainer/ScrollContents"]
 layout_mode = 2
 text = "Developer"
+horizontal_alignment = 1
+
+[node name="Developer" type="VBoxContainer" parent="Options/MarginContainer/ScrollContainer/ScrollContents"]
+layout_mode = 2
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Options/MarginContainer/ScrollContainer/ScrollContents/Developer"]
 layout_mode = 2
@@ -648,6 +768,7 @@ grow_horizontal = 2
 [node name="Open ROM" type="Button" parent="Loader"]
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
+tooltip_text = "Load Game Cart"
 focus_mode = 0
 icon = ExtResource("28_f1kbb")
 expand_icon = true
@@ -664,8 +785,9 @@ use_native_dialog = true
 
 [node name="Save Slot" type="OptionButton" parent="Loader"]
 layout_mode = 2
+tooltip_text = "Select Save Slot"
 focus_mode = 0
-item_count = 5
+item_count = 11
 selected = 0
 popup/item_0/text = "No Save"
 popup/item_0/id = 0
@@ -677,14 +799,63 @@ popup/item_3/text = "Save Slot 3"
 popup/item_3/id = 3
 popup/item_4/text = "Save Slot 4"
 popup/item_4/id = 4
+popup/item_5/text = "Save Slot 5"
+popup/item_5/id = 5
+popup/item_6/text = "Save Slot 6"
+popup/item_6/id = 6
+popup/item_7/text = "Save Slot 7"
+popup/item_7/id = 7
+popup/item_8/text = "Save Slot 8"
+popup/item_8/id = 8
+popup/item_9/text = "Save Slot 9"
+popup/item_9/id = 9
+popup/item_10/text = "Save Slot 10"
+popup/item_10/id = 10
 
 [node name="Play" type="Button" parent="Loader"]
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
+tooltip_text = "Start Playback"
 focus_mode = 0
 icon = ExtResource("29_f4os1")
 expand_icon = true
 
+[node name="Playback" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -24.0
+offset_top = 12.0
+offset_right = 24.0
+offset_bottom = 60.0
+grow_horizontal = 2
+
+[node name="Restart" type="Button" parent="Playback"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+tooltip_text = "Restart Playback"
+focus_mode = 0
+icon = ExtResource("32_agcku")
+expand_icon = true
+
+[node name="Pause" type="Button" parent="Playback"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+tooltip_text = "Pause/Resume Playback"
+focus_mode = 0
+icon = ExtResource("32_eqyyb")
+expand_icon = true
+
+[node name="Stop" type="Button" parent="Playback"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+tooltip_text = "Stop Playback"
+focus_mode = 0
+icon = ExtResource("32_qkn52")
+expand_icon = true
+
+[connection signal="pressed" from="Screen Layouts/Screen Only/Settings" to="Options" method="show"]
 [connection signal="pressed" from="Screen Layouts/Onscreen Controls/Control/Buttons/Settings" to="Options" method="show"]
 [connection signal="pressed" from="Screen Layouts/Skinned Controls/Control/Buttons/Settings" to="Options" method="show"]
 [connection signal="pressed" from="Options Shortcut" to="Options" method="show"]
@@ -698,3 +869,6 @@ expand_icon = true
 [connection signal="pressed" from="Loader/Open ROM" to="Loader/Open ROM/FileDialog" method="show"]
 [connection signal="file_selected" from="Loader/Open ROM/FileDialog" to="." method="LoadCartFromPath"]
 [connection signal="pressed" from="Loader/Play" to="." method="Play"]
+[connection signal="pressed" from="Playback/Restart" to="." method="Restart"]
+[connection signal="pressed" from="Playback/Pause" to="." method="TogglePause"]
+[connection signal="pressed" from="Playback/Stop" to="." method="Stop"]

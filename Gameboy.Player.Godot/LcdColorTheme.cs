@@ -96,5 +96,23 @@ public class LcdColorTheme {
 			Obj0Black = new Color("004A00"),
 			Obj1Black = new Color("000000"),
 		},
+		new LcdColorTheme { 
+			Name = "Super Donkey Kong",
+			BgWhite = new Color("FFFF9C"),	
+			Obj0White = new Color("FFC542"),
+			Obj1White = new Color("FFFFFF"),
+
+			BgLightGrey = new Color("94B5FF"),
+			Obj0LightGrey = new Color("FFD600"),
+			Obj1LightGrey = new Color("FF8484"),
+
+			BgDarkGrey = new Color("639473"),
+			Obj0DarkGrey = new Color("943A00"),
+			Obj1DarkGrey = new Color("943A3A"),
+
+			BgBlack = new Color("003A3A"),
+			Obj0Black = new Color("4A0000"),
+			Obj1Black = new Color("000000"),
+		},
 	};
 }

@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Linq;
 using Qkmaxware.Emulators.Gameboy;
 using Qkmaxware.Emulators.Gameboy.Hardware;
 using LcdBitmap = Qkmaxware.Emulators.Gameboy.Hardware.Bitmap;
@@ -38,6 +39,10 @@ public partial class Screen : TabContainer {
 	[Export]
 	public Color Obj1Black = new Color(0, 0, 0);
 
+	private LcdBitmap intro;
+	private LcdBitmap blank; 
+
+	private Image image;
 	private ImageTexture texture;
 	private TextureRect[] screens;
 
@@ -48,10 +53,41 @@ public partial class Screen : TabContainer {
 		for (int i = 0; i < tabs; i++) {
 			screens[i] = GetTabControl(i).GetNode<TextureRect>("Screen");
 		}
+
+		var intro = new LcdBitmap(Gpu.LCD_WIDTH, Gpu.LCD_HEIGHT);
+		this.intro = intro;
+		intro.Fill(ColourPallet.BackgroundDark);
+
+		blank = new LcdBitmap(Gpu.LCD_WIDTH, Gpu.LCD_HEIGHT);
+		blank.Fill(ColourPallet.BackgroundDark);
+
+		var text = new LcdBitmap[]{ LcdBitmap.StampB, LcdBitmap.StampL, LcdBitmap.StampA, LcdBitmap.StampZ, LcdBitmap.StampO, LcdBitmap.StampR, LcdBitmap.StampB, LcdBitmap.StampO, LcdBitmap.StampY }.Select(stamp => stamp.Invert().Enlarge(4)).ToArray();
+		var width = text.Select(stamp => stamp.Width + 1).Sum();
+		var height = text.Select(stamp => stamp.Height).Max();
+
+		var startX = (intro.Width / 2) - (width / 2);
+		var startY = (intro.Height / 2) - (height / 2);
+		foreach (var stamp in text) {
+			intro.Stamp(startX, startY, stamp);
+			startX += stamp.Width + 1;
+		}
+
+		this.Redraw(this.intro, assignToAllScreens: true);
     }
 
-    public void Redraw(LcdBitmap bmp) {
-		var pixels = Image.Create(width: bmp.Width, height: bmp.Height, useMipmaps: false, format: Image.Format.Rgb8);
+	public void ShowIntro() {
+		this.Redraw(intro);
+	}
+
+	public void Blank() {
+		this.Redraw(blank);
+	}
+
+    public void Redraw(LcdBitmap bmp, bool assignToAllScreens = false) {
+		if (this.image is null) {
+			this.image = Image.Create(width: bmp.Width, height: bmp.Height, useMipmaps: false, format: Image.Format.Rgb8);
+		}
+		var pixels = this.image;
 	
 		for (var col = 0; col < bmp.Height; col++) {
 			for (var row = 0; row < bmp.Width; row++) {
@@ -82,8 +118,17 @@ public partial class Screen : TabContainer {
 		} else {
 			texture.Update(pixels);
 		}
-		var screen = screens[CurrentTab];
-		if (screen is not null)
-			screen.Texture = texture;
+		if (assignToAllScreens) {
+			foreach (var screen in this.screens) {
+				if (screen is null)
+					continue;
+				screen.Texture = texture;
+			}
+		} else {
+			var screen = screens[CurrentTab];
+			if (screen is not null)
+				screen.Texture = texture;
+		}
+		
 	}
 }
