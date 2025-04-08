@@ -14,7 +14,7 @@
         </label>
         <img id="cart" src="cart.svg" alt="Game Cart">
         <img id="console" src="console.svg" alt="Console">
-        <canvas @ref=screen id="screen" width="@Gpu.LCD_WIDTH" height="@Gpu.LCD_HEIGHT"></canvas>
+        <canvas @ref=screen id="screen" width="@Ppu.LCD_WIDTH" height="@Ppu.LCD_HEIGHT"></canvas>
         <div id="controls">
             <button id="power" class="w3-button w3-circle" title="Power" @onclick=TogglePower>
                 @if (isPlaying) {
@@ -75,7 +75,7 @@
 
     protected override async Task OnAfterRenderAsync(bool firstRender) {
         if (firstRender) {
-            Bitmap intro = new Bitmap(Gpu.LCD_WIDTH, Gpu.LCD_HEIGHT);
+            Bitmap intro = new Bitmap(Ppu.LCD_WIDTH, Ppu.LCD_HEIGHT);
             intro.Fill(ColourPallet.BackgroundWhite);
 
             var text = new Bitmap[]{ Bitmap.StampB, Bitmap.StampL, Bitmap.StampA, Bitmap.StampZ, Bitmap.StampO, Bitmap.StampR, Bitmap.StampB, Bitmap.StampO, Bitmap.StampY }.Select(stamp => stamp.Enlarge(4)).ToArray();
@@ -165,7 +165,7 @@
             
             // ONLY DO THIS IF ITS NOT BEING REDRAWN RIGHT NOW OTHERWISE, SKIP THIS FRAME
             if ((frame % FrameSkipping) == 0) {
-                await Redraw (gb.GPU.Canvas);
+                await Redraw (gb.GPU.GetCanvasImage());
             }
             frame++;
 

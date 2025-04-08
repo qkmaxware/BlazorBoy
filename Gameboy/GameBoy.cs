@@ -11,10 +11,10 @@ public class Gameboy {
     public Input Input {get; init;}
     private Hardware.Timer timer {get; init;}
     private CartridgeAdapter cart {get; init;}
-    public Hardware.Sound Sound {get; init;}
+    public APU Sound {get; init;}
     public SerialConnection Serial {get; init;}
 
-    public Gameboy(IPpu? gpu = null, Input? input = null, CartridgeAdapter? cartReader = null, Hardware.Timer? timer = null, Hardware.Sound? sound = null, SerialConnection? serialIO = null) {
+    public Gameboy(IPpu? gpu = null, Input? input = null, CartridgeAdapter? cartReader = null, Hardware.Timer? timer = null, APU? sound = null, SerialConnection? serialIO = null) {
         mmu = new MemoryMap();
 
         Hardrive onboard = new Hardrive();
@@ -24,7 +24,7 @@ public class Gameboy {
         this.cart = cartReader ?? new CartridgeAdapter();
         SerialConnection sysio = serialIO ?? new SerialConnection(null, null);
         this.Serial = sysio;
-        this.Sound = sound ?? new Hardware.Sound();
+        this.Sound = sound ?? new APU();
 
         mmu.SetMappedComponent(MemoryMap.INTERNAL_RAM, onboard);
         mmu.SetMappedComponent(MemoryMap.ZRAM, onboard);
@@ -120,6 +120,9 @@ public class Gameboy {
         
         //Step the timer
         timer.Increment(deltaTime);
+
+        // Step the sound
+        this.Sound.Tick();
     }
 
     public void DispatchUntilBufferFlush() {

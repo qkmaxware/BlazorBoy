@@ -7,7 +7,7 @@ public interface IPpu : IMemorySegment {
     /// <summary>
     /// Canvas containing the rendered image
     /// </summary>
-    public Bitmap Canvas {get;}
+    public Bitmap GetCanvasImage();
 
     #region Flags
     /// <summary>

@@ -69,7 +69,7 @@
 
         stopWatch = new Stopwatch();
         stopWatch.Start();
-        await renderer.PushPixels(Screen, Gb.GPU.Canvas);
+        await renderer.PushPixels(Screen, Gb.GPU.GetCanvasImage());
         stopWatch.Stop();
         renderTiming = stopWatch.Elapsed;
     }

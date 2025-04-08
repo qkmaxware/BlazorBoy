@@ -30,8 +30,10 @@ public class Gpu : IPpu {
     #endregion
 
     #region  Drawing
-    public Bitmap Canvas {get; private set;} = new Bitmap(LCD_WIDTH, LCD_HEIGHT);
+    private Bitmap Canvas = new Bitmap(LCD_WIDTH, LCD_HEIGHT);
+    public Bitmap GetCanvasImage() => this.IsLcdOn ? Canvas : blank;
     private Bitmap buffer = new Bitmap(LCD_WIDTH, LCD_HEIGHT);
+    private static Bitmap blank = new Bitmap(LCD_WIDTH, LCD_HEIGHT, ColourPallet.BackgroundDark);
     private ColourPallet[] bgpallet = new ColourPallet[4];
     private ColourPallet[] obj0pallet = new ColourPallet[4];
     private ColourPallet[] obj1pallet = new ColourPallet[4];

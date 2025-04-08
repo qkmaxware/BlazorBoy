@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=3 uid="uid://lagkciw3arws"]
+[gd_scene load_steps=52 format=3 uid="uid://lagkciw3arws"]
 
 [ext_resource type="Script" path="res://Prefabs/GodotBoy/GodotBoy.cs" id="1_807qv"]
 [ext_resource type="Texture2D" uid="uid://dfkwdfgk0dp8n" path="res://icon.svg" id="1_fcyi5"]
@@ -26,10 +26,12 @@
 [ext_resource type="Texture2D" uid="uid://dye1lrylf76q3" path="res://Prefabs/GodotBoy/UI/default_skin_speaker.svg" id="19_2f425"]
 [ext_resource type="Theme" uid="uid://dcduu766csudy" path="res://Theme.tres" id="20_0wny8"]
 [ext_resource type="PackedScene" uid="uid://c51yw0q5xqybk" path="res://Prefabs/KeyRebind/keybind.tscn" id="21_1cq1c"]
+[ext_resource type="Script" path="res://Prefabs/GodotBoy/Speakers.cs" id="21_h4ww3"]
 [ext_resource type="PackedScene" uid="uid://7wdw54d0sdlj" path="res://Prefabs/ThemePicker/ThemePicker.tscn" id="21_xltfd"]
 [ext_resource type="PackedScene" uid="uid://t7khq15qfjuw" path="res://Debuggers/CartInfoDebug.tscn" id="21_y5t5s"]
 [ext_resource type="PackedScene" uid="uid://b5psa1c0pvkya" path="res://Debuggers/PaletteDebugger.tscn" id="22_e37a5"]
 [ext_resource type="Texture2D" uid="uid://dsfu4d554womr" path="res://Prefabs/GodotBoy/UI/controller.svg" id="22_wkh71"]
+[ext_resource type="Texture2D" uid="uid://dvmlkwr4x5ssd" path="res://Prefabs/GodotBoy/UI/audio_on.png" id="22_yitpl"]
 [ext_resource type="PackedScene" uid="uid://yis4daekext1" path="res://Debuggers/Sprite Debugger.tscn" id="23_01ypf"]
 [ext_resource type="PackedScene" uid="uid://ca3d3pani0rrj" path="res://Debuggers/Tile Debugger.tscn" id="24_cepwr"]
 [ext_resource type="PackedScene" uid="uid://2uytp7r2ouod" path="res://Debuggers/Map Debugger.tscn" id="25_i7c8m"]
@@ -39,12 +41,13 @@
 [ext_resource type="Texture2D" uid="uid://divrqb47wvwvt" path="res://Prefabs/GodotBoy/UI/reload.png" id="32_agcku"]
 [ext_resource type="Texture2D" uid="uid://cm332so38crqs" path="res://Prefabs/GodotBoy/UI/pause.png" id="32_eqyyb"]
 [ext_resource type="Texture2D" uid="uid://d0dpxbrvr2bo7" path="res://Prefabs/GodotBoy/UI/stop.png" id="32_qkn52"]
+[ext_resource type="PackedScene" uid="uid://ej42kngxrq4x" path="res://Debuggers/AudioDebug.tscn" id="35_inklj"]
+[ext_resource type="Script" path="res://Prefabs/GodotBoy/AudioButton.cs" id="43_d3dy6"]
+[ext_resource type="Texture2D" uid="uid://cfhmcu84xswfm" path="res://Prefabs/GodotBoy/UI/audio_off.png" id="44_n7g3r"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_o72x6"]
 
 [sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_h4nlb"]
-
-[sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_xf5bx"]
 
 [sub_resource type="InputEventKey" id="InputEventKey_81spp"]
 device = -1
@@ -115,6 +118,7 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="Settings" type="TextureButton" parent="Screen Layouts/Screen Only"]
+texture_filter = 1
 custom_minimum_size = Vector2(75, 75)
 layout_mode = 1
 anchors_preset = 1
@@ -181,6 +185,7 @@ grow_vertical = 2
 mouse_filter = 2
 
 [node name="A" type="TextureButton" parent="Screen Layouts/Onscreen Controls/Control/Buttons"]
+texture_filter = 1
 custom_minimum_size = Vector2(75, 75)
 layout_mode = 1
 anchors_preset = 3
@@ -201,6 +206,7 @@ ignore_texture_size = true
 stretch_mode = 5
 
 [node name="B" type="TextureButton" parent="Screen Layouts/Onscreen Controls/Control/Buttons"]
+texture_filter = 1
 custom_minimum_size = Vector2(75, 75)
 layout_mode = 1
 anchors_preset = 3
@@ -221,6 +227,7 @@ ignore_texture_size = true
 stretch_mode = 5
 
 [node name="Select" type="TextureButton" parent="Screen Layouts/Onscreen Controls/Control/Buttons"]
+texture_filter = 1
 custom_minimum_size = Vector2(75, 75)
 layout_mode = 1
 offset_right = 75.0
@@ -232,6 +239,7 @@ ignore_texture_size = true
 stretch_mode = 5
 
 [node name="Start" type="TextureButton" parent="Screen Layouts/Onscreen Controls/Control/Buttons"]
+texture_filter = 1
 custom_minimum_size = Vector2(75, 75)
 layout_mode = 1
 offset_left = 90.0
@@ -244,6 +252,7 @@ ignore_texture_size = true
 stretch_mode = 5
 
 [node name="Settings" type="TextureButton" parent="Screen Layouts/Onscreen Controls/Control/Buttons"]
+texture_filter = 1
 custom_minimum_size = Vector2(75, 75)
 layout_mode = 1
 anchors_preset = 1
@@ -385,6 +394,7 @@ grow_horizontal = 0
 grow_vertical = 2
 
 [node name="A" type="TextureButton" parent="Screen Layouts/Skinned Controls/Control/Buttons/Face"]
+texture_filter = 1
 custom_minimum_size = Vector2(75, 75)
 layout_mode = 1
 anchors_preset = 3
@@ -405,6 +415,7 @@ ignore_texture_size = true
 stretch_mode = 5
 
 [node name="B" type="TextureButton" parent="Screen Layouts/Skinned Controls/Control/Buttons/Face"]
+texture_filter = 1
 custom_minimum_size = Vector2(75, 75)
 layout_mode = 1
 anchors_preset = 3
@@ -425,6 +436,7 @@ ignore_texture_size = true
 stretch_mode = 5
 
 [node name="Select" type="TextureButton" parent="Screen Layouts/Skinned Controls/Control/Buttons"]
+texture_filter = 1
 custom_minimum_size = Vector2(75, 75)
 layout_mode = 1
 anchors_preset = 7
@@ -432,10 +444,10 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -81.5
-offset_top = -89.0
-offset_right = -6.5
-offset_bottom = -14.0
+offset_left = -79.5
+offset_top = -90.0
+offset_right = -4.5
+offset_bottom = -15.0
 grow_horizontal = 2
 grow_vertical = 0
 focus_mode = 0
@@ -445,6 +457,7 @@ ignore_texture_size = true
 stretch_mode = 5
 
 [node name="Start" type="TextureButton" parent="Screen Layouts/Skinned Controls/Control/Buttons"]
+texture_filter = 1
 custom_minimum_size = Vector2(75, 75)
 layout_mode = 1
 anchors_preset = 7
@@ -452,9 +465,9 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = 3.5
+offset_left = 4.5
 offset_top = -90.0
-offset_right = 78.5
+offset_right = 79.5
 offset_bottom = -15.0
 grow_horizontal = 2
 grow_vertical = 0
@@ -465,6 +478,7 @@ ignore_texture_size = true
 stretch_mode = 5
 
 [node name="Settings" type="TextureButton" parent="Screen Layouts/Skinned Controls/Control/Buttons"]
+texture_filter = 1
 custom_minimum_size = Vector2(75, 75)
 layout_mode = 1
 anchors_preset = 5
@@ -482,15 +496,12 @@ ignore_texture_size = true
 stretch_mode = 5
 
 [node name="Speakers" type="Control" parent="."]
+layout_mode = 1
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+script = ExtResource("21_h4ww3")
 
-[node name="Channel1 - Square1" type="AudioStreamPlayer" parent="Speakers"]
+[node name="Player" type="AudioStreamPlayer" parent="Speakers"]
 stream = SubResource("AudioStreamGenerator_h4nlb")
-
-[node name="Channel2 - Square2" type="AudioStreamPlayer" parent="Speakers"]
-stream = SubResource("AudioStreamGenerator_xf5bx")
 
 [node name="Options Shortcut" type="Button" parent="."]
 layout_mode = 0
@@ -749,6 +760,11 @@ layout_mode = 2
 Player = NodePath("../../../..")
 Map = 1
 
+[node name="Audio" parent="Debug/MarginContainer/Debuggers" node_paths=PackedStringArray("Player") instance=ExtResource("35_inklj")]
+visible = false
+layout_mode = 2
+Player = NodePath("../../../..")
+
 [node name="Disassembler" parent="Debug/MarginContainer/Debuggers" node_paths=PackedStringArray("Player") instance=ExtResource("26_1mdrh")]
 visible = false
 layout_mode = 2
@@ -855,6 +871,16 @@ focus_mode = 0
 icon = ExtResource("32_qkn52")
 expand_icon = true
 
+[node name="Audio" type="Button" parent="Playback" node_paths=PackedStringArray("Speakers")]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+icon = ExtResource("22_yitpl")
+expand_icon = true
+script = ExtResource("43_d3dy6")
+Speakers = NodePath("../../Speakers")
+AudioPlayingIcon = ExtResource("22_yitpl")
+AudioPausedIcon = ExtResource("44_n7g3r")
+
 [connection signal="pressed" from="Screen Layouts/Screen Only/Settings" to="Options" method="show"]
 [connection signal="pressed" from="Screen Layouts/Onscreen Controls/Control/Buttons/Settings" to="Options" method="show"]
 [connection signal="pressed" from="Screen Layouts/Skinned Controls/Control/Buttons/Settings" to="Options" method="show"]
@@ -872,3 +898,4 @@ expand_icon = true
 [connection signal="pressed" from="Playback/Restart" to="." method="Restart"]
 [connection signal="pressed" from="Playback/Pause" to="." method="TogglePause"]
 [connection signal="pressed" from="Playback/Stop" to="." method="Stop"]
+[connection signal="pressed" from="Playback/Audio" to="Speakers" method="ToggleAudio"]

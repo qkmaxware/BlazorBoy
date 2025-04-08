@@ -1,75 +1,10 @@
 // Sound hardware created from the description on the site below
 // https://gbdev.gg8.se/wiki/articles/Gameboy_sound_hardware
+// https://gbdev.io/pandocs/Audio.html
 // Might be able to be emulated in Godot using https://docs.godotengine.org/en/stable/classes/class_audiostreamgenerator.html
 namespace Qkmaxware.Emulators.Gameboy.Hardware;
 
-public class Channel {
-	public int NRx0;
-	public int NRx1;
-	public int NRx2;
-	public int NRx3;
-	public int NRx4;
-	
-	public void Reset() {
-		NRx0 = NRx1 = NRx2 = NRx3 = NRx4 = 0;
-	}
-}
-
-public class SquareWaveChannel : Channel {
-	public int SweepPeriod => (NRx0 >> 4) & (0b0000_0111);
-	public bool Negate => ((NRx0 >> 3) & (0b0000_0001)) != 0;
-	public int Shift => (NRx0 >> 0) & (0b0000_0111);
-	
-	public int Duty => (NRx1 >> 6) & (0b0000_0011);
-	public int LengthLoad => (NRx1 >> 0) & (0b0011_1111);
-	
-	public int StartingVolume => (NRx2 >> 4) & (0b0000_1111);
-	public bool EnvelopeAddMode => ((NRx2 >> 3) & (0b0000_0001)) != 0;
-	public int Period => (NRx2 >> 0) & (0b0000_0111);
-	
-	public int FrequencyLsb => NRx3;
-	
-	public bool Trigger => ((NRx4 >> 7) & 0b0000_0001) != 0;
-	public bool LengthEnable => ((NRx4 >> 6) & 0b0000_0001) != 0;
-	public int FrequencyMsb => NRx4 & 0b0000_0111;
-}
-
-public enum VolumeCode {
-	Volume0 = 0b00,
-	Volume100 = 0b01,
-	Volume50 = 0b10,
-	Volume25 = 0b11
-}
-
-public class WaveChannel : Channel {
-	public bool DacPower => ((NRx0) & (0b1000_0000)) != 0;
-	public int LengthLoad => NRx1;
-	public VolumeCode Volume => ((NRx2 >> 5) & 0b0000_0011) switch {
-		0b00 => VolumeCode.Volume0,
-		0b01 => VolumeCode.Volume100,
-		0b10 => VolumeCode.Volume50,
-		0b11 => VolumeCode.Volume25,
-		_ 	 => VolumeCode.Volume0
-	};
-	public int FrequencyLsb => NRx3;
-	public bool Trigger => ((NRx4 >> 7) & 0b0000_0001) != 0;
-	public bool LengthEnable => ((NRx4 >> 6) & 0b0000_0001) != 0;
-	public int FrequencyMsb => NRx4 & 0b0000_0111;
-}
-
-public class NoiseChannel : Channel {
-	public int LengthLoad => ((NRx1 >> 0) & 0b0011_1111);
-	public int StartingVolume => (NRx2 >> 4) & (0b0000_1111);
-	public bool EnvelopeAddMode => ((NRx2 >> 3) & (0b0000_0001)) != 0;
-	public int Period => (NRx2 >> 0) & (0b0000_0111);
-	public int ClockShift => (NRx3 >> 4) & 0b0000_1111;
-	public bool WidthModeOfLfsr => ((NRx3 >> 0) & 0b0000_1000) != 0;
-	public int DivisorCode => (NRx3 >> 0) & 0b0000_0111;
-	public bool Trigger => ((NRx4 >> 7) & 0b0000_0001) != 0;
-	public bool LengthEnable => ((NRx4 >> 6) & 0b0000_0001) != 0;
-}
-
-public class Sound : IMemorySegment {
+public class APU : IMemorySegment {
 
 	public SquareWaveChannel Channel1 = new SquareWaveChannel();
 	public SquareWaveChannel Channel2 = new SquareWaveChannel();
@@ -81,19 +16,32 @@ public class Sound : IMemorySegment {
 	public WaveChannel Wave => Channel3;
 	public NoiseChannel Noise => Channel4;
 
-	private int FF24;
-	public bool VinLeftEnabled => (FF24 & 0b1000_0000) != 0;
-	public bool VinRightEnabled => (FF24 & 0b0000_1000) != 0;
-	public int LeftVolume => ((FF24 >> 4) & 0b0000_0111);
-	public int RightVolume => ((FF24 >> 0) & 0b0000_0111);
+	private int FF24_MasterVolume_VINPanning;
+	public bool VinLeftEnabled => (FF24_MasterVolume_VINPanning & 0b1000_0000) != 0;
+	public Volume LeftVolume => new Volume(((FF24_MasterVolume_VINPanning >> 4) & 0b0000_0111));
+	public bool VinRightEnabled => (FF24_MasterVolume_VINPanning & 0b0000_1000) != 0;
+	public Volume RightVolume => new Volume(((FF24_MasterVolume_VINPanning >> 0) & 0b0000_0111));
 	
-	private int FF25;
-	public bool IsLeftOn => (FF25  & 0b1111_0000) != 0;
-	public bool IsRightOn => (FF25  & 0b0000_1111) != 0;
+	private int FF25_SoundPanning;
+	public SoundPanning PanningChannel4 
+		=> (FF25_SoundPanning  & 0b1000_0000) != 0 ? SoundPanning.Left : SoundPanning.None  
+		+  (FF25_SoundPanning  & 0b0000_1000) != 0 ? SoundPanning.Right : SoundPanning.None;
+	public SoundPanning PanningChannel3 
+		=> (FF25_SoundPanning  & 0b0100_0000) != 0 ? SoundPanning.Left : SoundPanning.None  
+		+  (FF25_SoundPanning  & 0b0000_0100) != 0 ? SoundPanning.Right : SoundPanning.None;
+	public SoundPanning PanningChannel2 
+		=> (FF25_SoundPanning  & 0b0010_0000) != 0 ? SoundPanning.Left : SoundPanning.None  
+		+  (FF25_SoundPanning  & 0b0000_0010) != 0 ? SoundPanning.Right : SoundPanning.None;
+	public SoundPanning PanningChannel1 
+		=> (FF25_SoundPanning  & 0b0001_0000) != 0 ? SoundPanning.Left : SoundPanning.None  
+		+  (FF25_SoundPanning  & 0b0000_0001) != 0 ? SoundPanning.Right : SoundPanning.None;
 	
-	private int FF26;
-	public bool IsPoweredOn => (FF26  & 0b1000_0000) != 0;
-	public int ChannelLengthStatuses => (FF26  & 0b0000_1111);
+	private int FF26_AudioMasterControl;
+	public bool IsPoweredOn => (FF26_AudioMasterControl  & 0b1000_0000) != 0;
+	public bool Channel4On => (FF26_AudioMasterControl  & 0b0000_1000) != 0;
+	public bool Channel3On => (FF26_AudioMasterControl  & 0b0000_0100) != 0;
+	public bool Channel2On => (FF26_AudioMasterControl  & 0b0000_0010) != 0;
+	public bool Channel1On => (FF26_AudioMasterControl  & 0b0000_0001) != 0;
 	
 	private int[] WaveTable = new int[0xFF40 - 0xFF30];
 
@@ -103,9 +51,9 @@ public class Sound : IMemorySegment {
 		Channel3.Reset();
 		Channel4.Reset();
 		
-		FF24 = 0;
-		FF25 = 0;
-		FF26 = 0;
+		FF24_MasterVolume_VINPanning = 0;
+		FF25_SoundPanning = 0;
+		FF26_AudioMasterControl = 0;
 		
 		Array.Fill(WaveTable, 0);
 	}
@@ -114,6 +62,13 @@ public class Sound : IMemorySegment {
 	public void SetMMU(MemoryMap mmu) {
         this.mmu = mmu;
     }
+
+	public void Tick() {
+		Channel1.Tick();
+		Channel2.Tick();
+		Channel3.Tick();
+		Channel4.Tick();
+	}
 
 	public int ReadByte(int addr) {
 		if (addr < 0xFF10 || addr > 0xFF3F) {
@@ -147,9 +102,9 @@ public class Sound : IMemorySegment {
 			case 0xFF23: return Channel4.NRx4;
 			
 			// Control & Status
-			case 0xFF24: return FF24;
-			case 0xFF25: return FF25;
-			case 0xFF26: return FF26;
+			case 0xFF24: return FF24_MasterVolume_VINPanning;
+			case 0xFF25: return FF25_SoundPanning;
+			case 0xFF26: return FF26_AudioMasterControl;
 			
 			// Unused
 			case >= 0xFF27 and 0xFF2F:
@@ -197,9 +152,9 @@ public class Sound : IMemorySegment {
 			case 0xFF23: Channel4.NRx4 = value; break;
 			
 			// Control & Status
-			case 0xFF24: FF24 = value; break;
-			case 0xFF25: FF25 = value; break;
-			case 0xFF26: FF26 = value; break;
+			case 0xFF24: FF24_MasterVolume_VINPanning = value; break;
+			case 0xFF25: FF25_SoundPanning = value; break;
+			case 0xFF26: FF26_AudioMasterControl = value; break;
 			
 			// Wave Table
 			case >= 0xFF30 and <= 0xFF3F: 

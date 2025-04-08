@@ -20,6 +20,7 @@ public partial class GodotBoy : Control, IDebugable {
 	[Export] public OnscreenControls[] OnscreenControls;
 
 	public Screen Screen {get; private set;}
+	public Speakers Speakers {get; private set;}
 	public Gameboy Console {get; init;} = new Gameboy();
 
 	// Called when the node enters the scene tree for the first time.
@@ -27,6 +28,8 @@ public partial class GodotBoy : Control, IDebugable {
 		if (OnscreenControls is null) {
 			OnscreenControls = new OnscreenControls[0];
 		}
+
+		this.Speakers = this.GetNode<Speakers>("Speakers");
 
 		this.Screen = this.GetNode<Screen>("Screen Layouts");
 		const int DesktopLayout = 0;
@@ -64,24 +67,25 @@ public partial class GodotBoy : Control, IDebugable {
 			this.Console.DispatchUntilBufferFlush();
 			if (this.Console.GPU.HasBufferJustFlushed) {
 				// Repaint
-				this.Screen.Redraw(this.Console.GPU.Canvas);
+				this.Screen.Redraw(this.Console.GPU.GetCanvasImage());
 			}
+			if (this.Console?.Sound is not null)
+				this.Speakers.GenerateAudio(this.Console, delta);
 		}
 	}
 
 	public void PollInput() {
 		// Arrows
-		setInput(KeyCodes.Up, OnscreenControls.Where(ctrl => ctrl.IsUpPressed()).Any() | Godot.Input.IsActionPressed("move_up"));
-		setInput(KeyCodes.Down, OnscreenControls.Where(ctrl => ctrl.IsDownPressed()).Any() | Godot.Input.IsActionPressed("move_down"));
-		setInput(KeyCodes.Left, OnscreenControls.Where(ctrl => ctrl.IsLeftPressed()).Any() | Godot.Input.IsActionPressed("move_left"));
-		setInput(KeyCodes.Right, OnscreenControls.Where(ctrl => ctrl.IsRightPressed()).Any() | Godot.Input.IsActionPressed("move_right"));
+		setInput(KeyCodes.Up, 		OnscreenControls.Where(ctrl => ctrl.IsUpPressed()).Any() 	|| 	Godot.Input.IsActionPressed("move_up"));
+		setInput(KeyCodes.Down, 	OnscreenControls.Where(ctrl => ctrl.IsDownPressed()).Any() 	|| 	Godot.Input.IsActionPressed("move_down"));
+		setInput(KeyCodes.Left, 	OnscreenControls.Where(ctrl => ctrl.IsLeftPressed()).Any() 	|| 	Godot.Input.IsActionPressed("move_left"));
+		setInput(KeyCodes.Right, 	OnscreenControls.Where(ctrl => ctrl.IsRightPressed()).Any() || 	Godot.Input.IsActionPressed("move_right"));
 
 		// Buttons
-		
-		setInput(KeyCodes.A, OnscreenControls.Where(ctrl => ctrl.IsAPressed()).Any() | Godot.Input.IsActionJustPressed("button_a"));
-		setInput(KeyCodes.B, OnscreenControls.Where(ctrl => ctrl.IsBPressed()).Any() | Godot.Input.IsActionJustPressed("button_b"));
-		setInput(KeyCodes.Start, OnscreenControls.Where(ctrl => ctrl.IsStartPressed()).Any() | Godot.Input.IsActionJustPressed("button_start"));
-		setInput(KeyCodes.Select, OnscreenControls.Where(ctrl => ctrl.IsSelectPressed()).Any() | Godot.Input.IsActionJustPressed("button_select"));
+		setInput(KeyCodes.A, 		OnscreenControls.Where(ctrl => ctrl.IsAPressed()).Any() 	|| 	Godot.Input.IsActionJustPressed("button_a"));
+		setInput(KeyCodes.B, 		OnscreenControls.Where(ctrl => ctrl.IsBPressed()).Any() 	|| 	Godot.Input.IsActionJustPressed("button_b"));
+		setInput(KeyCodes.Start, 	OnscreenControls.Where(ctrl => ctrl.IsStartPressed()).Any() || 	Godot.Input.IsActionJustPressed("button_start"));
+		setInput(KeyCodes.Select, 	OnscreenControls.Where(ctrl => ctrl.IsSelectPressed()).Any()|| 	Godot.Input.IsActionJustPressed("button_select"));
 	} 
 	private void setInput(KeyCodes vkey, bool @default, params Key?[] pkeys) {
 		var pressed = @default;

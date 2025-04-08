@@ -14,7 +14,7 @@ config/name="BlazorBoy"
 run/main_scene="res://Prefabs/GodotBoy/GodotBoy.tscn"
 config/features=PackedStringArray("4.2", "C#", "GL Compatibility")
 run/max_fps=60
-boot_splash/bg_color=Color(0.141176, 0.141176, 0.141176, 1)
+boot_splash/bg_color=Color(0, 0, 0, 1)
 boot_splash/image="res://console.png"
 config/icon="res://icon.svg"
 

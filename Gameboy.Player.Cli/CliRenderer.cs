@@ -107,8 +107,8 @@ public class CliRenderer {
         this.WindowY = (short)position.Top;
         this.scaleX = scaleX;
         this.scaleY = scaleY;
-        this.charsWidth = (short)(Gpu.LCD_WIDTH  * this.scaleX);
-        this.charsHeight = (short)(Gpu.LCD_HEIGHT * this.scaleY);
+        this.charsWidth = (short)(Ppu.LCD_WIDTH  * this.scaleX);
+        this.charsHeight = (short)(Ppu.LCD_HEIGHT * this.scaleY);
         chars = new CharInfo[charsHeight * charsWidth];
         changed = new bool[chars.Length];
         for (var i = 0; i < chars.Length; i++) {
@@ -162,8 +162,8 @@ public class CliRenderer {
     }
     private void fillChars(Bitmap bmp) {
         // Fill arrays
-        for (short row = 0; row < Gpu.LCD_HEIGHT; row++) {
-            for (short col = 0; col < Gpu.LCD_WIDTH; col++) {
+        for (short row = 0; row < Ppu.LCD_HEIGHT; row++) {
+            for (short col = 0; col < Ppu.LCD_WIDTH; col++) {
                 switch (bmp[col, row]) {
                     case ColourPallet.BackgroundDark:
                     case ColourPallet.Object0Dark:

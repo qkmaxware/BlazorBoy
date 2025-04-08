@@ -31,11 +31,16 @@ public partial class Ppu : IDebuggablePpu {
     /// <summary>
     /// Canvas containing the rendered image
     /// </summary>
-    public Bitmap Canvas {get; private set;} = new Bitmap(LCD_WIDTH, LCD_HEIGHT);
+    private Bitmap Canvas  = new Bitmap(LCD_WIDTH, LCD_HEIGHT);
+    /// <summary>
+    /// Canvas containing the rendered image
+    /// </summary>
+    public Bitmap GetCanvasImage() => this.LCDC.IsLcdEnabled ? Canvas : blank;
     /// <summary>
     /// buffer to be written to before a vblank
     /// </summary>
     private Bitmap buffer {get; set;} = new Bitmap(LCD_WIDTH, LCD_HEIGHT);
+    private static Bitmap blank = new Bitmap(LCD_WIDTH, LCD_HEIGHT, ColourPallet.BackgroundDark);
 
     /// <summary>
     /// Test if the PPU's buffer has flushed last step

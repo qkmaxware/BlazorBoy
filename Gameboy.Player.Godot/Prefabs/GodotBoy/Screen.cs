@@ -54,11 +54,11 @@ public partial class Screen : TabContainer {
 			screens[i] = GetTabControl(i).GetNode<TextureRect>("Screen");
 		}
 
-		var intro = new LcdBitmap(Gpu.LCD_WIDTH, Gpu.LCD_HEIGHT);
+		var intro = new LcdBitmap(Ppu.LCD_WIDTH, Ppu.LCD_HEIGHT);
 		this.intro = intro;
 		intro.Fill(ColourPallet.BackgroundDark);
 
-		blank = new LcdBitmap(Gpu.LCD_WIDTH, Gpu.LCD_HEIGHT);
+		blank = new LcdBitmap(Ppu.LCD_WIDTH, Ppu.LCD_HEIGHT);
 		blank.Fill(ColourPallet.BackgroundDark);
 
 		var text = new LcdBitmap[]{ LcdBitmap.StampB, LcdBitmap.StampL, LcdBitmap.StampA, LcdBitmap.StampZ, LcdBitmap.StampO, LcdBitmap.StampR, LcdBitmap.StampB, LcdBitmap.StampO, LcdBitmap.StampY }.Select(stamp => stamp.Invert().Enlarge(4)).ToArray();

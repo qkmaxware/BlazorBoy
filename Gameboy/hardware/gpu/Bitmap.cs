@@ -13,6 +13,9 @@ public class Bitmap {
         this.Width = width; 
         this.Height = height;
     } 
+    public Bitmap(int width, int height, ColourPallet value) : this(width, height) {
+        Array.Fill(this.pixels, (byte)value);
+    }
     public Bitmap(ColourPallet[,] pixels) {
         this.Width = pixels.GetLength(1); 
         this.Height = pixels.GetLength(0);

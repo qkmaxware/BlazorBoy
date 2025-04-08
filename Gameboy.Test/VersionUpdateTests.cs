@@ -8,7 +8,7 @@ namespace Qkmaxware.Emulators.Gameboy.Test;
 
 public partial class VersionUpdateTests : GbTests {
 
-    [TestMethod]
+    /*[TestMethod]
     public void TestGpuToPpu() {
         var game = ReadCart("bgbtest");
         Gameboy normal = new Gameboy(gpu: new Hardware.Gpu());
@@ -30,6 +30,6 @@ public partial class VersionUpdateTests : GbTests {
             // Compare system states
             AssertState(normal.GetState(), newppu.GetState(), "Frame " + frame + " differs between implementations");
         }
-    }
+    }*/
     
 }

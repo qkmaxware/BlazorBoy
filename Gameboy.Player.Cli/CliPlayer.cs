@@ -34,8 +34,8 @@ public class CliPlayer {
         CliPlayer player = new CliPlayer() {
             CpuTrace = cpuTrace,
             Benchmark = benchmark,
-            ScaleX = (float)width / (float)Gpu.LCD_WIDTH,
-            ScaleY = (float)height / (float)Gpu.LCD_HEIGHT
+            ScaleX = (float)width / (float)Ppu.LCD_WIDTH,
+            ScaleY = (float)height / (float)Ppu.LCD_HEIGHT
         };
         player.Start(rom);
     }
@@ -108,7 +108,7 @@ public class CliPlayer {
             gb.DispatchUntilBufferFlush();
             // Draw screen
             var metric = gb.PerformanceAnalyzer?.BeginMeasure(renderer);
-            renderer.ToConsole(gb.GPU.Canvas);
+            renderer.ToConsole(gb.GPU.GetCanvasImage());
             metric?.Record();
             // Handle user input without cancelling or pausing?
             gb.Input.ClearKeys();

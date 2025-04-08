@@ -1,0 +1,95 @@
+[gd_scene load_steps=2 format=3 uid="uid://bjbvg4d0iuviv"]
+
+[ext_resource type="Script" path="res://Debuggers/Plot2D.cs" id="1_cv401"]
+
+[node name="Plot2D" type="Control" node_paths=PackedStringArray("line", "YAxis", "YMax", "XAxis", "XMax", "YXMin", "TopLeft", "TopRight", "BottomLeft", "BottomRight")]
+custom_minimum_size = Vector2(640, 180)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 518.0
+offset_bottom = 174.0
+script = ExtResource("1_cv401")
+line = NodePath("Plot")
+YAxis = NodePath("Y-AxisLabel")
+YMax = NodePath("Y-Max")
+XAxis = NodePath("X-AxisLabel")
+XMax = NodePath("X-Max")
+YXMin = NodePath("XY-Origin")
+TopLeft = NodePath("TopLeft")
+TopRight = NodePath("TopRight")
+BottomLeft = NodePath("BottomLeft")
+BottomRight = NodePath("BottomRight")
+
+[node name="XY-Origin" type="Label" parent="."]
+layout_mode = 0
+offset_left = -8.0
+offset_top = 151.0
+offset_right = 32.0
+offset_bottom = 174.0
+text = "0,0"
+horizontal_alignment = 2
+
+[node name="Y-Max" type="Label" parent="."]
+layout_mode = 1
+offset_left = -9.0
+offset_right = 31.0
+offset_bottom = 23.0
+text = "1"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="X-Max" type="Label" parent="."]
+layout_mode = 1
+offset_left = 517.0
+offset_top = 129.0
+offset_right = 557.0
+offset_bottom = 152.0
+text = "1"
+
+[node name="Y-AxisLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 7.0
+offset_top = 150.0
+offset_right = 134.0
+offset_bottom = 173.0
+rotation = -1.5708
+text = "amplitude"
+horizontal_alignment = 1
+
+[node name="X-AxisLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 150.0
+offset_right = 512.0
+offset_bottom = 173.0
+text = "time (s)"
+horizontal_alignment = 1
+
+[node name="TopLeft" type="Marker2D" parent="."]
+position = Vector2(32, 23)
+
+[node name="BottomLeft" type="Marker2D" parent="."]
+position = Vector2(32, 151)
+
+[node name="TopRight" type="Marker2D" parent="."]
+position = Vector2(512, 23)
+
+[node name="BottomRight" type="Marker2D" parent="."]
+position = Vector2(512, 151)
+
+[node name="Plot" type="Line2D" parent="."]
+position = Vector2(32, 151)
+width = 3.0
+default_color = Color(0.805699, 0.390695, 0.13034, 1)
+
+[node name="Y-Axis" type="Line2D" parent="."]
+position = Vector2(32, 151)
+points = PackedVector2Array(0, 0, 0, -128)
+width = 3.0
+default_color = Color(0.244776, 0.244776, 0.244776, 1)
+
+[node name="X-Axis" type="Line2D" parent="."]
+position = Vector2(32, 151)
+points = PackedVector2Array(0, 0, 480, 0)
+width = 3.0
+default_color = Color(0.244776, 0.244776, 0.244776, 1)
