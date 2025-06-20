@@ -1,0 +1,175 @@
+namespace Qkmaxware.Emulators.Gameboy.Hardware;
+
+// https://gbdev.io/pandocs/Audio_Registers.html
+
+public enum ChannelStatus {
+	Unknown,
+	On,
+	Off
+}
+
+public abstract class Channel {
+	/// <summary>
+	/// The channel specific audio register
+	/// </summary>
+	public int NRx0;
+	/// <summary>
+	/// The length-timer register
+	/// </summary>
+	public int NRx1;
+	/// <summary>
+	/// The volume and envelope register
+	/// </summary>
+	public int NRx2;
+	/// <summary>
+	/// The period register
+	/// </summary>
+	public int NRx3;
+	/// <summary>
+	/// The trigger, length-timer enable, and leftover bits register
+	/// </summary>
+	public int NRx4;
+	
+	public bool DacEnable => (NRx2 & 0xF8) != 0;
+
+	public void Trigger() {
+		NRx4 = NRx4 | 0b1000_0000;
+	}
+
+	public bool IsTriggered => ((NRx4 >> 7) & 0b1000_0000) != 0;
+
+	public void Reset() {
+		NRx0 = NRx1 = NRx2 = NRx3 = NRx4 = 0;
+	}
+
+	public virtual ChannelStatus IsOn() => IsTriggered ? ChannelStatus.On : ChannelStatus.Off;
+	public abstract void Tick();
+}
+
+public class SquareWaveChannel : Channel {
+	public override ChannelStatus IsOn() {
+		return (this.LengthEnable && this.LengthTimer > 0) switch {
+			true 	=> ChannelStatus.On,
+			_ 		=> ChannelStatus.Off
+		};
+	}
+
+	/// <summary>
+	/// This register controls the channel's period sweep functionality
+	/// </summary>
+	public int SweepControls => NRx0;
+	/// <summary>
+	/// This dictates how often sweep iterations happen in units of 128Hz ticks
+	/// </summary>
+    public Frequency Pace => new Frequency(((SweepControls & 0b0111_0000) >> 4) * 128);
+	/// <summary>
+	/// This indicates the sweep direction, 0 for increasing period, 1 for decreasing period
+	/// </summary>
+    public Direction SweepDirection => (SweepControls & 0b1000_0000) == 0 ? Direction.Increasing : Direction.Decreasing;
+	/// <summary>
+	/// The step for period calculation. Each period is computed as: L(t+1) = L(t) +- L(t)/pow(2, step)
+	/// </summary>
+	public int SweepStep => SweepControls & 0b111;
+
+	/// <summary>
+	/// Channel length timer and duty cycle register
+	/// </summary>
+    public int LengthTimeAndDutyCycle => NRx1;
+
+	/// <summary>
+	/// Duty cycle waveform 
+	/// </summary>
+    public Duty DutyCycle => new Duty(
+        ((LengthTimeAndDutyCycle >> 6) & (0b0000_0011)) switch {
+            0b00 	=> 0.125f,
+            0b01 	=> 0.25f,
+            0b10 	=> 0.5f,
+            0b11 	=> 0.75f,
+			_ 		=> 0.5f
+        }
+    );
+	/// <summary>
+	/// The initial length timer, the higher this field the shorter time before the channel is cut
+	/// </summary>
+	public int LengthTimer => (NRx1 >> 0) & (0b0011_1111);
+	
+	/// <summary>
+	/// This register controls the digital amplitude of the "high" part of the pulse and the sweep applied to that setting
+	/// </summary>
+    public int VolumeAndEnvelope => NRx2;
+	/// <summary>
+	/// How loud the channel initially is
+	/// </summary>
+	public Volume Volume => new Volume(((VolumeAndEnvelope >> 4) & (0b0000_1111)) / 16.0f);
+	/// <summary>
+	/// The envelope's direction, 0 for decreasing volume over time, 1 for increasing volume
+	/// </summary>
+	public Direction EnvelopeDirection => (((VolumeAndEnvelope >> 3) & (0b0000_0001)) != 0) ? Direction.Increasing : Direction.Decreasing;
+	/// <summary>
+	/// The pace at which the envelope ticks to increase or decreate
+	/// </summary>
+	public Frequency SweepPace => new Frequency( ((VolumeAndEnvelope >> 0) & (0b0000_0111)) * 64 );
+	/// <summary>
+	/// Boolean to check if the envelope is enabled or not
+	/// </summary>
+	public bool IsEnvelopeEnabled => ((VolumeAndEnvelope >> 0) & (0b0000_0111)) != 0;
+	
+	/// <summary>
+	/// The low bytes of the channel's period
+	/// </summary>
+	public int FrequencyLsb => NRx3;
+
+	public bool LengthEnable => ((NRx4 >> 6) & 0b0000_0001) != 0;
+	/// <summary>
+	/// The high order bytes of the channel's period
+	/// </summary>
+	public int FrequencyMsb => NRx4 & 0b0000_0111;
+
+	/// <summary>
+	/// A computation of the period of the channel
+	/// </summary>
+	public Frequency Frequency => new Frequency(
+		131072 / (2048 - ((FrequencyMsb << 8) | FrequencyLsb))
+	);
+
+	public override void Tick() {}
+}
+
+public class WaveChannel : Channel {
+	public int LengthLoad => NRx1;
+	public VolumeCode VolumeCode => ((NRx2 >> 5) & 0b0000_0011) switch {
+		0b00 => VolumeCode.Volume0,
+		0b01 => VolumeCode.Volume100,
+		0b10 => VolumeCode.Volume50,
+		0b11 => VolumeCode.Volume25,
+		_ 	 => VolumeCode.Volume0
+	};
+	public Volume Volume => VolumeCode switch {
+		VolumeCode.Volume0 => new Volume(0f),
+		VolumeCode.Volume25=> new Volume(0.25f),
+		VolumeCode.Volume50=> new Volume(0.5f),
+		VolumeCode.Volume100=> new Volume(1.0f),
+		_ => new Volume(0f)
+	};
+	public int FrequencyLsb => NRx3;
+	public bool WaveTrigger => ((NRx4 >> 7) & 0b0000_0001) != 0;
+	public bool LengthEnable => ((NRx4 >> 6) & 0b0000_0001) != 0;
+	public int FrequencyMsb => NRx4 & 0b0000_0111;
+
+	public override void Tick() {}
+}
+
+public class NoiseChannel : Channel {
+	public int LengthLoad => ((NRx1 >> 0) & 0b0011_1111);
+	public int StartingVolume => (NRx2 >> 4) & (0b0000_1111);
+	public Volume Volume => new Volume((StartingVolume + 1) / 16.0f);
+	public bool EnvelopeAddMode => ((NRx2 >> 3) & (0b0000_0001)) != 0;
+	public int Period => (NRx2 >> 0) & (0b0000_0111);
+	public int ClockShift => (NRx3 >> 4) & 0b0000_1111;
+	public bool WidthModeOfLfsr => ((NRx3 >> 0) & 0b0000_1000) != 0;
+	public int DivisorCode => (NRx3 >> 0) & 0b0000_0111;
+	public bool Trigger => ((NRx4 >> 7) & 0b0000_0001) != 0;
+	public bool LengthEnable => ((NRx4 >> 6) & 0b0000_0001) != 0;
+
+	public override void Tick() {}
+}

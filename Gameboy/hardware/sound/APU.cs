@@ -1,51 +1,47 @@
-// Sound hardware created from the description on the site below
-// https://gbdev.gg8.se/wiki/articles/Gameboy_sound_hardware
-// https://gbdev.io/pandocs/Audio.html
-// Might be able to be emulated in Godot using https://docs.godotengine.org/en/stable/classes/class_audiostreamgenerator.html
+using System.IO.Compression;
+using Qkmaxware.Vm.LR35902;
+
 namespace Qkmaxware.Emulators.Gameboy.Hardware;
 
 public class APU : IMemorySegment {
-
-	public SquareWaveChannel Channel1 = new SquareWaveChannel();
-	public SquareWaveChannel Channel2 = new SquareWaveChannel();
-	public WaveChannel Channel3 = new WaveChannel();
+    private FrameSequencer sequencer;
+    public SquareWaveChannel Channel1 = new SquareWaveChannel();
+	public SquareWaveChannel Channel2 = new SquareWaveChannel(use_sweep: false);
+	public PcmChannel Channel3 = new PcmChannel();
 	public NoiseChannel Channel4 = new NoiseChannel();
 	
 	public SquareWaveChannel Square1 => Channel1;
 	public SquareWaveChannel Square2 => Channel2;
-	public WaveChannel Wave => Channel3;
+	public PcmChannel Wave => Channel3;
 	public NoiseChannel Noise => Channel4;
 
-	private int FF24_MasterVolume_VINPanning;
-	public bool VinLeftEnabled => (FF24_MasterVolume_VINPanning & 0b1000_0000) != 0;
-	public Volume LeftVolume => new Volume(((FF24_MasterVolume_VINPanning >> 4) & 0b0000_0111));
-	public bool VinRightEnabled => (FF24_MasterVolume_VINPanning & 0b0000_1000) != 0;
-	public Volume RightVolume => new Volume(((FF24_MasterVolume_VINPanning >> 0) & 0b0000_0111));
-	
-	private int FF25_SoundPanning;
-	public SoundPanning PanningChannel4 
-		=> (FF25_SoundPanning  & 0b1000_0000) != 0 ? SoundPanning.Left : SoundPanning.None  
-		+  (FF25_SoundPanning  & 0b0000_1000) != 0 ? SoundPanning.Right : SoundPanning.None;
-	public SoundPanning PanningChannel3 
-		=> (FF25_SoundPanning  & 0b0100_0000) != 0 ? SoundPanning.Left : SoundPanning.None  
-		+  (FF25_SoundPanning  & 0b0000_0100) != 0 ? SoundPanning.Right : SoundPanning.None;
-	public SoundPanning PanningChannel2 
-		=> (FF25_SoundPanning  & 0b0010_0000) != 0 ? SoundPanning.Left : SoundPanning.None  
-		+  (FF25_SoundPanning  & 0b0000_0010) != 0 ? SoundPanning.Right : SoundPanning.None;
-	public SoundPanning PanningChannel1 
-		=> (FF25_SoundPanning  & 0b0001_0000) != 0 ? SoundPanning.Left : SoundPanning.None  
-		+  (FF25_SoundPanning  & 0b0000_0001) != 0 ? SoundPanning.Right : SoundPanning.None;
-	
-	private int FF26_AudioMasterControl;
-	public bool IsPoweredOn => (FF26_AudioMasterControl  & 0b1000_0000) != 0;
-	public bool Channel4On => (FF26_AudioMasterControl  & 0b0000_1000) != 0;
-	public bool Channel3On => (FF26_AudioMasterControl  & 0b0000_0100) != 0;
-	public bool Channel2On => (FF26_AudioMasterControl  & 0b0000_0010) != 0;
-	public bool Channel1On => (FF26_AudioMasterControl  & 0b0000_0001) != 0;
-	
-	private int[] WaveTable = new int[0xFF40 - 0xFF30];
+    private int FF24_MasterVolume_VINPanning;
+    public int LeftVolume => (FF24_MasterVolume_VINPanning & 0b0111_0000) >> 4;
+    public int RightVolume => (FF24_MasterVolume_VINPanning & 0b0000_0111);
 
-	public void Reset() {
+    private int FF25_SoundPanning;
+    private int FF26_AudioMasterControl;
+    public bool IsPoweredOn => (FF26_AudioMasterControl  & 0b1000_0000) != 0;
+
+    public APU() {
+        sequencer = new FrameSequencer(Channel1, Channel2, Channel3, Channel4);
+    }
+
+    public void Tick(ClockDelta dt) {
+		// Called every instruction
+        Channel1.Tick(ref dt);
+        Channel2.Tick(ref dt);
+        Channel3.Tick(ref dt);
+        Channel4.Tick(ref dt);
+        sequencer.Step(ref dt);
+    }
+
+    private MemoryMap? mmu;
+	public void SetMMU(MemoryMap mmu) {
+        this.mmu = mmu;
+    }
+
+    public void Reset() {
 		Channel1.Reset();
 		Channel2.Reset();
 		Channel3.Reset();
@@ -54,52 +50,38 @@ public class APU : IMemorySegment {
 		FF24_MasterVolume_VINPanning = 0;
 		FF25_SoundPanning = 0;
 		FF26_AudioMasterControl = 0;
-		
-		Array.Fill(WaveTable, 0);
-	}
-	
-	private MemoryMap? mmu;
-	public void SetMMU(MemoryMap mmu) {
-        this.mmu = mmu;
-    }
-
-	public void Tick() {
-		Channel1.Tick();
-		Channel2.Tick();
-		Channel3.Tick();
-		Channel4.Tick();
 	}
 
-	public int ReadByte(int addr) {
+    public int ReadByte(int addr) {
 		if (addr < 0xFF10 || addr > 0xFF3F) {
 			return 0;
 		}
 		
 		switch (addr) {
 			// Channels
-			case 0xFF10: return Channel1.NRx0;
-			case 0xFF11: return Channel1.NRx1;
-			case 0xFF12: return Channel1.NRx2;
-			case 0xFF13: return Channel1.NRx3;
-			case 0xFF14: return Channel1.NRx4;
+			case 0xFF10: return Channel1.NRX0;
+			case 0xFF11: return Channel1.NRX1;
+			case 0xFF12: return Channel1.NRX2;
+			case 0xFF13: return Channel1.NRX3;
+			case 0xFF14: return Channel1.NRX4;
 			
-			case 0xFF15: return Channel2.NRx0;
-			case 0xFF16: return Channel2.NRx1;
-			case 0xFF17: return Channel2.NRx2;
-			case 0xFF18: return Channel2.NRx3;
-			case 0xFF19: return Channel2.NRx4;
+			case 0xFF15: return Channel2.NRX0;
+			case 0xFF16: return Channel2.NRX1;
+			case 0xFF17: return Channel2.NRX2;
+			case 0xFF18: return Channel2.NRX3;
+			case 0xFF19: return Channel2.NRX4;
 			
-			case 0xFF1A: return Channel3.NRx0;
-			case 0xFF1B: return Channel3.NRx1;
-			case 0xFF1C: return Channel3.NRx2;
-			case 0xFF1D: return Channel3.NRx3;
-			case 0xFF1E: return Channel3.NRx4;
+			case 0xFF1A: return Channel3.NRX0;
+			case 0xFF1B: return Channel3.NRX1;
+			case 0xFF1C: return Channel3.NRX2;
+			case 0xFF1D: return Channel3.NRX3;
+			case 0xFF1E: return Channel3.NRX4;
 			
-			case 0xFF1F: return Channel4.NRx0;
-			case 0xFF20: return Channel4.NRx1;
-			case 0xFF21: return Channel4.NRx2;
-			case 0xFF22: return Channel4.NRx3;
-			case 0xFF23: return Channel4.NRx4;
+			case 0xFF1F: return Channel4.NRX0;
+			case 0xFF20: return Channel4.NRX1;
+			case 0xFF21: return Channel4.NRX2;
+			case 0xFF22: return Channel4.NRX3;
+			case 0xFF23: return Channel4.NRX4;
 			
 			// Control & Status
 			case 0xFF24: return FF24_MasterVolume_VINPanning;
@@ -112,7 +94,7 @@ public class APU : IMemorySegment {
 			
 			// Wave Table
 			case >= 0xFF30 and <= 0xFF3F:
-				return WaveTable[addr - 0xFF30];
+				return this.Channel3.SampleTable[addr - 0xFF30];
 			
 			default: return 0;
 		}
@@ -127,29 +109,29 @@ public class APU : IMemorySegment {
 		
 		switch (addr) {
 			// Channels
-			case 0xFF10: Channel1.NRx0 = value; break;
-			case 0xFF11: Channel1.NRx1 = value; break;
-			case 0xFF12: Channel1.NRx2 = value; break;
-			case 0xFF13: Channel1.NRx3 = value; break;
-			case 0xFF14: Channel1.NRx4 = value; break;
+			case 0xFF10: Channel1.NRX0 = value; break;
+			case 0xFF11: Channel1.NRX1 = value; break;
+			case 0xFF12: Channel1.NRX2 = value; break;
+			case 0xFF13: Channel1.NRX3 = value; break;
+			case 0xFF14: Channel1.NRX4 = value; break;
 									  
-			case 0xFF15: Channel2.NRx0 = value; break;
-			case 0xFF16: Channel2.NRx1 = value; break;
-			case 0xFF17: Channel2.NRx2 = value; break;
-			case 0xFF18: Channel2.NRx3 = value; break;
-			case 0xFF19: Channel2.NRx4 = value; break;
+			case 0xFF15: Channel2.NRX0 = value; break;
+			case 0xFF16: Channel2.NRX1 = value; break;
+			case 0xFF17: Channel2.NRX2 = value; break;
+			case 0xFF18: Channel2.NRX3 = value; break;
+			case 0xFF19: Channel2.NRX4 = value; break;
 									   
-			case 0xFF1A: Channel3.NRx0 = value; break;
-			case 0xFF1B: Channel3.NRx1 = value; break;
-			case 0xFF1C: Channel3.NRx2 = value; break;
-			case 0xFF1D: Channel3.NRx3 = value; break;
-			case 0xFF1E: Channel3.NRx4 = value; break;
+			case 0xFF1A: Channel3.NRX0 = value; break;
+			case 0xFF1B: Channel3.NRX1 = value; break;
+			case 0xFF1C: Channel3.NRX2 = value; break;
+			case 0xFF1D: Channel3.NRX3 = value; break;
+			case 0xFF1E: Channel3.NRX4 = value; break;
 									   
-			case 0xFF1F: Channel4.NRx0 = value; break;
-			case 0xFF20: Channel4.NRx1 = value; break;
-			case 0xFF21: Channel4.NRx2 = value; break;
-			case 0xFF22: Channel4.NRx3 = value; break;
-			case 0xFF23: Channel4.NRx4 = value; break;
+			case 0xFF1F: Channel4.NRX0 = value; break;
+			case 0xFF20: Channel4.NRX1 = value; break;
+			case 0xFF21: Channel4.NRX2 = value; break;
+			case 0xFF22: Channel4.NRX3 = value; break;
+			case 0xFF23: Channel4.NRX4 = value; break;
 			
 			// Control & Status
 			case 0xFF24: FF24_MasterVolume_VINPanning = value; break;
@@ -158,7 +140,7 @@ public class APU : IMemorySegment {
 			
 			// Wave Table
 			case >= 0xFF30 and <= 0xFF3F: 
-				WaveTable[addr - 0xFF30] = value;
+				this.Channel3.SampleTable[addr - 0xFF30] = value;
 				break;
 		}
 		
@@ -170,25 +152,10 @@ public class APU : IMemorySegment {
 			}
 		}
 	}
-	
-	private void onPoweredOn() {
+
+    private void onPoweredOn() {
 		// GBC default wave table values
-		WaveTable[0]  = 0x00;
-		WaveTable[1]  = 0xFF; 
-		WaveTable[2]  = 0x00; 
-		WaveTable[3]  = 0xFF; 
-		WaveTable[4]  = 0x00; 
-		WaveTable[5]  = 0xFF; 
-		WaveTable[6]  = 0x00; 
-		WaveTable[7]  = 0xFF; 
-		WaveTable[8]  = 0x00; 
-		WaveTable[9]  = 0xFF; 
-		WaveTable[10] = 0x00; 
-		WaveTable[11] = 0xFF; 
-		WaveTable[12] = 0x00; 
-		WaveTable[13] = 0xFF; 
-		WaveTable[14] = 0x00; 
-		WaveTable[15] = 0xFF;
+        Channel3.ResetWaveTable();
 	}
 	
 	private void onPoweredOff() {
@@ -198,4 +165,25 @@ public class APU : IMemorySegment {
 		Channel4.Reset();
 	}
 
+    public void FillSamples(float playbackFreq, Sample[] samples, float chan1Volume = 1.0f, float chan2Volume = 1.0f, float chan3Volume = 1.0f, float chan4Volume = 1.0f) {
+        // Clear samples
+		Array.Fill(samples, new Sample()); 
+
+		if (!IsPoweredOn)
+            return; // Done, no audio is generated
+	
+		// Mix in samples
+        Channel1.MixInSamples(playbackFreq, chan1Volume * LeftVolume, chan1Volume * RightVolume, samples);
+        Channel2.MixInSamples(playbackFreq, chan2Volume * LeftVolume, chan2Volume * RightVolume, samples);
+        Channel3.MixInSamples(playbackFreq, chan3Volume * LeftVolume, chan3Volume * RightVolume, samples);
+        Channel4.MixInSamples(playbackFreq, chan4Volume * LeftVolume, chan4Volume * RightVolume, samples);
+
+		// Average samples across channels
+		for (var i = 0; i < samples.Length; i++) {
+			var sample = samples[i];
+			sample.Left /= 4;
+			sample.Right /= 4;
+			samples[i] = sample;
+		}
+    }
 }

@@ -47,7 +47,7 @@ public partial class Cpu : IResetable {
 
     protected virtual int RegisterIE() => 0;
     protected virtual int RegisterIF() => 0;
-    public int Step() {
+    public ClockDelta Step() {
         // Interrupt handler
         if ((RegisterIF() & RegisterIE()) != 0) {
             if (reg.ime() != 0) {
@@ -59,15 +59,13 @@ public partial class Cpu : IResetable {
                 HandleStdInterrupts();
                 HandleAdditionalInterrupts();
                 reg.ime(0);
-                int deltaMInterrupt = clock.delM();
-                clock.Accept();
-                return deltaMInterrupt;
+                return clock.Accept();
             }
             ExitHaltMode();
         }
 
         if (IsInHaltMode()) {
-            return 1;
+            return new ClockDelta(0, 1);
         }
 
         // Fetch instruction
@@ -102,10 +100,7 @@ public partial class Cpu : IResetable {
         OnAfterExecute(address, op);
 
         // Increment the clock
-        int deltaM = clock.delM();
-        clock.Accept();
-    
-        return deltaM;
+        return clock.Accept();
     }
     private bool isHalted = false;
     private int haltModeEnabledAt = 0;

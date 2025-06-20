@@ -8,11 +8,13 @@ namespace Qkmaxware.Emulators.Gameboy.Player;
 
 public partial class AudioDebug : Control {
     [Export] public GodotBoy Player;
+    [Export] public Speakers Speakers;
 
-    [Export] public Label AudioOn;
+    [Export] public CheckButton AudioOnButton;
 
     [ExportGroup("Channel 1")]
     [Export] public Label Ch1On;
+    [Export] public Slider Ch1Volume;
     [Export] public Label NR11;
     [Export] public Label Ch1Pace;
     [Export] public Label Ch1SweepDir;
@@ -27,6 +29,7 @@ public partial class AudioDebug : Control {
 
     [ExportGroup("Channel 2")]
     [Export] public Label Ch2On;
+    [Export] public Slider Ch2Volume;
     [Export] public Label NR21;
     [Export] public Label Ch2Pace;
     [Export] public Label Ch2SweepDir;
@@ -41,6 +44,7 @@ public partial class AudioDebug : Control {
 
     [ExportGroup("Channel 3")]
     [Export] public Label Ch3On;
+    [Export] public Slider Ch3Volume;
     [Export] public Label NR31;
     [Export] public Label NR32;
     [Export] public Label NR33;
@@ -48,6 +52,7 @@ public partial class AudioDebug : Control {
 
     [ExportGroup("Channel 4")]
     [Export] public Label Ch4On;
+    [Export] public Slider Ch4Volume;
     [Export] public Label NR41;
     [Export] public Label NR42;
     [Export] public Label NR43;
@@ -61,17 +66,18 @@ public partial class AudioDebug : Control {
         const int points = 200;
         const float timespan = 1.0f;
 
-        AudioOn.Text        = Console.Sound.IsPoweredOn ? "Audio On" : "Audio Off"; 
+        AudioOnButton.ButtonPressed = Speakers?.EnableSound ?? false;
 
         // CH1
-        Ch1On.Text          = Console.Sound.Channel1.IsOn().ToString();
+        /*Ch1On.Text          = Console.Sound.Channel1.IsOn().ToString();
+        Ch1Volume.Value     = Speakers?.Square1Volume ?? 0.0;
 
         NR11.Text           = "0b" + Convert.ToString(Console.Sound.Channel1.NRx0, 2);
         Ch1Pace.Text        = "sweep pace:   " + Console.Sound.Channel1.Pace.ToString();
-        Ch1SweepDir.Text    = "sweep dir:    " + Console.Sound.Channel1.Direction.ToString();
+        Ch1SweepDir.Text    = "sweep dir:    " + Console.Sound.Channel1.SweepDirection.ToString();
 
         NR12.Text           = "0b" + Convert.ToString(Console.Sound.Channel1.NRx1, 2);
-        Ch1Duty.Text        = "duty freq:    " + Console.Sound.Channel1.Duty.ToString();
+        Ch1Duty.Text        = "duty freq:    " + Console.Sound.Channel1.DutyCycle.ToString();
         Ch1LengthTimer.Text = "length timer: " + Console.Sound.Channel1.LengthTimer;
 
         NR13.Text           = "0b" + Convert.ToString(Console.Sound.Channel1.NRx2, 2);
@@ -91,13 +97,14 @@ public partial class AudioDebug : Control {
 
         // CH2
         Ch2On.Text          = Console.Sound.Channel2.IsOn().ToString();
+        Ch2Volume.Value     = Speakers?.Square2Volume ?? 0.0;
 
         NR21.Text           = "0b" + Convert.ToString(Console.Sound.Channel2.NRx0, 2);
         Ch2Pace.Text        = "sweep pace:   " + Console.Sound.Channel2.Pace.ToString();
-        Ch2SweepDir.Text    = "sweep dir:    " + Console.Sound.Channel2.Direction.ToString();
+        Ch2SweepDir.Text    = "sweep dir:    " + Console.Sound.Channel2.SweepDirection.ToString();
 
         NR22.Text           = "0b" + Convert.ToString(Console.Sound.Channel2.NRx1, 2);
-        Ch2Duty.Text        = "duty freq:    " + Console.Sound.Channel2.Duty.ToString();
+        Ch2Duty.Text        = "duty freq:    " + Console.Sound.Channel2.DutyCycle.ToString();
         Ch2LengthTimer.Text = "length timer: " + Console.Sound.Channel2.LengthTimer;
 
         NR23.Text           = "0b" + Convert.ToString(Console.Sound.Channel2.NRx2, 2);
@@ -114,5 +121,40 @@ public partial class AudioDebug : Control {
                 Math.Sign(Math.Sin(Math.Tau * hz.Hertz * ((x/(float)points) * timespan)))
             )).ToArray()
         );
+
+        // CH3
+        Ch3On.Text          = Console.Sound.Channel3.IsOn().ToString();
+        Ch3Volume.Value     = Speakers?.WaveVolume ?? 0.0;
+
+        // CH4
+        Ch4On.Text          = Console.Sound.Channel4.IsOn().ToString();
+        Ch4Volume.Value     = Speakers?.NoiseVolume ?? 0.0;*/
+    }
+
+    public void OnSliderChanged(bool changed) {
+        if (changed) {
+            PushbackSettings();
+        }
+    }
+    public void PushbackSettings() {
+        if (Player is not null)
+            PushbackConsoleSettings(Player.Console);
+        if (Speakers is not null) 
+            PushbackSpeakerSettings(Speakers);
+    }
+    private void PushbackConsoleSettings(Gameboy gameboy) {
+
+    }
+
+    private void PushbackSpeakerSettings(Speakers speakers) {
+        if (speakers is null)
+            return;
+
+        speakers.EnableSound = AudioOnButton.ButtonPressed;
+
+        speakers.Square1Volume = (float)Ch1Volume.Value;
+        speakers.Square2Volume = (float)Ch2Volume.Value;
+        speakers.WaveVolume    = (float)Ch3Volume.Value;
+        speakers.NoiseVolume   = (float)Ch4Volume.Value;
     }
 }

@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://divrqb47wvwvt" path="res://Prefabs/GodotBoy/UI/reload.png" id="2_4l1t0"]
 [ext_resource type="PackedScene" uid="uid://bjbvg4d0iuviv" path="res://Debuggers/Plot2D.tscn" id="2_kb1rd"]
 
-[node name="Audio" type="Control" node_paths=PackedStringArray("AudioOn", "Ch1On", "NR11", "Ch1Pace", "Ch1SweepDir", "NR12", "Ch1Duty", "Ch1LengthTimer", "NR13", "Ch1Freq", "NR14", "Ch1LengthEnable", "CH1Plot", "Ch2On", "NR21", "Ch2Pace", "Ch2SweepDir", "NR22", "Ch2Duty", "Ch2LengthTimer", "NR23", "Ch2Freq", "NR24", "Ch2LengthEnable", "CH2Plot")]
+[node name="Audio" type="Control" node_paths=PackedStringArray("AudioOnButton", "Ch1On", "Ch1Volume", "NR11", "Ch1Pace", "Ch1SweepDir", "NR12", "Ch1Duty", "Ch1LengthTimer", "NR13", "Ch1Freq", "NR14", "Ch1LengthEnable", "CH1Plot", "Ch2On", "Ch2Volume", "NR21", "Ch2Pace", "Ch2SweepDir", "NR22", "Ch2Duty", "Ch2LengthTimer", "NR23", "Ch2Freq", "NR24", "Ch2LengthEnable", "CH2Plot", "Ch3On", "Ch3Volume", "Ch4On", "Ch4Volume")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -12,8 +12,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_bchvj")
-AudioOn = NodePath("ScrollContainer/MarginContainer/VBoxContainer/AudioStatus")
+AudioOnButton = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Mute")
 Ch1On = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Ch1/OnOff")
+Ch1Volume = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Volume1/HSlider")
 NR11 = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Spec1/NRx0/Label")
 Ch1Pace = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Spec1/NRx0/Pace")
 Ch1SweepDir = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Spec1/NRx0/SweepDirection")
@@ -26,6 +27,7 @@ NR14 = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Spec1/NRx3/Label"
 Ch1LengthEnable = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Spec1/NRx3/LengthEnable")
 CH1Plot = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Plot2D")
 Ch2On = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Ch2/OnOff")
+Ch2Volume = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Volume2/HSlider")
 NR21 = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Spec2/NRx0/Label")
 Ch2Pace = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Spec2/NRx0/Pace")
 Ch2SweepDir = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Spec2/NRx0/SweepDirection")
@@ -37,6 +39,10 @@ Ch2Freq = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Spec2/NRx2/Fre
 NR24 = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Spec2/NRx3/Label")
 Ch2LengthEnable = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Spec2/NRx3/LengthEnable")
 CH2Plot = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Plot2D2")
+Ch3On = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Ch3/OnOff")
+Ch3Volume = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Volume3/HSlider")
+Ch4On = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Ch4/OnOff")
+Ch4Volume = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Volume4/HSlider")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 layout_mode = 1
@@ -58,9 +64,10 @@ theme_override_constants/margin_bottom = 10
 [node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="AudioStatus" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer"]
+[node name="Mute" type="CheckButton" parent="ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
-horizontal_alignment = 1
+text = "Mute/Unmute All"
+alignment = 2
 
 [node name="Ch1" type="HBoxContainer" parent="ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -73,6 +80,19 @@ text = "Channel 1 - Square 1"
 [node name="OnOff" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/Ch1"]
 custom_minimum_size = Vector2(64, 0)
 layout_mode = 2
+
+[node name="Volume1" type="HBoxContainer" parent="ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/Volume1"]
+layout_mode = 2
+text = "Volume:"
+
+[node name="HSlider" type="HSlider" parent="ScrollContainer/MarginContainer/VBoxContainer/Volume1"]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.1
 
 [node name="Spec1" type="HBoxContainer" parent="ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -146,6 +166,19 @@ text = "Channel 2 - Square 2"
 [node name="OnOff" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/Ch2"]
 custom_minimum_size = Vector2(64, 0)
 layout_mode = 2
+
+[node name="Volume2" type="HBoxContainer" parent="ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/Volume2"]
+layout_mode = 2
+text = "Volume:"
+
+[node name="HSlider" type="HSlider" parent="ScrollContainer/MarginContainer/VBoxContainer/Volume2"]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.1
 
 [node name="Spec2" type="HBoxContainer" parent="ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -230,6 +263,19 @@ text = "Channel 3 - Wave"
 custom_minimum_size = Vector2(64, 0)
 layout_mode = 2
 
+[node name="Volume3" type="HBoxContainer" parent="ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/Volume3"]
+layout_mode = 2
+text = "Volume:"
+
+[node name="HSlider" type="HSlider" parent="ScrollContainer/MarginContainer/VBoxContainer/Volume3"]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.1
+
 [node name="HSeparator3" type="HSeparator" parent="ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
@@ -245,6 +291,19 @@ text = "Channel 4 - Noise"
 custom_minimum_size = Vector2(64, 0)
 layout_mode = 2
 
+[node name="Volume4" type="HBoxContainer" parent="ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/Volume4"]
+layout_mode = 2
+text = "Volume:"
+
+[node name="HSlider" type="HSlider" parent="ScrollContainer/MarginContainer/VBoxContainer/Volume4"]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.1
+
 [node name="Reload" type="Button" parent="."]
 layout_mode = 1
 anchors_preset = 1
@@ -257,4 +316,9 @@ text = "Reload"
 icon = ExtResource("2_4l1t0")
 expand_icon = true
 
+[connection signal="pressed" from="ScrollContainer/MarginContainer/VBoxContainer/Mute" to="." method="PushbackSettings"]
+[connection signal="drag_ended" from="ScrollContainer/MarginContainer/VBoxContainer/Volume1/HSlider" to="." method="OnSliderChanged"]
+[connection signal="drag_ended" from="ScrollContainer/MarginContainer/VBoxContainer/Volume2/HSlider" to="." method="OnSliderChanged"]
+[connection signal="drag_ended" from="ScrollContainer/MarginContainer/VBoxContainer/Volume3/HSlider" to="." method="OnSliderChanged"]
+[connection signal="drag_ended" from="ScrollContainer/MarginContainer/VBoxContainer/Volume4/HSlider" to="." method="OnSliderChanged"]
 [connection signal="pressed" from="Reload" to="." method="Refresh"]

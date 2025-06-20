@@ -8,6 +8,15 @@ using System.IO;
 using Qkmaxware.Emulators.Gameboy.Player;
 
 public partial class GodotBoy : Control, IDebugable {
+
+	[Signal] public delegate void PlaybackStartedEventHandler();
+	[Signal] public delegate void PlaybackStoppedEventHandler();
+	[Signal] public delegate void GameSavedEventHandler();
+	[Signal] public delegate void GameLoadedEventHandler();
+
+	[Export] public bool EnableLoaderControls = true;
+	[Export] public bool EnablePlaybackControls = true;
+
 	public enum ControlState {
 		Stopped, Paused, Playing
 	}
@@ -25,6 +34,20 @@ public partial class GodotBoy : Control, IDebugable {
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready() {
+		if (!EnableLoaderControls) {
+			var loader = this.GetNode<Control>("Loader");
+			loader.Visible = false;
+			if (SaveSlot is not null) {
+				SaveSlot.Selected = 0; // Fix to disable the LoadFromSaveSlot feature
+			}
+			loader.ProcessMode = Node.ProcessModeEnum.Disabled;
+		}
+		if (!EnablePlaybackControls) {
+			var playback = this.GetNode<Control>("Playback");
+			playback.Visible = false;
+			playback.ProcessMode = Node.ProcessModeEnum.Disabled;
+		}
+
 		if (OnscreenControls is null) {
 			OnscreenControls = new OnscreenControls[0];
 		}
@@ -101,19 +124,25 @@ public partial class GodotBoy : Control, IDebugable {
 	}
 
 	private string LastCartPath;
-	public void LoadCartFromPath(string filepath) {
+	public void LoadCartFromPath(string filepath, string saveDataPath = null) {
 		try {
+			LastSavePath = null;
 			LastCartPath = filepath;
 			var cart = new Cartridge(File.ReadAllBytes(filepath));
 			insertCart(cart);
+			if (saveDataPath is not null)
+				LoadSaveFromFile(saveDataPath);
 		} catch (Exception e) {
 			GD.PushError(e);
 		}
 	}
 
-	public void LoadCart(Cartridge cart) {
+	public void LoadCart(Cartridge cart, string saveDataPath = null) {
+		LastSavePath = null;
 		this.LastCartPath = null;
 		insertCart(cart);
+		if (saveDataPath is not null)
+			LoadSaveFromFile(saveDataPath);
 	}
 
 
@@ -129,27 +158,45 @@ public partial class GodotBoy : Control, IDebugable {
 		this.Console?.LoadCartridge(cart);
 	}
 
+	private string? LastSavePath;
+	public void LoadSaveFromSlot() {
+		if (SaveSlot is not null) {
+			var index = SaveSlot.GetItemId(SaveSlot.Selected);
+
+			// Load save
+			if (!string.IsNullOrEmpty(LastCartPath) && index > 0) {
+				var saveSlotPath = LastCartPath + ".sav" + index;
+				if (File.Exists(saveSlotPath)) {
+					var saveData = File.ReadAllBytes(saveSlotPath);
+					this.Console.RestoreCartRam(saveData);
+					GD.Print("Loaded eRAM from: " + saveSlotPath);
+					EmitSignal(SignalName.GameLoaded);
+				}
+				LastSavePath = saveSlotPath;
+			}
+		}
+	}
+	public void LoadSaveFromFile(string path) {
+		var saveSlotPath = path;
+		if (File.Exists(saveSlotPath)) {
+			var saveData = File.ReadAllBytes(saveSlotPath);
+			this.Console.RestoreCartRam(saveData);
+			GD.Print("Loaded eRAM from: " + saveSlotPath);
+			EmitSignal(SignalName.GameLoaded);
+		}
+		LastSavePath = saveSlotPath;
+	}
+
 	public void Start() {
 		if (this.Console is not null && this.Console.IsCartridgeLoaded()) {
 			this.Console.Reset();
 
 			// If we have a save slot selected, a cart loaded, and that cart has a battery then...
-			if (SaveSlot is not null) {
-				var index = SaveSlot.GetItemId(SaveSlot.Selected);
-
-				// Load save
-				if (!string.IsNullOrEmpty(LastCartPath) && index > 0) {
-					var saveSlotPath = LastCartPath + ".sav" + index;
-					if (File.Exists(saveSlotPath)) {
-						var saveData = File.ReadAllBytes(saveSlotPath);
-						this.Console.RestoreCartRam(saveData);
-						GD.Print("Loaded eRAM from: " + saveSlotPath);
-					}
-				}
-			}
+			LoadSaveFromSlot(); // By default this will be "No Save"
 
 			this.Screen.Blank();
 			this.State = ControlState.Playing;
+			EmitSignal(SignalName.PlaybackStarted);
 		} else {
 			GD.PushError("No cartridge loaded");
 		}
@@ -180,15 +227,18 @@ public partial class GodotBoy : Control, IDebugable {
 	public void Stop() {
 		if (this.Console is not null && this.Console.IsCartridgeLoaded()) {
 			this.State = ControlState.Stopped;
-			if (this.Console.SupportsSaves() && !string.IsNullOrEmpty(LastCartPath) && SaveSlot is not null) {
-				var index = SaveSlot.GetItemId(SaveSlot.Selected);
-				if (index > 0) {
-					var saveSlotPath = LastCartPath + ".sav" + index;
-					File.WriteAllBytes(saveSlotPath, this.Console.DumpCartRam().ToArray());
-				}
-			}
+			Save();
 			this.Console.Reset();
 			this.Screen.ShowIntro();
+			EmitSignal(SignalName.PlaybackStopped);
+		}
+	}
+
+	public void Save() {
+		if (this.Console.SupportsSaves() && LastSavePath is not null) {
+			var saveSlotPath = LastSavePath;
+			File.WriteAllBytes(saveSlotPath, this.Console.DumpCartRam().ToArray());
+			EmitSignal(SignalName.GameSaved);
 		}
 	}
 

@@ -42,12 +42,16 @@ public class Clock : IResetable {
        inst_cycle += i;
     }
     
-    public void Accept(){
+    public ClockDelta Accept(){
+        ClockDelta dt = new ClockDelta(inst_cycle, inst_machine);
+
         cycles = inst_cycle;
         inst_cycle = 0;
         
         machine = inst_machine;
         inst_machine = 0;
+
+        return dt;
     }
 
     public void Reject(){

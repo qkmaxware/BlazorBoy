@@ -110,19 +110,19 @@ public class Gameboy {
     public void Dispatch(){
         //Step the cpu
         var measure = PerformanceAnalyzer?.BeginMeasure(CPU);
-        int deltaTime = CPU.Step();
+        var dt = CPU.Step();
         measure?.Record();
 
         //Step the gpu
         measure = PerformanceAnalyzer?.BeginMeasure(GPU);
-        GPU.Step(deltaTime);
+        GPU.Step(dt.M);
         measure?.Record();
         
         //Step the timer
-        timer.Increment(deltaTime);
+        timer.Increment(dt.M);
 
         // Step the sound
-        this.Sound.Tick();
+        this.Sound.Tick(dt);
     }
 
     public void DispatchUntilBufferFlush() {

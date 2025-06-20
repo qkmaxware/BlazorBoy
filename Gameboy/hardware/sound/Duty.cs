@@ -1,18 +1,23 @@
 namespace Qkmaxware.Emulators.Gameboy.Hardware;
 
-public struct Duty {
-	private float percent;
+public enum Duty {
+    TwelvePointFive = 0,
+    TwentyFive = 1,
+    Fifty = 2,
+    SeventyFive = 3
+}
 
-    public Duty (float value) {
-        if (value < 0)
-            value = 0;
-        if (value > 1)
-            value = 1;
-        percent = value;
+public struct SquareWaveWaveform {
+    private int pattern;
+
+    public SquareWaveWaveform(int pattern) {
+        this.pattern = pattern & 0b1111_1111;
     }
 
-	public float Percent => percent * 100;
-	public float NormalizedPercent => percent;
+    public bool IsHigh(int fsStep) {
+        fsStep = fsStep % 8;
+        return (pattern & (0b1000_000 >> fsStep)) != 0;
+    }
 
-	public override string ToString() => $"{Percent}% of period";
+    public bool IsLow(int fsStep) => !IsHigh(fsStep);
 }

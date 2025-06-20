@@ -499,6 +499,8 @@ stretch_mode = 5
 layout_mode = 1
 anchors_preset = 0
 script = ExtResource("21_h4ww3")
+EnableSound = true
+NoiseVolume = 1.0
 
 [node name="Player" type="AudioStreamPlayer" parent="Speakers"]
 stream = SubResource("AudioStreamGenerator_h4nlb")
@@ -760,10 +762,11 @@ layout_mode = 2
 Player = NodePath("../../../..")
 Map = 1
 
-[node name="Audio" parent="Debug/MarginContainer/Debuggers" node_paths=PackedStringArray("Player") instance=ExtResource("35_inklj")]
+[node name="Audio" parent="Debug/MarginContainer/Debuggers" node_paths=PackedStringArray("Player", "Speakers") instance=ExtResource("35_inklj")]
 visible = false
 layout_mode = 2
 Player = NodePath("../../../..")
+Speakers = NodePath("../../../../Speakers")
 
 [node name="Disassembler" parent="Debug/MarginContainer/Debuggers" node_paths=PackedStringArray("Player") instance=ExtResource("26_1mdrh")]
 visible = false
