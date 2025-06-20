@@ -1,0 +1,50 @@
+[gd_scene load_steps=3 format=3 uid="uid://chiogj51d08p6"]
+
+[ext_resource type="Texture2D" uid="uid://dxeevgs2arqxu" path="res://Bios/bios.svg" id="1_hv4eg"]
+[ext_resource type="Script" uid="uid://b5gw2xas4b2mf" path="res://Prefabs/ProfileSelect/Clock.gd" id="2_v8oty"]
+
+[node name="Header" type="ColorRect"]
+custom_minimum_size = Vector2(0, 48)
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 48.0
+grow_horizontal = 2
+color = Color(0.156863, 0.168627, 0.188235, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 6
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="Logo" type="TextureRect" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("1_hv4eg")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="VSeparator" type="VSeparator" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 24
+
+[node name="Clock" type="Label" parent="MarginContainer/HBoxContainer"]
+layout_direction = 3
+layout_mode = 2
+text = "99:99"
+script = ExtResource("2_v8oty")
+
+[node name="Timer" type="Timer" parent="MarginContainer/HBoxContainer/Clock"]
+wait_time = 30.0
+autostart = true
+
+[connection signal="timeout" from="MarginContainer/HBoxContainer/Clock/Timer" to="MarginContainer/HBoxContainer/Clock" method="_on_timer_timeout"]

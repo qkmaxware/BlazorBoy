@@ -1,0 +1,356 @@
+[gd_scene load_steps=12 format=3 uid="uid://cmwne2xpx0ew8"]
+
+[ext_resource type="Texture2D" uid="uid://phib2s0vtdjc" path="res://Bios/B.svg" id="1_0n0qd"]
+[ext_resource type="Script" uid="uid://c3k0kvlttr15v" path="res://Prefabs/Splash/Splash.gd" id="1_mhcl2"]
+[ext_resource type="Texture2D" uid="uid://b5iio36yx53ob" path="res://Bios/L.svg" id="2_mhcl2"]
+[ext_resource type="Texture2D" uid="uid://cjfc1krx8vsrb" path="res://Bios/A.svg" id="3_0b750"]
+[ext_resource type="Texture2D" uid="uid://b6jgtgt13oh3d" path="res://Bios/Z.svg" id="4_j1xrc"]
+[ext_resource type="Texture2D" uid="uid://5qs5dk1bryyu" path="res://Bios/O.svg" id="5_le1wa"]
+[ext_resource type="Texture2D" uid="uid://cy4fls78vteaj" path="res://Bios/R.svg" id="6_m3i7e"]
+[ext_resource type="Texture2D" uid="uid://bndcyy3q7vslr" path="res://Bios/Y.svg" id="7_g4i5i"]
+
+[sub_resource type="Animation" id="Animation_mhcl2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedText/VBoxContainer/Author:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedText/VBoxContainer/Title/Letter:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedText/VBoxContainer/Title/Letter2:self_modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AnimatedText/VBoxContainer/Title/Letter3:self_modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("AnimatedText/VBoxContainer/Title/Letter4:self_modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("AnimatedText/VBoxContainer/Title/Letter5:self_modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("AnimatedText/VBoxContainer/Title/Letter6:self_modulate")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("AnimatedText/VBoxContainer/Title/Letter7:self_modulate")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("AnimatedText/VBoxContainer/Title/Letter8:self_modulate")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("AnimatedText/VBoxContainer/Title/Letter9:self_modulate")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_0n0qd"]
+resource_name = "Show"
+length = 4.0
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedText/VBoxContainer/Author:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedText/VBoxContainer/Title/Letter:self_modulate")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.5, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedText/VBoxContainer/Title/Letter2:self_modulate")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.75, 1.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AnimatedText/VBoxContainer/Title/Letter3:self_modulate")
+tracks/3/interp = 2
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(1, 1.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("AnimatedText/VBoxContainer/Title/Letter4:self_modulate")
+tracks/4/interp = 2
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(1.25, 1.75),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("AnimatedText/VBoxContainer/Title/Letter5:self_modulate")
+tracks/5/interp = 2
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(1.5, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("AnimatedText/VBoxContainer/Title/Letter6:self_modulate")
+tracks/6/interp = 2
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(1.75, 2.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("AnimatedText/VBoxContainer/Title/Letter7:self_modulate")
+tracks/7/interp = 2
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(2, 2.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("AnimatedText/VBoxContainer/Title/Letter8:self_modulate")
+tracks/8/interp = 2
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(2.25, 2.75),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("AnimatedText/VBoxContainer/Title/Letter9:self_modulate")
+tracks/9/interp = 2
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(2.5, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_mhcl2"]
+_data = {
+&"RESET": SubResource("Animation_mhcl2"),
+&"Show": SubResource("Animation_0n0qd")
+}
+
+[node name="Splash" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_mhcl2")
+goto = "uid://bj2vk0fr047sq"
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.117647, 0.129412, 0.141176, 1)
+
+[node name="AnimatedText" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="AnimatedText"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="HBoxContainer" parent="AnimatedText/VBoxContainer"]
+layout_mode = 2
+
+[node name="Letter" type="TextureRect" parent="AnimatedText/VBoxContainer/Title"]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+texture = ExtResource("1_0n0qd")
+
+[node name="Letter2" type="TextureRect" parent="AnimatedText/VBoxContainer/Title"]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+texture = ExtResource("2_mhcl2")
+
+[node name="Letter3" type="TextureRect" parent="AnimatedText/VBoxContainer/Title"]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+texture = ExtResource("3_0b750")
+
+[node name="Letter4" type="TextureRect" parent="AnimatedText/VBoxContainer/Title"]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+texture = ExtResource("4_j1xrc")
+
+[node name="Letter5" type="TextureRect" parent="AnimatedText/VBoxContainer/Title"]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+texture = ExtResource("5_le1wa")
+
+[node name="Letter6" type="TextureRect" parent="AnimatedText/VBoxContainer/Title"]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+texture = ExtResource("6_m3i7e")
+
+[node name="Letter7" type="TextureRect" parent="AnimatedText/VBoxContainer/Title"]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+texture = ExtResource("1_0n0qd")
+
+[node name="Letter8" type="TextureRect" parent="AnimatedText/VBoxContainer/Title"]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+texture = ExtResource("5_le1wa")
+
+[node name="Letter9" type="TextureRect" parent="AnimatedText/VBoxContainer/Title"]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+texture = ExtResource("7_g4i5i")
+
+[node name="Author" type="Label" parent="AnimatedText/VBoxContainer"]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+text = "Qkmaxware"
+horizontal_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_mhcl2")
+}
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

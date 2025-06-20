@@ -1,7 +1,7 @@
 namespace Qkmaxware.Emulators.Gameboy.Hardware;
 
 public enum RegionCode {
-    Unknown, Japanese, NotJapanese
+    Unknown, Japanese, International
 }
 
 public static class RegionCodeRegistry {
@@ -10,7 +10,7 @@ public static class RegionCodeRegistry {
             case 0x00:
                 return RegionCode.Japanese;
             case 0x01:
-                return RegionCode.NotJapanese;
+                return RegionCode.International;
             default:
                 return RegionCode.Unknown;
         }

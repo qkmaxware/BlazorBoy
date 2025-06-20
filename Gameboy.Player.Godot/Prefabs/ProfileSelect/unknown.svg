@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="32mm"
+   height="32mm"
+   viewBox="0 0 32 32"
+   version="1.1"
+   id="svg8"
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"
+   sodipodi:docname="unknown.svg">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#4f4f4f"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.4"
+     inkscape:cx="-27.652088"
+     inkscape:cy="-29.046404"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     inkscape:document-rotation="0"
+     showgrid="false"
+     inkscape:pagecheckerboard="true"
+     inkscape:window-width="1680"
+     inkscape:window-height="979"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     showguides="false" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="fill:#ffffff;stroke:none;stroke-width:0.862177;stroke-linecap:round;stroke-linejoin:round"
+       id="rect843"
+       width="32"
+       height="32"
+       x="0"
+       y="-1.110223e-16"
+       inkscape:label="BG" />
+    <path
+       id="rect845"
+       style="fill:#cccccc;stroke:none;stroke-width:2.90146;stroke-linecap:round;stroke-linejoin:round"
+       d="M 98.216797,0 V 99.5 H 0 v 21.44531 H 98.216797 120.94531 V 99.5 0 Z"
+       transform="scale(0.26458333)" />
+    <g
+       aria-label="?"
+       id="text834"
+       style="font-size:27.9003px;line-height:1.25;font-family:Arial;-inkscape-font-specification:Arial;fill:#333333;stroke:#333333;stroke-width:0.697509"
+       transform="matrix(1.1529198,0,0,1.1529198,-2.423785,-2.4467163)">
+      <path
+         d="m 14.760289,21.238117 q -0.01362,-0.490435 -0.01362,-0.735652 0,-1.444059 0.408696,-2.493045 0.29971,-0.790145 0.967246,-1.593913 0.490435,-0.585797 1.757392,-1.702899 1.28058,-1.130725 1.66203,-1.798262 0.381449,-0.667536 0.381449,-1.457681 0,-1.430436 -1.117102,-2.5066679 -1.117101,-1.0898554 -2.738261,-1.0898554 -1.566668,0 -2.615653,0.9808699 Q 12.403477,9.8218815 12.07652,11.90623 L 9.5562294,11.60652 q 0.3405798,-2.7927548 2.0162326,-4.2776828 1.689276,-1.484928 4.454784,-1.484928 2.928986,0 4.672755,1.5939135 1.743769,1.5939136 1.743769,3.8553633 0,1.307827 -0.613044,2.411305 -0.613043,1.103479 -2.397682,2.683769 -1.198841,1.06261 -1.566667,1.566668 -0.367826,0.504058 -0.544928,1.157971 -0.177101,0.653913 -0.204348,2.125218 z m -0.149855,4.917973 v -2.792755 h 2.792754 v 2.792755 z"
+         style="fill:#333333;stroke:#333333;stroke-width:0.697509"
+         id="path836" />
+    </g>
+  </g>
+</svg>

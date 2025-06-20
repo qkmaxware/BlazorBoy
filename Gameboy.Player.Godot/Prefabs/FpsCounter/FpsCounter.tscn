@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://h76usr16og0b"]
 
-[ext_resource type="Script" path="res://Prefabs/FpsCounter/FpsCounter.cs" id="1_frcmh"]
+[ext_resource type="Script" uid="uid://bp8gwdwtfl3a6" path="res://Prefabs/FpsCounter/FpsCounter.cs" id="1_frcmh"]
 
 [node name="FPS" type="Label"]
 anchors_preset = 15

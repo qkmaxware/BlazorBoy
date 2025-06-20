@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://bcvv8417hthjf"]
 
-[ext_resource type="Script" path="res://Prefabs/OnscreenControls/Joystick.cs" id="1_e6dly"]
+[ext_resource type="Script" uid="uid://fvd3namwppa5" path="res://Prefabs/OnscreenControls/Joystick.cs" id="1_e6dly"]
 [ext_resource type="Texture2D" uid="uid://cgwofjnfpool2" path="res://Prefabs/GodotBoy/UI/joyring.png" id="2_sd8fw"]
 [ext_resource type="Texture2D" uid="uid://hysemwm538jj" path="res://Prefabs/GodotBoy/UI/joystick_knob.png" id="3_6sxs2"]
 

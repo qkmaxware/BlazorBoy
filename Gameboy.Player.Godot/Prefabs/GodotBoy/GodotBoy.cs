@@ -16,8 +16,10 @@ public partial class GodotBoy : Control, IDebugable {
 
 	[Export] public bool EnableLoaderControls = true;
 	[Export] public bool EnablePlaybackControls = true;
+	[Export] public bool AutoloadOptions = true;
 
-	public enum ControlState {
+	public enum ControlState
+	{
 		Stopped, Paused, Playing
 	}
 	private ControlState State {get; set;} = ControlState.Stopped;
@@ -27,8 +29,9 @@ public partial class GodotBoy : Control, IDebugable {
 	[Export] public Control PlaybackControl;
 	[Export] public OptionButton SaveSlot;
 	[Export] public OnscreenControls[] OnscreenControls;
+	[Export] public Options Options;
 
-	public Screen Screen {get; private set;}
+	public Screen Screen { get; private set; }
 	public Speakers Speakers {get; private set;}
 	public Gameboy Console {get; init;} = new Gameboy();
 
@@ -47,8 +50,13 @@ public partial class GodotBoy : Control, IDebugable {
 			playback.Visible = false;
 			playback.ProcessMode = Node.ProcessModeEnum.Disabled;
 		}
+		if (AutoloadOptions && Options is not null)
+		{
+			Options.LoadConfig();
+		}
 
-		if (OnscreenControls is null) {
+		if (OnscreenControls is null)
+		{
 			OnscreenControls = new OnscreenControls[0];
 		}
 
@@ -157,6 +165,8 @@ public partial class GodotBoy : Control, IDebugable {
 		Stop();
 		this.Console?.LoadCartridge(cart);
 	}
+
+	public bool IsCartLoaded() => this.Console is not null && this.Console.IsCartridgeLoaded();
 
 	private string? LastSavePath;
 	public void LoadSaveFromSlot() {

@@ -1,8 +1,8 @@
 [gd_scene load_steps=52 format=3 uid="uid://lagkciw3arws"]
 
-[ext_resource type="Script" path="res://Prefabs/GodotBoy/GodotBoy.cs" id="1_807qv"]
+[ext_resource type="Script" uid="uid://peco1e5427od" path="res://Prefabs/GodotBoy/GodotBoy.cs" id="1_807qv"]
 [ext_resource type="Texture2D" uid="uid://dfkwdfgk0dp8n" path="res://icon.svg" id="1_fcyi5"]
-[ext_resource type="Script" path="res://Prefabs/GodotBoy/Screen.cs" id="2_36eiy"]
+[ext_resource type="Script" uid="uid://cnc1u8f7ht624" path="res://Prefabs/GodotBoy/Screen.cs" id="2_36eiy"]
 [ext_resource type="PackedScene" uid="uid://bcvv8417hthjf" path="res://Prefabs/OnscreenControls/Joystick.tscn" id="4_drwt1"]
 [ext_resource type="Texture2D" uid="uid://c1grnn67kto6b" path="res://Prefabs/GodotBoy/UI/transparent.png" id="4_yyevs"]
 [ext_resource type="Texture2D" uid="uid://dubx3mrt06u5p" path="res://Prefabs/GodotBoy/UI/switch_button_a_outline.png" id="5_5ygii"]
@@ -16,17 +16,17 @@
 [ext_resource type="Texture2D" uid="uid://cynul7h3p1uih" path="res://Prefabs/GodotBoy/UI/playstation3_button_start_outline.png" id="11_0eyg3"]
 [ext_resource type="Texture2D" uid="uid://kifhudxotdni" path="res://Prefabs/GodotBoy/UI/playstation3_button_start.png" id="12_df12b"]
 [ext_resource type="Texture2D" uid="uid://ddnjngordtat1" path="res://Prefabs/GodotBoy/UI/default_skin.svg" id="15_43iv6"]
-[ext_resource type="Script" path="res://Prefabs/OnscreenControls/OnscreenControls.cs" id="16_ffynx"]
+[ext_resource type="Script" uid="uid://cgvf2ikb85ljr" path="res://Prefabs/OnscreenControls/OnscreenControls.cs" id="16_ffynx"]
 [ext_resource type="Texture2D" uid="uid://trhljjy16es1" path="res://Prefabs/GodotBoy/UI/layout_screen.svg" id="16_s0175"]
 [ext_resource type="Texture2D" uid="uid://dma6vgdj4ntir" path="res://Prefabs/GodotBoy/UI/layout_screen_control.svg" id="17_arug4"]
 [ext_resource type="Texture2D" uid="uid://bqimngayey7nv" path="res://Prefabs/GodotBoy/UI/default_skin_header.svg" id="17_var3s"]
-[ext_resource type="Script" path="res://Prefabs/GodotBoy/Options.cs" id="17_yhmc5"]
+[ext_resource type="Script" uid="uid://dbg2h6buavn6a" path="res://Prefabs/GodotBoy/Options.cs" id="17_yhmc5"]
 [ext_resource type="Texture2D" uid="uid://gixtpgxdg6fd" path="res://Prefabs/GodotBoy/UI/default_skin_logo.svg" id="18_bpf3f"]
 [ext_resource type="Texture2D" uid="uid://5ynu1mc2abvi" path="res://Prefabs/GodotBoy/UI/layout_skin.svg" id="18_sw6ge"]
 [ext_resource type="Texture2D" uid="uid://dye1lrylf76q3" path="res://Prefabs/GodotBoy/UI/default_skin_speaker.svg" id="19_2f425"]
 [ext_resource type="Theme" uid="uid://dcduu766csudy" path="res://Theme.tres" id="20_0wny8"]
 [ext_resource type="PackedScene" uid="uid://c51yw0q5xqybk" path="res://Prefabs/KeyRebind/keybind.tscn" id="21_1cq1c"]
-[ext_resource type="Script" path="res://Prefabs/GodotBoy/Speakers.cs" id="21_h4ww3"]
+[ext_resource type="Script" uid="uid://3sfycawpbdaf" path="res://Prefabs/GodotBoy/Speakers.cs" id="21_h4ww3"]
 [ext_resource type="PackedScene" uid="uid://7wdw54d0sdlj" path="res://Prefabs/ThemePicker/ThemePicker.tscn" id="21_xltfd"]
 [ext_resource type="PackedScene" uid="uid://t7khq15qfjuw" path="res://Debuggers/CartInfoDebug.tscn" id="21_y5t5s"]
 [ext_resource type="PackedScene" uid="uid://b5psa1c0pvkya" path="res://Debuggers/PaletteDebugger.tscn" id="22_e37a5"]
@@ -42,7 +42,7 @@
 [ext_resource type="Texture2D" uid="uid://cm332so38crqs" path="res://Prefabs/GodotBoy/UI/pause.png" id="32_eqyyb"]
 [ext_resource type="Texture2D" uid="uid://d0dpxbrvr2bo7" path="res://Prefabs/GodotBoy/UI/stop.png" id="32_qkn52"]
 [ext_resource type="PackedScene" uid="uid://ej42kngxrq4x" path="res://Debuggers/AudioDebug.tscn" id="35_inklj"]
-[ext_resource type="Script" path="res://Prefabs/GodotBoy/AudioButton.cs" id="43_d3dy6"]
+[ext_resource type="Script" uid="uid://bxd1708f6sogn" path="res://Prefabs/GodotBoy/AudioButton.cs" id="43_d3dy6"]
 [ext_resource type="Texture2D" uid="uid://cfhmcu84xswfm" path="res://Prefabs/GodotBoy/UI/audio_off.png" id="44_n7g3r"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_o72x6"]
@@ -70,7 +70,7 @@ unicode = 105
 [sub_resource type="Shortcut" id="Shortcut_2ct1q"]
 events = [SubResource("InputEventKey_mhgt7"), SubResource("InputEventKey_wrprd")]
 
-[node name="GodotBoy" type="Control" node_paths=PackedStringArray("CartControl", "PlaybackControl", "SaveSlot", "OnscreenControls")]
+[node name="GodotBoy" type="Control" node_paths=PackedStringArray("CartControl", "PlaybackControl", "SaveSlot", "OnscreenControls", "Options")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -82,6 +82,7 @@ CartControl = NodePath("Loader")
 PlaybackControl = NodePath("Playback")
 SaveSlot = NodePath("Loader/Save Slot")
 OnscreenControls = [NodePath("Screen Layouts/Onscreen Controls/Control"), NodePath("Screen Layouts/Skinned Controls/Control")]
+Options = NodePath("Options")
 
 [node name="Screen Layouts" type="TabContainer" parent="."]
 layout_mode = 1
@@ -91,11 +92,13 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_o72x6")
+current_tab = 0
 tabs_visible = false
 script = ExtResource("2_36eiy")
 
 [node name="Screen Only" type="Control" parent="Screen Layouts"]
 layout_mode = 2
+metadata/_tab_index = 0
 
 [node name="Background" type="ColorRect" parent="Screen Layouts/Screen Only"]
 layout_mode = 1
@@ -137,6 +140,7 @@ stretch_mode = 5
 [node name="Onscreen Controls" type="Control" parent="Screen Layouts"]
 visible = false
 layout_mode = 2
+metadata/_tab_index = 1
 
 [node name="Background" type="ColorRect" parent="Screen Layouts/Onscreen Controls"]
 layout_mode = 1
@@ -270,6 +274,7 @@ stretch_mode = 5
 [node name="Skinned Controls" type="Control" parent="Screen Layouts"]
 visible = false
 layout_mode = 2
+metadata/_tab_index = 2
 
 [node name="Background" type="ColorRect" parent="Screen Layouts/Skinned Controls"]
 layout_mode = 1
@@ -500,6 +505,7 @@ layout_mode = 1
 anchors_preset = 0
 script = ExtResource("21_h4ww3")
 EnableSound = true
+MasterVolume = 0.5
 NoiseVolume = 1.0
 
 [node name="Player" type="AudioStreamPlayer" parent="Speakers"]
@@ -730,48 +736,57 @@ theme_override_constants/margin_right = 6
 [node name="Debuggers" type="TabContainer" parent="Debug/MarginContainer"]
 layout_mode = 2
 theme = ExtResource("20_0wny8")
+current_tab = 0
 tab_focus_mode = 0
 
 [node name="Cartridge Info" parent="Debug/MarginContainer/Debuggers" node_paths=PackedStringArray("Player") instance=ExtResource("21_y5t5s")]
 layout_mode = 2
 Player = NodePath("../../../..")
+metadata/_tab_index = 0
 
 [node name="Colour Palettes" parent="Debug/MarginContainer/Debuggers" node_paths=PackedStringArray("Player") instance=ExtResource("22_e37a5")]
 visible = false
 layout_mode = 2
 Player = NodePath("../../../..")
+metadata/_tab_index = 1
 
 [node name="Sprites" parent="Debug/MarginContainer/Debuggers" node_paths=PackedStringArray("Player") instance=ExtResource("23_01ypf")]
 visible = false
 layout_mode = 2
 Player = NodePath("../../../..")
+metadata/_tab_index = 2
 
 [node name="Tiles" parent="Debug/MarginContainer/Debuggers" node_paths=PackedStringArray("Player") instance=ExtResource("24_cepwr")]
 visible = false
 layout_mode = 2
 Player = NodePath("../../../..")
+metadata/_tab_index = 3
 
 [node name="Background Map" parent="Debug/MarginContainer/Debuggers" node_paths=PackedStringArray("Player") instance=ExtResource("25_i7c8m")]
 visible = false
 layout_mode = 2
 Player = NodePath("../../../..")
+metadata/_tab_index = 4
 
 [node name="Window Map" parent="Debug/MarginContainer/Debuggers" node_paths=PackedStringArray("Player") instance=ExtResource("25_i7c8m")]
 visible = false
 layout_mode = 2
 Player = NodePath("../../../..")
 Map = 1
+metadata/_tab_index = 5
 
 [node name="Audio" parent="Debug/MarginContainer/Debuggers" node_paths=PackedStringArray("Player", "Speakers") instance=ExtResource("35_inklj")]
 visible = false
 layout_mode = 2
 Player = NodePath("../../../..")
 Speakers = NodePath("../../../../Speakers")
+metadata/_tab_index = 6
 
 [node name="Disassembler" parent="Debug/MarginContainer/Debuggers" node_paths=PackedStringArray("Player") instance=ExtResource("26_1mdrh")]
 visible = false
 layout_mode = 2
 Player = NodePath("../../../..")
+metadata/_tab_index = 7
 
 [node name="Loader" type="HBoxContainer" parent="."]
 layout_mode = 1
@@ -794,7 +809,7 @@ expand_icon = true
 
 [node name="FileDialog" type="FileDialog" parent="Loader/Open ROM"]
 title = "Open a File"
-size = Vector2i(392, 159)
+size = Vector2i(392, 175)
 ok_button_text = "Open"
 dialog_hide_on_ok = true
 file_mode = 0
@@ -806,8 +821,8 @@ use_native_dialog = true
 layout_mode = 2
 tooltip_text = "Select Save Slot"
 focus_mode = 0
-item_count = 11
 selected = 0
+item_count = 11
 popup/item_0/text = "No Save"
 popup/item_0/id = 0
 popup/item_1/text = "Save Slot 1"

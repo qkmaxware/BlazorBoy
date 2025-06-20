@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://0jxwbr6l750m"]
 
-[ext_resource type="Script" path="res://BitmapTextureRect.cs" id="1_80e0p"]
+[ext_resource type="Script" uid="uid://bhde2vxslpuwu" path="res://BitmapTextureRect.cs" id="1_80e0p"]
 
 [node name="TileTemplate" type="TextureRect"]
 visible = false

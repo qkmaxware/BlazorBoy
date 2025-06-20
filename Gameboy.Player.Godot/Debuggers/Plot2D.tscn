@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bjbvg4d0iuviv"]
 
-[ext_resource type="Script" path="res://Debuggers/Plot2D.cs" id="1_cv401"]
+[ext_resource type="Script" uid="uid://bxuf7fl721cqi" path="res://Debuggers/Plot2D.cs" id="1_cv401"]
 
 [node name="Plot2D" type="Control" node_paths=PackedStringArray("line", "YAxis", "YMax", "XAxis", "XMax", "YXMin", "TopLeft", "TopRight", "BottomLeft", "BottomRight")]
 custom_minimum_size = Vector2(640, 180)

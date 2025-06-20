@@ -1,0 +1,281 @@
+[gd_scene load_steps=12 format=3 uid="uid://dbnkmmbkfij33"]
+
+[ext_resource type="PackedScene" uid="uid://chiogj51d08p6" path="res://Prefabs/ProfileSelect/Header.tscn" id="1_bdva6"]
+[ext_resource type="Script" uid="uid://dgriyu43xfc4f" path="res://Prefabs/Home/Home.cs" id="1_wi2fq"]
+[ext_resource type="Texture2D" uid="uid://br0shrhsurjy6" path="res://Prefabs/ProfileSelect/button.svg" id="2_dsoyu"]
+[ext_resource type="Texture2D" uid="uid://cff2koxmy52fe" path="res://Prefabs/ProfileSelect/unknown.svg" id="2_xj780"]
+[ext_resource type="Texture2D" uid="uid://d240ks40bo133" path="res://Prefabs/Home/eject.png" id="3_wi1gy"]
+[ext_resource type="Texture2D" uid="uid://8vfeoryxk5td" path="res://Prefabs/Home/empty_cart.png" id="4_50vnm"]
+[ext_resource type="PackedScene" uid="uid://lagkciw3arws" path="res://Prefabs/GodotBoy/GodotBoy.tscn" id="6_x58xt"]
+[ext_resource type="Texture2D" uid="uid://byxxvldruom6j" path="res://Prefabs/GodotBoy/UI/play.png" id="8_wghg3"]
+[ext_resource type="Texture2D" uid="uid://divrqb47wvwvt" path="res://Prefabs/GodotBoy/UI/reload.png" id="9_m1h2v"]
+[ext_resource type="Texture2D" uid="uid://xgxq8becl7om" path="res://Prefabs/GodotBoy/UI/settings.png" id="9_o2v3m"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_m1h2v"]
+
+[node name="Home" type="Control" node_paths=PackedStringArray("Root", "ProfileIcon", "DetailsRoot", "Title", "Boxart", "BoxartDownloader", "Publisher", "Year", "Region", "Description", "Genres", "GodotBoy")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_wi2fq")
+Root = NodePath("Menu")
+DefaultProfileIcon = ExtResource("2_xj780")
+ProfileIcon = NodePath("Menu/Header/MarginContainer/HBoxContainer/UserIcon")
+DetailsRoot = NodePath("Menu/GameDetails")
+Title = NodePath("Menu/GameDetails/HBoxContainer/Panel/MarginContainer/VBoxContainer/Game Title")
+DefaultBoxart = ExtResource("4_50vnm")
+Boxart = NodePath("Menu/GameDetails/HBoxContainer/BoxArt")
+BoxartDownloader = NodePath("HttpBoxartDownloader")
+Publisher = NodePath("Menu/GameDetails/HBoxContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer/Publisher")
+Year = NodePath("Menu/GameDetails/HBoxContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer/Year")
+Region = NodePath("Menu/GameDetails/HBoxContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer/Region")
+Description = NodePath("Menu/GameDetails/HBoxContainer/Panel/MarginContainer/VBoxContainer/Desc")
+Genres = NodePath("Menu/GameDetails/HBoxContainer/Panel/MarginContainer/VBoxContainer/Genres")
+GodotBoy = NodePath("GodotBoy")
+ProfileSelectScene = "uid://bj2vk0fr047sq"
+
+[node name="GodotBoy" parent="." instance=ExtResource("6_x58xt")]
+layout_mode = 1
+EnableLoaderControls = false
+AutoloadOptions = false
+
+[node name="Menu" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="ColorRect" parent="Menu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.117647, 0.129412, 0.141176, 1)
+
+[node name="Header" parent="Menu" instance=ExtResource("1_bdva6")]
+layout_mode = 1
+anchors_preset = -1
+anchor_bottom = 0.074
+offset_bottom = 0.0480003
+grow_horizontal = 1
+
+[node name="UserIcon" type="TextureRect" parent="Menu/Header/MarginContainer/HBoxContainer" index="1"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("2_xj780")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Options" type="HBoxContainer" parent="Menu"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.792
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -0.216064
+offset_right = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 6
+alignment = 1
+
+[node name="EjectCart" type="Button" parent="Menu/Options"]
+custom_minimum_size = Vector2(96, 96)
+layout_mode = 2
+icon = ExtResource("2_dsoyu")
+flat = true
+expand_icon = true
+
+[node name="TextureRect" type="TextureRect" parent="Menu/Options/EjectCart"]
+self_modulate = Color(0.162066, 0.162066, 0.162066, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_wi1gy")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="FileDialog" type="FileDialog" parent="Menu/Options/EjectCart"]
+title = "Open a File"
+initial_position = 2
+ok_button_text = "Open"
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.gb;Gameboy Carts")
+
+[node name="Play" type="Button" parent="Menu/Options"]
+custom_minimum_size = Vector2(96, 96)
+layout_mode = 2
+icon = ExtResource("2_dsoyu")
+flat = true
+expand_icon = true
+
+[node name="TextureRect" type="TextureRect" parent="Menu/Options/Play"]
+self_modulate = Color(0.162066, 0.162066, 0.162066, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("8_wghg3")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="VSeparator" type="VSeparator" parent="Menu/Options"]
+layout_mode = 2
+theme_override_constants/separation = 48
+theme_override_styles/separator = SubResource("StyleBoxEmpty_m1h2v")
+
+[node name="Settings" type="Button" parent="Menu/Options"]
+custom_minimum_size = Vector2(96, 96)
+layout_mode = 2
+icon = ExtResource("2_dsoyu")
+flat = true
+expand_icon = true
+
+[node name="TextureRect" type="TextureRect" parent="Menu/Options/Settings"]
+visible = false
+self_modulate = Color(0.162066, 0.162066, 0.162066, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("9_o2v3m")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ChangeProfile" type="Button" parent="Menu/Options"]
+custom_minimum_size = Vector2(96, 96)
+layout_mode = 2
+icon = ExtResource("2_dsoyu")
+flat = true
+expand_icon = true
+
+[node name="TextureRect" type="TextureRect" parent="Menu/Options/ChangeProfile"]
+self_modulate = Color(0.162066, 0.162066, 0.162066, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("9_m1h2v")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="GameDetails" type="MarginContainer" parent="Menu"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.068
+anchor_right = 1.0
+anchor_bottom = 0.773
+offset_top = -0.064003
+offset_bottom = 0.0959473
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Menu/GameDetails"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="BoxArt" type="TextureRect" parent="Menu/GameDetails/HBoxContainer"]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("4_50vnm")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Panel" type="Panel" parent="Menu/GameDetails/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="Menu/GameDetails/HBoxContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Menu/GameDetails/HBoxContainer/Panel/MarginContainer"]
+layout_mode = 2
+
+[node name="Game Title" type="Label" parent="Menu/GameDetails/HBoxContainer/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Game Title"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Menu/GameDetails/HBoxContainer/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label3" type="Label" parent="Menu/GameDetails/HBoxContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Year: "
+
+[node name="Year" type="Label" parent="Menu/GameDetails/HBoxContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="VSeparator" type="VSeparator" parent="Menu/GameDetails/HBoxContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 24
+
+[node name="Label" type="Label" parent="Menu/GameDetails/HBoxContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Publisher: "
+
+[node name="Publisher" type="Label" parent="Menu/GameDetails/HBoxContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="VSeparator2" type="VSeparator" parent="Menu/GameDetails/HBoxContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 24
+
+[node name="Label2" type="Label" parent="Menu/GameDetails/HBoxContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Region: "
+
+[node name="Region" type="Label" parent="Menu/GameDetails/HBoxContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="Desc" type="RichTextLabel" parent="Menu/GameDetails/HBoxContainer/Panel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 256)
+layout_mode = 2
+text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc non iaculis libero, id euismod diam. Nullam sit amet laoreet arcu. Nunc mattis nisi ex, vitae bibendum risus pretium et. Donec quis nibh mi. Morbi vel faucibus erat. Suspendisse pellentesque tempus tortor sed consectetur. Maecenas in bibendum augue. Duis accumsan, nisi vitae posuere semper, lectus tortor venenatis mauris, quis tincidunt erat lectus id ex. Praesent nec dolor sed nulla commodo blandit. Nunc sed tellus id turpis vestibulum gravida. Mauris accumsan mauris nisl, vitae tincidunt ipsum interdum ac. Nullam consequat justo a purus mollis malesuada. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Sed pulvinar tellus nulla, ac luctus lacus convallis ut. Suspendisse porttitor orci nisi, id gravida felis tristique et."
+
+[node name="Genres" type="Label" parent="Menu/GameDetails/HBoxContainer/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HttpBoxartDownloader" type="HTTPRequest" parent="."]
+timeout = 12.0
+
+[connection signal="PlaybackStopped" from="GodotBoy" to="." method="Stop"]
+[connection signal="pressed" from="Menu/Options/EjectCart" to="Menu/Options/EjectCart/FileDialog" method="show"]
+[connection signal="file_selected" from="Menu/Options/EjectCart/FileDialog" to="." method="LoadCart"]
+[connection signal="pressed" from="Menu/Options/Play" to="." method="Play"]
+[connection signal="pressed" from="Menu/Options/Settings" to="." method="OpenSettings"]
+[connection signal="pressed" from="Menu/Options/ChangeProfile" to="." method="ReturnToProfileSelect"]
+[connection signal="request_completed" from="HttpBoxartDownloader" to="." method="OnBoxartDownloaded"]
+
+[editable path="Menu/Header"]

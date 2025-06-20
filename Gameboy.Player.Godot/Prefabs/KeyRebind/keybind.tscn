@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://c51yw0q5xqybk"]
 
-[ext_resource type="Script" path="res://Prefabs/KeyRebind/Keybind.cs" id="1_wcb04"]
+[ext_resource type="Script" uid="uid://cqt377ljrl8xl" path="res://Prefabs/KeyRebind/Keybind.cs" id="1_wcb04"]
 [ext_resource type="Theme" uid="uid://cm80ju1d6rsye" path="res://Prefabs/KeyRebind/RebindButtonTheme.tres" id="2_phmuq"]
 
 [node name="Keybind" type="HBoxContainer"]

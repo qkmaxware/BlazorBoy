@@ -1,0 +1,208 @@
+[gd_scene load_steps=15 format=3 uid="uid://bj2vk0fr047sq"]
+
+[ext_resource type="Script" uid="uid://dyuhldevhsm0h" path="res://Prefabs/ProfileSelect/ProfileSelect.gd" id="1_b5ix8"]
+[ext_resource type="PackedScene" uid="uid://bda4qvfmwluh0" path="res://Prefabs/ProfileSelect/Profile.tscn" id="1_d8084"]
+[ext_resource type="Texture2D" uid="uid://mnu3ob67prl3" path="res://Prefabs/ProfileSelect/add.svg" id="2_b5ix8"]
+[ext_resource type="PackedScene" uid="uid://chiogj51d08p6" path="res://Prefabs/ProfileSelect/Header.tscn" id="2_ved71"]
+[ext_resource type="Script" uid="uid://6nrfcej4lkyn" path="res://Prefabs/ProfileSelect/ProfileCreator.gd" id="4_hbys4"]
+[ext_resource type="Texture2D" uid="uid://4v13lyxfwcgt" path="res://Prefabs/ProfileSelect/pencil.svg" id="4_po7qh"]
+[ext_resource type="Texture2D" uid="uid://cff2koxmy52fe" path="res://Prefabs/ProfileSelect/unknown.svg" id="5_dlyws"]
+[ext_resource type="Texture2D" uid="uid://cmk86lqg18exb" path="res://Prefabs/ProfileSelect/DefaultIcons/1.png" id="6_5wuhn"]
+[ext_resource type="Script" uid="uid://cgac2pbpl28or" path="res://Prefabs/ProfileSelect/ProfileIconTexture.gd" id="6_b63d5"]
+[ext_resource type="Texture2D" uid="uid://bymamg6lhobu1" path="res://Prefabs/ProfileSelect/DefaultIcons/2.png" id="7_btwc3"]
+[ext_resource type="Script" uid="uid://5ytuiim1mhwy" path="res://Prefabs/ProfileSelect/DefaultIcon.gd" id="8_pfgdh"]
+[ext_resource type="Texture2D" uid="uid://cmptiae3okdn3" path="res://Prefabs/ProfileSelect/DefaultIcons/3.png" id="8_wje2q"]
+[ext_resource type="Texture2D" uid="uid://bl46cuqy8lkhq" path="res://Prefabs/ProfileSelect/DefaultIcons/4.png" id="9_ved71"]
+[ext_resource type="Texture2D" uid="uid://dbvajlploxqwg" path="res://Prefabs/ProfileSelect/DefaultIcons/5.png" id="10_iylxk"]
+
+[node name="ProfileSelect" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_b5ix8")
+goto = "uid://dbnkmmbkfij33"
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.117647, 0.129412, 0.141176, 1)
+
+[node name="Header" parent="ColorRect" instance=ExtResource("2_ved71")]
+layout_mode = 1
+offset_bottom = 0.0
+
+[node name="MarginContainer" type="MarginContainer" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="ScrollContainer" type="ScrollContainer" parent="ColorRect/MarginContainer"]
+layout_mode = 2
+follow_focus = true
+vertical_scroll_mode = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ColorRect/MarginContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="AddProfile" parent="ColorRect/MarginContainer/ScrollContainer/HBoxContainer" instance=ExtResource("1_d8084")]
+layout_mode = 2
+icon = ExtResource("2_b5ix8")
+username = "Add New Profile"
+
+[node name="Window" type="Window" parent="."]
+title = "Profile Wizard"
+initial_position = 2
+size = Vector2i(480, 480)
+visible = false
+script = ExtResource("4_hbys4")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Window"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Window/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Window/ScrollContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label0" type="Label" parent="Window/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Name:"
+
+[node name="TextEdit" type="LineEdit" parent="Window/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+placeholder_text = "name"
+max_length = 128
+caret_blink = true
+
+[node name="Label1" type="Label" parent="Window/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Icon:"
+
+[node name="TextureRect" type="TextureRect" parent="Window/ScrollContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+texture = ExtResource("5_dlyws")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("6_b63d5")
+
+[node name="DefaultIcons" type="GridContainer" parent="Window/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+columns = 5
+
+[node name="Icon" type="Button" parent="Window/ScrollContainer/MarginContainer/VBoxContainer/DefaultIcons"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+icon = ExtResource("6_5wuhn")
+flat = true
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("8_pfgdh")
+
+[node name="Icon2" type="Button" parent="Window/ScrollContainer/MarginContainer/VBoxContainer/DefaultIcons"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+icon = ExtResource("7_btwc3")
+flat = true
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("8_pfgdh")
+
+[node name="Icon3" type="Button" parent="Window/ScrollContainer/MarginContainer/VBoxContainer/DefaultIcons"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+icon = ExtResource("8_wje2q")
+flat = true
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("8_pfgdh")
+
+[node name="Icon4" type="Button" parent="Window/ScrollContainer/MarginContainer/VBoxContainer/DefaultIcons"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+icon = ExtResource("9_ved71")
+flat = true
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("8_pfgdh")
+
+[node name="Icon5" type="Button" parent="Window/ScrollContainer/MarginContainer/VBoxContainer/DefaultIcons"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+icon = ExtResource("10_iylxk")
+flat = true
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("8_pfgdh")
+
+[node name="OpenFileDialog" type="Button" parent="Window/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Pick Custom Image"
+icon = ExtResource("4_po7qh")
+expand_icon = true
+
+[node name="FileDialog" type="FileDialog" parent="Window/ScrollContainer/MarginContainer/VBoxContainer"]
+title = "Open a File"
+initial_position = 2
+ok_button_text = "Open"
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.png,*.jpg,*.jpeg,*.bmp;Image Files")
+
+[node name="HSeparator" type="HSeparator" parent="Window/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="CreateProfile" type="Button" parent="Window/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Create"
+
+[connection signal="pressed" from="ColorRect/MarginContainer/ScrollContainer/HBoxContainer/AddProfile" to="Window" method="show"]
+[connection signal="close_requested" from="Window" to="Window" method="hide"]
+[connection signal="profile_created" from="Window" to="." method="reload_profile_list"]
+[connection signal="load_icon" from="Window/ScrollContainer/MarginContainer/VBoxContainer/DefaultIcons/Icon" to="Window/ScrollContainer/MarginContainer/VBoxContainer/TextureRect" method="_on_icon_load_icon"]
+[connection signal="pressed" from="Window/ScrollContainer/MarginContainer/VBoxContainer/DefaultIcons/Icon" to="Window/ScrollContainer/MarginContainer/VBoxContainer/DefaultIcons/Icon" method="_on_pressed"]
+[connection signal="load_icon" from="Window/ScrollContainer/MarginContainer/VBoxContainer/DefaultIcons/Icon2" to="Window/ScrollContainer/MarginContainer/VBoxContainer/TextureRect" method="_on_icon_load_icon"]
+[connection signal="pressed" from="Window/ScrollContainer/MarginContainer/VBoxContainer/DefaultIcons/Icon2" to="Window/ScrollContainer/MarginContainer/VBoxContainer/DefaultIcons/Icon2" method="_on_pressed"]
+[connection signal="load_icon" from="Window/ScrollContainer/MarginContainer/VBoxContainer/DefaultIcons/Icon3" to="Window/ScrollContainer/MarginContainer/VBoxContainer/TextureRect" method="_on_icon_load_icon"]
+[connection signal="pressed" from="Window/ScrollContainer/MarginContainer/VBoxContainer/DefaultIcons/Icon3" to="Window/ScrollContainer/MarginContainer/VBoxContainer/DefaultIcons/Icon3" method="_on_pressed"]
+[connection signal="load_icon" from="Window/ScrollContainer/MarginContainer/VBoxContainer/DefaultIcons/Icon4" to="Window/ScrollContainer/MarginContainer/VBoxContainer/TextureRect" method="_on_icon_load_icon"]
+[connection signal="pressed" from="Window/ScrollContainer/MarginContainer/VBoxContainer/DefaultIcons/Icon4" to="Window/ScrollContainer/MarginContainer/VBoxContainer/DefaultIcons/Icon4" method="_on_pressed"]
+[connection signal="load_icon" from="Window/ScrollContainer/MarginContainer/VBoxContainer/DefaultIcons/Icon5" to="Window/ScrollContainer/MarginContainer/VBoxContainer/TextureRect" method="_on_icon_load_icon"]
+[connection signal="pressed" from="Window/ScrollContainer/MarginContainer/VBoxContainer/DefaultIcons/Icon5" to="Window/ScrollContainer/MarginContainer/VBoxContainer/DefaultIcons/Icon5" method="_on_pressed"]
+[connection signal="pressed" from="Window/ScrollContainer/MarginContainer/VBoxContainer/OpenFileDialog" to="Window/ScrollContainer/MarginContainer/VBoxContainer/FileDialog" method="show"]
+[connection signal="file_selected" from="Window/ScrollContainer/MarginContainer/VBoxContainer/FileDialog" to="Window" method="_on_image_file_dialog_file_selected"]
+[connection signal="pressed" from="Window/ScrollContainer/MarginContainer/VBoxContainer/CreateProfile" to="Window" method="hide"]
+[connection signal="pressed" from="Window/ScrollContainer/MarginContainer/VBoxContainer/CreateProfile" to="Window" method="_on_create_profile_pressed"]
