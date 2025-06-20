@@ -1,17 +1,166 @@
-[gd_scene load_steps=12 format=3 uid="uid://dbnkmmbkfij33"]
+[gd_scene load_steps=32 format=3 uid="uid://dbnkmmbkfij33"]
 
 [ext_resource type="PackedScene" uid="uid://chiogj51d08p6" path="res://Prefabs/ProfileSelect/Header.tscn" id="1_bdva6"]
 [ext_resource type="Script" uid="uid://dgriyu43xfc4f" path="res://Prefabs/Home/Home.cs" id="1_wi2fq"]
-[ext_resource type="Texture2D" uid="uid://br0shrhsurjy6" path="res://Prefabs/ProfileSelect/button.svg" id="2_dsoyu"]
 [ext_resource type="Texture2D" uid="uid://cff2koxmy52fe" path="res://Prefabs/ProfileSelect/unknown.svg" id="2_xj780"]
-[ext_resource type="Texture2D" uid="uid://d240ks40bo133" path="res://Prefabs/Home/eject.png" id="3_wi1gy"]
 [ext_resource type="Texture2D" uid="uid://8vfeoryxk5td" path="res://Prefabs/Home/empty_cart.png" id="4_50vnm"]
+[ext_resource type="PackedScene" uid="uid://dga6asgcx536q" path="res://Prefabs/Home/HomeButton.tscn" id="6_jx4h5"]
 [ext_resource type="PackedScene" uid="uid://lagkciw3arws" path="res://Prefabs/GodotBoy/GodotBoy.tscn" id="6_x58xt"]
-[ext_resource type="Texture2D" uid="uid://byxxvldruom6j" path="res://Prefabs/GodotBoy/UI/play.png" id="8_wghg3"]
-[ext_resource type="Texture2D" uid="uid://divrqb47wvwvt" path="res://Prefabs/GodotBoy/UI/reload.png" id="9_m1h2v"]
-[ext_resource type="Texture2D" uid="uid://xgxq8becl7om" path="res://Prefabs/GodotBoy/UI/settings.png" id="9_o2v3m"]
+[ext_resource type="Texture2D" uid="uid://c2ysws5myvu57" path="res://Prefabs/Home/Ui/cart.png" id="7_0elp8"]
+[ext_resource type="Texture2D" uid="uid://4m3jjak2luj1" path="res://Prefabs/Home/Ui/cart-animated.png" id="8_8lrdv"]
+[ext_resource type="Texture2D" uid="uid://28pi8cgc1cwx" path="res://Prefabs/Home/Ui/gear.png" id="9_fh6vd"]
+[ext_resource type="Texture2D" uid="uid://c6uplth7stqsd" path="res://Prefabs/Home/Ui/right-anim.png" id="9_g41qc"]
+[ext_resource type="Texture2D" uid="uid://dqems8opa8ely" path="res://Prefabs/Home/Ui/gear-rotated.png" id="10_g41qc"]
+[ext_resource type="Texture2D" uid="uid://jkbm8d7sfx52" path="res://Prefabs/Home/Ui/massiveMultiplayer.png" id="12_fh6vd"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2vuop"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_0elp8")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_op6q3"]
+atlas = ExtResource("8_8lrdv")
+region = Rect2(0, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fo4ir"]
+atlas = ExtResource("8_8lrdv")
+region = Rect2(100, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6rxsq"]
+atlas = ExtResource("8_8lrdv")
+region = Rect2(200, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jwl2b"]
+atlas = ExtResource("8_8lrdv")
+region = Rect2(300, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yb3w6"]
+atlas = ExtResource("8_8lrdv")
+region = Rect2(400, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gsxy1"]
+atlas = ExtResource("8_8lrdv")
+region = Rect2(500, 0, 100, 100)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0px1i"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_op6q3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fo4ir")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6rxsq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jwl2b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yb3w6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gsxy1")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0elp8"]
+atlas = ExtResource("9_g41qc")
+region = Rect2(0, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8lrdv"]
+atlas = ExtResource("9_g41qc")
+region = Rect2(100, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2vuop"]
+atlas = ExtResource("9_g41qc")
+region = Rect2(200, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n62sg"]
+atlas = ExtResource("9_g41qc")
+region = Rect2(300, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6imsh"]
+atlas = ExtResource("9_g41qc")
+region = Rect2(400, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fasyu"]
+atlas = ExtResource("9_g41qc")
+region = Rect2(500, 0, 100, 100)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_op6q3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0elp8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8lrdv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2vuop")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n62sg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6imsh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fasyu")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_m1h2v"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0elp8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_fh6vd")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8lrdv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_fh6vd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_g41qc")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_g41qc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("12_fh6vd")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="Home" type="Control" node_paths=PackedStringArray("Root", "ProfileIcon", "DetailsRoot", "Title", "Boxart", "BoxartDownloader", "Publisher", "Year", "Region", "Description", "Genres", "GodotBoy")]
 layout_mode = 3
@@ -86,26 +235,13 @@ grow_vertical = 2
 theme_override_constants/separation = 6
 alignment = 1
 
-[node name="EjectCart" type="Button" parent="Menu/Options"]
-custom_minimum_size = Vector2(96, 96)
+[node name="ChangeCart" parent="Menu/Options" instance=ExtResource("6_jx4h5")]
 layout_mode = 2
-icon = ExtResource("2_dsoyu")
-flat = true
-expand_icon = true
+normal_sprite = SubResource("SpriteFrames_2vuop")
+hover_sprite = SubResource("SpriteFrames_0px1i")
 
-[node name="TextureRect" type="TextureRect" parent="Menu/Options/EjectCart"]
-self_modulate = Color(0.162066, 0.162066, 0.162066, 1)
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("3_wi1gy")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="FileDialog" type="FileDialog" parent="Menu/Options/EjectCart"]
+[node name="FileDialog" type="FileDialog" parent="Menu/Options/ChangeCart"]
+auto_translate_mode = 1
 title = "Open a File"
 initial_position = 2
 ok_button_text = "Open"
@@ -113,68 +249,23 @@ file_mode = 0
 access = 2
 filters = PackedStringArray("*.gb;Gameboy Carts")
 
-[node name="Play" type="Button" parent="Menu/Options"]
-custom_minimum_size = Vector2(96, 96)
+[node name="Play" parent="Menu/Options" instance=ExtResource("6_jx4h5")]
 layout_mode = 2
-icon = ExtResource("2_dsoyu")
-flat = true
-expand_icon = true
-
-[node name="TextureRect" type="TextureRect" parent="Menu/Options/Play"]
-self_modulate = Color(0.162066, 0.162066, 0.162066, 1)
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("8_wghg3")
-expand_mode = 1
-stretch_mode = 5
+hover_sprite = SubResource("SpriteFrames_op6q3")
 
 [node name="VSeparator" type="VSeparator" parent="Menu/Options"]
 layout_mode = 2
-theme_override_constants/separation = 48
+theme_override_constants/separation = 32
 theme_override_styles/separator = SubResource("StyleBoxEmpty_m1h2v")
 
-[node name="Settings" type="Button" parent="Menu/Options"]
-custom_minimum_size = Vector2(96, 96)
+[node name="Settings" parent="Menu/Options" instance=ExtResource("6_jx4h5")]
 layout_mode = 2
-icon = ExtResource("2_dsoyu")
-flat = true
-expand_icon = true
+normal_sprite = SubResource("SpriteFrames_0elp8")
+hover_sprite = SubResource("SpriteFrames_8lrdv")
 
-[node name="TextureRect" type="TextureRect" parent="Menu/Options/Settings"]
-visible = false
-self_modulate = Color(0.162066, 0.162066, 0.162066, 1)
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("9_o2v3m")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="ChangeProfile" type="Button" parent="Menu/Options"]
-custom_minimum_size = Vector2(96, 96)
+[node name="ChangeProfile" parent="Menu/Options" instance=ExtResource("6_jx4h5")]
 layout_mode = 2
-icon = ExtResource("2_dsoyu")
-flat = true
-expand_icon = true
-
-[node name="TextureRect" type="TextureRect" parent="Menu/Options/ChangeProfile"]
-self_modulate = Color(0.162066, 0.162066, 0.162066, 1)
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("9_m1h2v")
-expand_mode = 1
-stretch_mode = 5
+normal_sprite = SubResource("SpriteFrames_g41qc")
 
 [node name="GameDetails" type="MarginContainer" parent="Menu"]
 layout_mode = 1
@@ -271,8 +362,8 @@ layout_mode = 2
 timeout = 12.0
 
 [connection signal="PlaybackStopped" from="GodotBoy" to="." method="Stop"]
-[connection signal="pressed" from="Menu/Options/EjectCart" to="Menu/Options/EjectCart/FileDialog" method="show"]
-[connection signal="file_selected" from="Menu/Options/EjectCart/FileDialog" to="." method="LoadCart"]
+[connection signal="pressed" from="Menu/Options/ChangeCart" to="Menu/Options/ChangeCart/FileDialog" method="show"]
+[connection signal="file_selected" from="Menu/Options/ChangeCart/FileDialog" to="." method="LoadCart"]
 [connection signal="pressed" from="Menu/Options/Play" to="." method="Play"]
 [connection signal="pressed" from="Menu/Options/Settings" to="." method="OpenSettings"]
 [connection signal="pressed" from="Menu/Options/ChangeProfile" to="." method="ReturnToProfileSelect"]

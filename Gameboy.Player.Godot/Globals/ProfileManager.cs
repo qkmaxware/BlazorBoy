@@ -15,7 +15,7 @@ public class Profile
     private string icon_path;
     private string setting_path;
     private string state_path;
-    private string save_path;
+    public string SavePath { get; private set; }
     private string screenshot_path;
 
     public Profile(string path)
@@ -26,7 +26,7 @@ public class Profile
         this.setting_path = path + "/" + "user_config.cfg";
 
         this.state_path = path + "/" + "states";
-        this.save_path = path + "/" + "saves";
+        this.SavePath = path + "/" + "saves";
         this.screenshot_path = path + "/" + "screenshots";
     }
 
@@ -35,7 +35,7 @@ public class Profile
         Directory.CreateDirectory(Path);
 
         Directory.CreateDirectory(state_path);
-        Directory.CreateDirectory(save_path);
+        Directory.CreateDirectory(SavePath);
         Directory.CreateDirectory(screenshot_path);
     }
 

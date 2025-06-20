@@ -71,10 +71,12 @@ public partial class Home : Control
         }
     }
 
+    private string cartPath;
     public void LoadCart(string path)
     {
         try
         {
+            cartPath = path;
             var cart = new Cartridge(File.ReadAllBytes(path));
 
             var db = GameDatabase.Instance();
@@ -130,6 +132,21 @@ public partial class Home : Control
         }
     }
 
+    private string getSavePathForCart(int save_index)
+    {
+        var cart = GodotBoy.Console.GetCartridge();
+        if (cart is null || cartPath is null)
+            return null;
+
+        if (activeProfile is null)
+        {
+            return cartPath + ".sav" + save_index; // Just a default save for the cart
+        }
+
+        activeProfile.MakeDirs();
+        return activeProfile.SavePath + "/" + System.IO.Path.GetFileName(cartPath) + ".sav" + save_index;
+    }
+
     public bool Play()
     {
         if (GodotBoy is null)
@@ -137,6 +154,12 @@ public partial class Home : Control
 
         if (!GodotBoy.IsCartLoaded())
             return false;
+
+        var save_path = getSavePathForCart(0);
+        if (save_path is not null)
+        {
+            GodotBoy.LoadSaveFromFile(save_path);
+        }
 
         this.Root.Visible = false;
         this.GodotBoy.Play();

@@ -204,5 +204,5 @@ text = "Create"
 [connection signal="pressed" from="Window/ScrollContainer/MarginContainer/VBoxContainer/DefaultIcons/Icon5" to="Window/ScrollContainer/MarginContainer/VBoxContainer/DefaultIcons/Icon5" method="_on_pressed"]
 [connection signal="pressed" from="Window/ScrollContainer/MarginContainer/VBoxContainer/OpenFileDialog" to="Window/ScrollContainer/MarginContainer/VBoxContainer/FileDialog" method="show"]
 [connection signal="file_selected" from="Window/ScrollContainer/MarginContainer/VBoxContainer/FileDialog" to="Window" method="_on_image_file_dialog_file_selected"]
-[connection signal="pressed" from="Window/ScrollContainer/MarginContainer/VBoxContainer/CreateProfile" to="Window" method="hide"]
 [connection signal="pressed" from="Window/ScrollContainer/MarginContainer/VBoxContainer/CreateProfile" to="Window" method="_on_create_profile_pressed"]
+[connection signal="pressed" from="Window/ScrollContainer/MarginContainer/VBoxContainer/CreateProfile" to="Window" method="hide"]

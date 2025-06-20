@@ -1,0 +1,48 @@
+[gd_scene load_steps=8 format=3 uid="uid://dga6asgcx536q"]
+
+[ext_resource type="Texture2D" uid="uid://c3toufu7o7nss" path="res://Prefabs/Home/Ui/white-circle.png" id="1_1sij1"]
+[ext_resource type="Texture2D" uid="uid://chx8qpbbblbx8" path="res://Prefabs/Home/Ui/right.png" id="2_1sij1"]
+[ext_resource type="Script" uid="uid://bm5h6egk1lkxp" path="res://Prefabs/Home/HomeButton.gd" id="2_hve8p"]
+[ext_resource type="Texture2D" uid="uid://3knjg44ximej" path="res://Prefabs/Home/Ui/blue-circle.png" id="2_tea3k"]
+[ext_resource type="Texture2D" uid="uid://bhykgw4gowe1p" path="res://Prefabs/Home/Ui/ltgrey-circle.png" id="3_2rwss"]
+[ext_resource type="Texture2D" uid="uid://drxphrfelcs0i" path="res://Prefabs/Home/Ui/dkgrey-circle.png" id="4_gbynk"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2rwss"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_1sij1")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Button" type="TextureButton"]
+custom_minimum_size = Vector2(96, 96)
+offset_right = 96.0
+offset_bottom = 96.0
+texture_normal = ExtResource("1_1sij1")
+texture_pressed = ExtResource("2_tea3k")
+texture_hover = ExtResource("3_2rwss")
+texture_disabled = ExtResource("4_gbynk")
+ignore_texture_size = true
+stretch_mode = 5
+script = ExtResource("2_hve8p")
+normal_sprite = SubResource("SpriteFrames_2rwss")
+
+[node name="IconTexture" type="TextureRect" parent="."]
+self_modulate = Color(0.489622, 0.489622, 0.489622, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 19.0
+offset_top = 17.0
+offset_right = -15.0
+offset_bottom = -17.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_1sij1")
+expand_mode = 1
+stretch_mode = 5
