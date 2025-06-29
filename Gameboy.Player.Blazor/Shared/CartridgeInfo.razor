@@ -53,8 +53,8 @@
         set {
             if (value != cart) {
                 this.cart = value;
-                if (value is not null) {
-                    this.dbInfo = GameDatabase.Instance().Where(x => x.CartTitle == value.Info.title).FirstOrDefault();
+                if (value is not null && value.Info.title is not null) {
+                    this.dbInfo = GameDatabase.Instance().FindClosest(value.Info.title);
                 } else {
                     this.dbInfo = null;
                 }
