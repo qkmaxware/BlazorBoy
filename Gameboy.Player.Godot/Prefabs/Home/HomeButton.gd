@@ -4,11 +4,13 @@ class_name AnimatedTextureRect extends TextureButton
 @export var speed_scale: float = 1.0
 
 @export var animation_name: String = "default"
+@export_group("Icons")
 @export var normal_sprite: SpriteFrames
 @export var pressed_sprite: SpriteFrames
 @export var hover_sprite: SpriteFrames
 @export var disabled_sprite: SpriteFrames
 @export var focused_sprite: SpriteFrames
+@export var icon_tint: Color
 
 @onready var icon_texture: TextureRect = $IconTexture
 
@@ -31,6 +33,7 @@ func get_sprite() -> SpriteFrames:
 		return normal_sprite
 
 func _ready() -> void:
+	icon_texture.self_modulate = icon_tint
 	pass
 
 func _process(delta: float) -> void:

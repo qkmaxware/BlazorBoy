@@ -30,6 +30,7 @@ ignore_texture_size = true
 stretch_mode = 5
 script = ExtResource("2_hve8p")
 normal_sprite = SubResource("SpriteFrames_2rwss")
+icon_tint = Color(0.490196, 0.490196, 0.490196, 1)
 
 [node name="IconTexture" type="TextureRect" parent="."]
 self_modulate = Color(0.489622, 0.489622, 0.489622, 1)

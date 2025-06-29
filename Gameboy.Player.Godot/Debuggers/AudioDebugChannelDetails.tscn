@@ -1,0 +1,68 @@
+[gd_scene load_steps=2 format=3 uid="uid://dkorf0mhytowk"]
+
+[ext_resource type="Script" uid="uid://byg0tyuc623td" path="res://Debuggers/AudioDebugChannelDetails.cs" id="1_n8s4o"]
+
+[node name="ChannelDetails" type="MarginContainer" node_paths=PackedStringArray("NRx0", "NRx1", "NRx2", "NRx3", "NRx4")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+script = ExtResource("1_n8s4o")
+NRx0 = NodePath("MarginContainer/Registers/NRx0")
+NRx1 = NodePath("MarginContainer/Registers/NRx1")
+NRx2 = NodePath("MarginContainer/Registers/NRx2")
+NRx3 = NodePath("MarginContainer/Registers/NRx3")
+NRx4 = NodePath("MarginContainer/Registers/NRx4")
+
+[node name="MarginContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Registers" type="GridContainer" parent="MarginContainer"]
+layout_mode = 2
+columns = 5
+
+[node name="LabelNRx0" type="Label" parent="MarginContainer/Registers"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "NRx0"
+
+[node name="LabelNRx1" type="Label" parent="MarginContainer/Registers"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "NRx1"
+
+[node name="LabelNRx2" type="Label" parent="MarginContainer/Registers"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "NRx2"
+
+[node name="LabelNRx3" type="Label" parent="MarginContainer/Registers"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "NRx3"
+
+[node name="LabelNRx4" type="Label" parent="MarginContainer/Registers"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "NRx4"
+
+[node name="NRx0" type="Label" parent="MarginContainer/Registers"]
+layout_mode = 2
+
+[node name="NRx1" type="Label" parent="MarginContainer/Registers"]
+layout_mode = 2
+
+[node name="NRx2" type="Label" parent="MarginContainer/Registers"]
+layout_mode = 2
+
+[node name="NRx3" type="Label" parent="MarginContainer/Registers"]
+layout_mode = 2
+
+[node name="NRx4" type="Label" parent="MarginContainer/Registers"]
+layout_mode = 2

@@ -1,0 +1,71 @@
+[gd_scene load_steps=2 format=3 uid="uid://8j1xl1re8w4n"]
+
+[ext_resource type="Script" uid="uid://bwah2y4ejl3qw" path="res://Prefabs/Home/SaveSlot.cs" id="1_yygms"]
+
+[node name="SaveSlot" type="Control" node_paths=PackedStringArray("SelectedIndicator", "Button", "SlotID", "Details", "EmptyIndicator", "PlayTime")]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 259.0
+offset_bottom = 77.0
+size_flags_horizontal = 3
+script = ExtResource("1_yygms")
+SelectedColor = Color(0.447059, 0.537255, 0.854902, 1)
+SelectedIndicator = NodePath("HBoxContainer/ColorRect")
+Button = NodePath("Button")
+SlotID = NodePath("HBoxContainer/VBoxContainer/HBoxContainer/SlotId")
+Details = NodePath("HBoxContainer/VBoxContainer/Details")
+EmptyIndicator = NodePath("HBoxContainer/VBoxContainer/EmptyIndicator")
+PlayTime = NodePath("HBoxContainer/VBoxContainer/Details/PlayTime")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="HBoxContainer"]
+custom_minimum_size = Vector2(16, 32)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Slot "
+
+[node name="SlotId" type="Label" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "0"
+
+[node name="Details" type="HBoxContainer" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer/Details"]
+layout_mode = 2
+text = "Last Played: "
+
+[node name="PlayTime" type="Label" parent="HBoxContainer/VBoxContainer/Details"]
+layout_mode = 2
+
+[node name="EmptyIndicator" type="Label" parent="HBoxContainer/VBoxContainer"]
+self_modulate = Color(0.509286, 0.509286, 0.509286, 1)
+layout_mode = 2
+text = "EMPTY"
+horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+flat = true

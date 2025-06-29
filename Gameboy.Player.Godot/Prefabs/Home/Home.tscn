@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://dbnkmmbkfij33"]
+[gd_scene load_steps=36 format=3 uid="uid://dbnkmmbkfij33"]
 
 [ext_resource type="PackedScene" uid="uid://chiogj51d08p6" path="res://Prefabs/ProfileSelect/Header.tscn" id="1_bdva6"]
 [ext_resource type="Script" uid="uid://dgriyu43xfc4f" path="res://Prefabs/Home/Home.cs" id="1_wi2fq"]
@@ -8,10 +8,13 @@
 [ext_resource type="PackedScene" uid="uid://lagkciw3arws" path="res://Prefabs/GodotBoy/GodotBoy.tscn" id="6_x58xt"]
 [ext_resource type="Texture2D" uid="uid://c2ysws5myvu57" path="res://Prefabs/Home/Ui/cart.png" id="7_0elp8"]
 [ext_resource type="Texture2D" uid="uid://4m3jjak2luj1" path="res://Prefabs/Home/Ui/cart-animated.png" id="8_8lrdv"]
+[ext_resource type="Texture2D" uid="uid://b17cb2qco3xve" path="res://Prefabs/Home/Ui/save.png" id="9_8lrdv"]
 [ext_resource type="Texture2D" uid="uid://28pi8cgc1cwx" path="res://Prefabs/Home/Ui/gear.png" id="9_fh6vd"]
 [ext_resource type="Texture2D" uid="uid://c6uplth7stqsd" path="res://Prefabs/Home/Ui/right-anim.png" id="9_g41qc"]
 [ext_resource type="Texture2D" uid="uid://dqems8opa8ely" path="res://Prefabs/Home/Ui/gear-rotated.png" id="10_g41qc"]
 [ext_resource type="Texture2D" uid="uid://jkbm8d7sfx52" path="res://Prefabs/Home/Ui/massiveMultiplayer.png" id="12_fh6vd"]
+[ext_resource type="Script" uid="uid://bl348oq7fxu8f" path="res://Prefabs/Home/SaveManager.cs" id="13_0elp8"]
+[ext_resource type="PackedScene" uid="uid://8j1xl1re8w4n" path="res://Prefabs/Home/SaveSlot.tscn" id="13_g41qc"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_2vuop"]
 animations = [{
@@ -68,6 +71,17 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_gsxy1")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_n62sg"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_8lrdv")
 }],
 "loop": true,
 "name": &"default",
@@ -162,7 +176,7 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Home" type="Control" node_paths=PackedStringArray("Root", "ProfileIcon", "DetailsRoot", "Title", "Boxart", "BoxartDownloader", "Publisher", "Year", "Region", "Description", "Genres", "GodotBoy")]
+[node name="Home" type="Control" node_paths=PackedStringArray("Root", "ProfileIcon", "Saves", "DetailsRoot", "Title", "Boxart", "BoxartDownloader", "Publisher", "Year", "Region", "Description", "Genres", "GodotBoy")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -173,6 +187,7 @@ script = ExtResource("1_wi2fq")
 Root = NodePath("Menu")
 DefaultProfileIcon = ExtResource("2_xj780")
 ProfileIcon = NodePath("Menu/Header/MarginContainer/HBoxContainer/UserIcon")
+Saves = NodePath("Window")
 DetailsRoot = NodePath("Menu/GameDetails")
 Title = NodePath("Menu/GameDetails/HBoxContainer/Panel/MarginContainer/VBoxContainer/Game Title")
 DefaultBoxart = ExtResource("4_50vnm")
@@ -237,8 +252,10 @@ alignment = 1
 
 [node name="ChangeCart" parent="Menu/Options" instance=ExtResource("6_jx4h5")]
 layout_mode = 2
+tooltip_text = "Load Game Cart"
 normal_sprite = SubResource("SpriteFrames_2vuop")
 hover_sprite = SubResource("SpriteFrames_0px1i")
+icon_tint = Color(0.858824, 0.145098, 0.0823529, 1)
 
 [node name="FileDialog" type="FileDialog" parent="Menu/Options/ChangeCart"]
 auto_translate_mode = 1
@@ -249,9 +266,17 @@ file_mode = 0
 access = 2
 filters = PackedStringArray("*.gb;Gameboy Carts")
 
+[node name="EditSaves" parent="Menu/Options" instance=ExtResource("6_jx4h5")]
+layout_mode = 2
+tooltip_text = "Change Save Slot"
+normal_sprite = SubResource("SpriteFrames_n62sg")
+icon_tint = Color(0.180086, 0.473486, 0.715532, 1)
+
 [node name="Play" parent="Menu/Options" instance=ExtResource("6_jx4h5")]
 layout_mode = 2
+tooltip_text = "Launch Game"
 hover_sprite = SubResource("SpriteFrames_op6q3")
+icon_tint = Color(0.910749, 0.56813, 0.213195, 1)
 
 [node name="VSeparator" type="VSeparator" parent="Menu/Options"]
 layout_mode = 2
@@ -260,11 +285,13 @@ theme_override_styles/separator = SubResource("StyleBoxEmpty_m1h2v")
 
 [node name="Settings" parent="Menu/Options" instance=ExtResource("6_jx4h5")]
 layout_mode = 2
+tooltip_text = "Settings"
 normal_sprite = SubResource("SpriteFrames_0elp8")
 hover_sprite = SubResource("SpriteFrames_8lrdv")
 
 [node name="ChangeProfile" parent="Menu/Options" instance=ExtResource("6_jx4h5")]
 layout_mode = 2
+tooltip_text = "Switch Profile"
 normal_sprite = SubResource("SpriteFrames_g41qc")
 
 [node name="GameDetails" type="MarginContainer" parent="Menu"]
@@ -361,12 +388,45 @@ layout_mode = 2
 [node name="HttpBoxartDownloader" type="HTTPRequest" parent="."]
 timeout = 12.0
 
+[node name="Window" type="Window" parent="." node_paths=PackedStringArray("Container", "HomeMenu")]
+title = "Save Manager"
+initial_position = 2
+size = Vector2i(480, 480)
+visible = false
+script = ExtResource("13_0elp8")
+NumberOfSlots = 101
+Container = NodePath("MarginContainer/ScrollContainer/VBoxContainer")
+SaveSlot = ExtResource("13_g41qc")
+HomeMenu = NodePath("..")
+
+[node name="MarginContainer" type="MarginContainer" parent="Window"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Window/MarginContainer"]
+layout_mode = 2
+follow_focus = true
+horizontal_scroll_mode = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Window/MarginContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
 [connection signal="PlaybackStopped" from="GodotBoy" to="." method="Stop"]
 [connection signal="pressed" from="Menu/Options/ChangeCart" to="Menu/Options/ChangeCart/FileDialog" method="show"]
 [connection signal="file_selected" from="Menu/Options/ChangeCart/FileDialog" to="." method="LoadCart"]
+[connection signal="pressed" from="Menu/Options/EditSaves" to="Window" method="RefreshListingAndShow"]
 [connection signal="pressed" from="Menu/Options/Play" to="." method="Play"]
 [connection signal="pressed" from="Menu/Options/Settings" to="." method="OpenSettings"]
 [connection signal="pressed" from="Menu/Options/ChangeProfile" to="." method="ReturnToProfileSelect"]
 [connection signal="request_completed" from="HttpBoxartDownloader" to="." method="OnBoxartDownloaded"]
+[connection signal="close_requested" from="Window" to="Window" method="hide"]
 
 [editable path="Menu/Header"]

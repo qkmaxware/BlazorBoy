@@ -31,19 +31,19 @@
 [ext_resource type="PackedScene" uid="uid://t7khq15qfjuw" path="res://Debuggers/CartInfoDebug.tscn" id="21_y5t5s"]
 [ext_resource type="PackedScene" uid="uid://b5psa1c0pvkya" path="res://Debuggers/PaletteDebugger.tscn" id="22_e37a5"]
 [ext_resource type="Texture2D" uid="uid://dsfu4d554womr" path="res://Prefabs/GodotBoy/UI/controller.svg" id="22_wkh71"]
-[ext_resource type="Texture2D" uid="uid://dvmlkwr4x5ssd" path="res://Prefabs/GodotBoy/UI/audio_on.png" id="22_yitpl"]
 [ext_resource type="PackedScene" uid="uid://yis4daekext1" path="res://Debuggers/Sprite Debugger.tscn" id="23_01ypf"]
 [ext_resource type="PackedScene" uid="uid://ca3d3pani0rrj" path="res://Debuggers/Tile Debugger.tscn" id="24_cepwr"]
 [ext_resource type="PackedScene" uid="uid://2uytp7r2ouod" path="res://Debuggers/Map Debugger.tscn" id="25_i7c8m"]
 [ext_resource type="PackedScene" uid="uid://cs764ed0jafqu" path="res://Debuggers/Disassembler.tscn" id="26_1mdrh"]
 [ext_resource type="Texture2D" uid="uid://cip0keh15srys" path="res://Prefabs/GodotBoy/UI/cart.png" id="28_f1kbb"]
 [ext_resource type="Texture2D" uid="uid://byxxvldruom6j" path="res://Prefabs/GodotBoy/UI/play.png" id="29_f4os1"]
-[ext_resource type="Texture2D" uid="uid://divrqb47wvwvt" path="res://Prefabs/GodotBoy/UI/reload.png" id="32_agcku"]
-[ext_resource type="Texture2D" uid="uid://cm332so38crqs" path="res://Prefabs/GodotBoy/UI/pause.png" id="32_eqyyb"]
 [ext_resource type="Texture2D" uid="uid://d0dpxbrvr2bo7" path="res://Prefabs/GodotBoy/UI/stop.png" id="32_qkn52"]
 [ext_resource type="PackedScene" uid="uid://ej42kngxrq4x" path="res://Debuggers/AudioDebug.tscn" id="35_inklj"]
+[ext_resource type="Texture2D" uid="uid://bn4ysopxxjkin" path="res://Prefabs/Home/Ui/return.png" id="39_n225a"]
+[ext_resource type="Texture2D" uid="uid://y4vocnt7d11f" path="res://Prefabs/Home/Ui/pause.png" id="40_mxtt7"]
+[ext_resource type="Texture2D" uid="uid://d18cwowsrddfq" path="res://Prefabs/Home/Ui/musicOn.png" id="42_n225a"]
 [ext_resource type="Script" uid="uid://bxd1708f6sogn" path="res://Prefabs/GodotBoy/AudioButton.cs" id="43_d3dy6"]
-[ext_resource type="Texture2D" uid="uid://cfhmcu84xswfm" path="res://Prefabs/GodotBoy/UI/audio_off.png" id="44_n7g3r"]
+[ext_resource type="Texture2D" uid="uid://cnukeqtiamf87" path="res://Prefabs/Home/Ui/musicOff.png" id="44_mxtt7"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_o72x6"]
 
@@ -505,7 +505,7 @@ layout_mode = 1
 anchors_preset = 0
 script = ExtResource("21_h4ww3")
 EnableSound = true
-MasterVolume = 0.5
+MasterVolume = 0.25
 NoiseVolume = 1.0
 
 [node name="Player" type="AudioStreamPlayer" parent="Speakers"]
@@ -560,6 +560,7 @@ layout_mode = 2
 
 [node name="GridContainer" type="GridContainer" parent="Options/MarginContainer/ScrollContainer/ScrollContents/Display"]
 layout_mode = 2
+theme_override_constants/h_separation = 64
 columns = 3
 
 [node name="Screen Only" type="TextureButton" parent="Options/MarginContainer/ScrollContainer/ScrollContents/Display/GridContainer"]
@@ -685,7 +686,14 @@ layout_mode = 2
 layout_mode = 2
 text = "Controller"
 
-[node name="TextureRect" type="TextureRect" parent="Options/MarginContainer/ScrollContainer/ScrollContents/Controller"]
+[node name="MarginContainer" type="MarginContainer" parent="Options/MarginContainer/ScrollContainer/ScrollContents/Controller"]
+layout_mode = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="TextureRect" type="TextureRect" parent="Options/MarginContainer/ScrollContainer/ScrollContents/Controller/MarginContainer"]
 layout_mode = 2
 texture = ExtResource("22_wkh71")
 expand_mode = 5
@@ -870,7 +878,7 @@ custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
 tooltip_text = "Restart Playback"
 focus_mode = 0
-icon = ExtResource("32_agcku")
+icon = ExtResource("39_n225a")
 expand_icon = true
 
 [node name="Pause" type="Button" parent="Playback"]
@@ -878,7 +886,7 @@ custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
 tooltip_text = "Pause/Resume Playback"
 focus_mode = 0
-icon = ExtResource("32_eqyyb")
+icon = ExtResource("40_mxtt7")
 expand_icon = true
 
 [node name="Stop" type="Button" parent="Playback"]
@@ -892,12 +900,12 @@ expand_icon = true
 [node name="Audio" type="Button" parent="Playback" node_paths=PackedStringArray("Speakers")]
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
-icon = ExtResource("22_yitpl")
+icon = ExtResource("42_n225a")
 expand_icon = true
 script = ExtResource("43_d3dy6")
 Speakers = NodePath("../../Speakers")
-AudioPlayingIcon = ExtResource("22_yitpl")
-AudioPausedIcon = ExtResource("44_n7g3r")
+AudioPlayingIcon = ExtResource("42_n225a")
+AudioPausedIcon = ExtResource("44_mxtt7")
 
 [connection signal="pressed" from="Screen Layouts/Screen Only/Settings" to="Options" method="show"]
 [connection signal="pressed" from="Screen Layouts/Onscreen Controls/Control/Buttons/Settings" to="Options" method="show"]

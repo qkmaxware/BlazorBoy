@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Security.Principal;
+using System.Text.RegularExpressions;
 
 public partial class Home : Control
 {
@@ -17,6 +18,7 @@ public partial class Home : Control
     [ExportGroup("Ui/Profile")]
     [Export] public Texture2D DefaultProfileIcon { get; set; }
     [Export] public TextureRect ProfileIcon { get; set; }
+    [Export] public SaveManager Saves {get; set;}
     Profile activeProfile;
 
     [ExportGroup("Ui/Game Details")]
@@ -72,19 +74,24 @@ public partial class Home : Control
     }
 
     private string cartPath;
+    public string LoadedCartPath => cartPath;
+    private static Regex last_digits = new Regex(@"\.sav(?<slotid>\d+)$");
     public void LoadCart(string path)
     {
         try
         {
             cartPath = path;
+            var filename = System.IO.Path.GetFileName(path);
             var cart = new Cartridge(File.ReadAllBytes(path));
 
+            // "fuzzy" search the game db for a matching game
             var db = GameDatabase.Instance();
-            var details = db.Where(x => x.CartTitle == cart.Info.title).FirstOrDefault();
+            GameInfo details = db.FindClosest(cart.Info.title);
 
+            // Set cart details on the display
             Title.Text = details?.Name ?? cart.Info.title;
             Boxart.Texture = DefaultBoxart;
-            if (details?.BoxArtUrl is not null && BoxartDownloader is not null)
+            if (!string.IsNullOrEmpty(details?.BoxArtUrl) && BoxartDownloader is not null)
             {
                 BoxartDownloader.CancelRequest();
                 BoxartDownloader.RequestRaw(
@@ -93,12 +100,30 @@ public partial class Home : Control
                     HttpClient.Method.Get
                 );
             }
-            Publisher.Text = details.PublisherName ?? cart.Info.licencee.ToString();
+            Publisher.Text = details?.PublisherName ?? cart.Info.licencee.ToString();
             Year.Text = details?.ReleaseYear.ToString() ?? "?";
             Region.Text = cart.Info.region.ToString();
             Description.Text = details?.Description ?? string.Empty;
             Genres.Text = string.Join(", ", details?.Genres ?? Enumerable.Empty<string>());
 
+            // Set save slot
+            if (activeProfile is not null && Saves is not null) {
+                var most_recent_save = activeProfile.EnumerateSaves().Where(file => file.Name.StartsWith(filename)).OrderByDescending(file => file.LastWriteTime).FirstOrDefault();
+                if (most_recent_save is not null) {
+                    var match = last_digits.Match(most_recent_save.Extension);
+                    if (match.Success) {
+                        Saves.SlotId = int.Parse(match.Groups["slotid"].Value);
+                    } else {
+                        Saves.SlotId = 0;
+                    }
+                } else {
+                    Saves.SlotId = 0;
+                } 
+            } else {
+                Saves.SlotId = 0;
+            }
+
+            // Actually load the card into the GB
             GodotBoy?.LoadCart(cart);
             DetailsRoot.Visible = true;
         }
@@ -115,8 +140,35 @@ public partial class Home : Control
 
         try
         {
+            var content_type = headers
+                .Where(header => header.StartsWith("Content-Type:"))
+                .Select(header => header.Substring("Content-Type:".Length).Trim())
+                .FirstOrDefault();
+            GD.Print(content_type);
+            
+            // Allow downloader to handle all "common" image types
             Image image = new Image();
-            image.LoadPngFromBuffer(body);
+            switch (content_type) {
+                case "image/jpe":
+                case "image/jpg":
+                case "image/jpeg":
+                    image.LoadJpgFromBuffer(body);
+                    break;
+                case "image/bmp":
+                    image.LoadBmpFromBuffer(body);
+                    break;
+                case "image/webp":
+                    image.LoadWebpFromBuffer(body);
+                    break;
+                case "image/x-targa":
+                    image.LoadTgaFromBuffer(body);
+                    break;
+                case "image/png":
+                    image.LoadPngFromBuffer(body);
+                    break;
+                default:
+                    return; // This is not a valid image type
+            }
             Texture2D texture = ImageTexture.CreateFromImage(image);
             Boxart.Texture = texture;
         }
@@ -155,7 +207,7 @@ public partial class Home : Control
         if (!GodotBoy.IsCartLoaded())
             return false;
 
-        var save_path = getSavePathForCart(0);
+        var save_path = getSavePathForCart(Saves?.SlotId ?? 0);
         if (save_path is not null)
         {
             GodotBoy.LoadSaveFromFile(save_path);

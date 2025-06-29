@@ -1,10 +1,10 @@
 [gd_scene load_steps=4 format=3 uid="uid://ej42kngxrq4x"]
 
-[ext_resource type="Script" path="res://Debuggers/AudioDebug.cs" id="1_bchvj"]
+[ext_resource type="Script" uid="uid://dfypdaddkhox0" path="res://Debuggers/AudioDebug.cs" id="1_bchvj"]
 [ext_resource type="Texture2D" uid="uid://divrqb47wvwvt" path="res://Prefabs/GodotBoy/UI/reload.png" id="2_4l1t0"]
-[ext_resource type="PackedScene" uid="uid://bjbvg4d0iuviv" path="res://Debuggers/Plot2D.tscn" id="2_kb1rd"]
+[ext_resource type="PackedScene" uid="uid://dkorf0mhytowk" path="res://Debuggers/AudioDebugChannelDetails.tscn" id="2_kaodp"]
 
-[node name="Audio" type="Control" node_paths=PackedStringArray("AudioOnButton", "Ch1On", "Ch1Volume", "NR11", "Ch1Pace", "Ch1SweepDir", "NR12", "Ch1Duty", "Ch1LengthTimer", "NR13", "Ch1Freq", "NR14", "Ch1LengthEnable", "CH1Plot", "Ch2On", "Ch2Volume", "NR21", "Ch2Pace", "Ch2SweepDir", "NR22", "Ch2Duty", "Ch2LengthTimer", "NR23", "Ch2Freq", "NR24", "Ch2LengthEnable", "CH2Plot", "Ch3On", "Ch3Volume", "Ch4On", "Ch4Volume")]
+[node name="Audio" type="Control" node_paths=PackedStringArray("AudioOnButton", "Ch1On", "Ch1Volume", "Ch1Details", "Ch2On", "Ch2Volume", "Ch2Details", "Ch3On", "Ch3Volume", "Ch3Details", "Ch4On", "Ch4Volume", "Ch4Details")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -15,34 +15,16 @@ script = ExtResource("1_bchvj")
 AudioOnButton = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Mute")
 Ch1On = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Ch1/OnOff")
 Ch1Volume = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Volume1/HSlider")
-NR11 = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Spec1/NRx0/Label")
-Ch1Pace = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Spec1/NRx0/Pace")
-Ch1SweepDir = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Spec1/NRx0/SweepDirection")
-NR12 = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Spec1/NRx1/Label")
-Ch1Duty = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Spec1/NRx1/Duty")
-Ch1LengthTimer = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Spec1/NRx1/LengthTimer")
-NR13 = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Spec1/NRx2/Label")
-Ch1Freq = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Spec1/NRx2/Freq")
-NR14 = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Spec1/NRx3/Label")
-Ch1LengthEnable = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Spec1/NRx3/LengthEnable")
-CH1Plot = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Plot2D")
+Ch1Details = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Ch1Details")
 Ch2On = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Ch2/OnOff")
 Ch2Volume = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Volume2/HSlider")
-NR21 = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Spec2/NRx0/Label")
-Ch2Pace = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Spec2/NRx0/Pace")
-Ch2SweepDir = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Spec2/NRx0/SweepDirection")
-NR22 = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Spec2/NRx1/Label")
-Ch2Duty = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Spec2/NRx1/Duty")
-Ch2LengthTimer = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Spec2/NRx1/LengthTimer")
-NR23 = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Spec2/NRx2/Label")
-Ch2Freq = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Spec2/NRx2/Freq")
-NR24 = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Spec2/NRx3/Label")
-Ch2LengthEnable = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Spec2/NRx3/LengthEnable")
-CH2Plot = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Plot2D2")
+Ch2Details = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Ch2Details")
 Ch3On = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Ch3/OnOff")
 Ch3Volume = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Volume3/HSlider")
+Ch3Details = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Ch3Details")
 Ch4On = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Ch4/OnOff")
 Ch4Volume = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Volume4/HSlider")
+Ch4Details = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Ch4Details")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 layout_mode = 1
@@ -94,62 +76,7 @@ size_flags_horizontal = 3
 max_value = 1.0
 step = 0.1
 
-[node name="Spec1" type="HBoxContainer" parent="ScrollContainer/MarginContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="NRx0" type="VBoxContainer" parent="ScrollContainer/MarginContainer/VBoxContainer/Spec1"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="Label" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/Spec1/NRx0"]
-layout_mode = 2
-text = "xxxx"
-
-[node name="Pace" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/Spec1/NRx0"]
-layout_mode = 2
-
-[node name="SweepDirection" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/Spec1/NRx0"]
-layout_mode = 2
-
-[node name="NRx1" type="VBoxContainer" parent="ScrollContainer/MarginContainer/VBoxContainer/Spec1"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="Label" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/Spec1/NRx1"]
-layout_mode = 2
-text = "xxxx"
-
-[node name="Duty" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/Spec1/NRx1"]
-layout_mode = 2
-text = "xxxx"
-
-[node name="LengthTimer" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/Spec1/NRx1"]
-layout_mode = 2
-text = "xxxx"
-
-[node name="NRx2" type="VBoxContainer" parent="ScrollContainer/MarginContainer/VBoxContainer/Spec1"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="Label" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/Spec1/NRx2"]
-layout_mode = 2
-text = "xxxx"
-
-[node name="Freq" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/Spec1/NRx2"]
-layout_mode = 2
-
-[node name="NRx3" type="VBoxContainer" parent="ScrollContainer/MarginContainer/VBoxContainer/Spec1"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="Label" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/Spec1/NRx3"]
-layout_mode = 2
-text = "xxxx"
-
-[node name="LengthEnable" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/Spec1/NRx3"]
-layout_mode = 2
-
-[node name="Plot2D" parent="ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("2_kb1rd")]
+[node name="Ch1Details" parent="ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("2_kaodp")]
 layout_mode = 2
 
 [node name="HSeparator" type="HSeparator" parent="ScrollContainer/MarginContainer/VBoxContainer"]
@@ -180,73 +107,8 @@ size_flags_horizontal = 3
 max_value = 1.0
 step = 0.1
 
-[node name="Spec2" type="HBoxContainer" parent="ScrollContainer/MarginContainer/VBoxContainer"]
+[node name="Ch2Details" parent="ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("2_kaodp")]
 layout_mode = 2
-
-[node name="NRx0" type="VBoxContainer" parent="ScrollContainer/MarginContainer/VBoxContainer/Spec2"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="Label" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/Spec2/NRx0"]
-layout_mode = 2
-text = "xxxx"
-
-[node name="Pace" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/Spec2/NRx0"]
-layout_mode = 2
-
-[node name="SweepDirection" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/Spec2/NRx0"]
-layout_mode = 2
-
-[node name="NRx1" type="VBoxContainer" parent="ScrollContainer/MarginContainer/VBoxContainer/Spec2"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="Label" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/Spec2/NRx1"]
-layout_mode = 2
-text = "xxxx"
-
-[node name="Duty" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/Spec2/NRx1"]
-layout_mode = 2
-text = "xxxx"
-
-[node name="LengthTimer" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/Spec2/NRx1"]
-layout_mode = 2
-text = "xxxx"
-
-[node name="NRx2" type="VBoxContainer" parent="ScrollContainer/MarginContainer/VBoxContainer/Spec2"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="Label" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/Spec2/NRx2"]
-layout_mode = 2
-text = "xxxx"
-
-[node name="Freq" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/Spec2/NRx2"]
-layout_mode = 2
-
-[node name="NRx3" type="VBoxContainer" parent="ScrollContainer/MarginContainer/VBoxContainer/Spec2"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="Label" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/Spec2/NRx3"]
-layout_mode = 2
-text = "xxxx"
-
-[node name="LengthEnable" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/Spec2/NRx3"]
-layout_mode = 2
-
-[node name="Plot2D2" parent="ScrollContainer/MarginContainer/VBoxContainer" node_paths=PackedStringArray("line", "YAxis", "YMax", "XAxis", "XMax", "YXMin", "TopLeft", "TopRight", "BottomLeft", "BottomRight") instance=ExtResource("2_kb1rd")]
-layout_mode = 2
-line = NodePath("../Plot2D/Plot")
-YAxis = NodePath("../Plot2D/Y-AxisLabel")
-YMax = NodePath("../Plot2D/Y-Max")
-XAxis = NodePath("../Plot2D/X-AxisLabel")
-XMax = NodePath("../Plot2D/X-Max")
-YXMin = NodePath("../Plot2D/XY-Origin")
-TopLeft = NodePath("../Plot2D/TopLeft")
-TopRight = NodePath("../Plot2D/TopRight")
-BottomLeft = NodePath("../Plot2D/BottomLeft")
-BottomRight = NodePath("../Plot2D/BottomRight")
 
 [node name="HSeparator2" type="HSeparator" parent="ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -276,6 +138,9 @@ size_flags_horizontal = 3
 max_value = 1.0
 step = 0.1
 
+[node name="Ch3Details" parent="ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("2_kaodp")]
+layout_mode = 2
+
 [node name="HSeparator3" type="HSeparator" parent="ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
@@ -303,6 +168,9 @@ layout_mode = 2
 size_flags_horizontal = 3
 max_value = 1.0
 step = 0.1
+
+[node name="Ch4Details" parent="ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("2_kaodp")]
+layout_mode = 2
 
 [node name="Reload" type="Button" parent="."]
 layout_mode = 1

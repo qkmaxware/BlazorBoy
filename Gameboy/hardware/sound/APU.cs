@@ -173,10 +173,12 @@ public class APU : IMemorySegment {
             return; // Done, no audio is generated
 	
 		// Mix in samples
-        Channel1.MixInSamples(playbackFreq, chan1Volume * LeftVolume, chan1Volume * RightVolume, samples);
-        Channel2.MixInSamples(playbackFreq, chan2Volume * LeftVolume, chan2Volume * RightVolume, samples);
-        Channel3.MixInSamples(playbackFreq, chan3Volume * LeftVolume, chan3Volume * RightVolume, samples);
-        Channel4.MixInSamples(playbackFreq, chan4Volume * LeftVolume, chan4Volume * RightVolume, samples);
+		var lv = LeftVolume / 7.0f;
+		var rv = RightVolume / 7.0f;
+        Channel1.MixInSamples(playbackFreq, chan1Volume * lv, chan1Volume * rv, samples);
+        Channel2.MixInSamples(playbackFreq, chan2Volume * lv, chan2Volume * rv, samples);
+        Channel3.MixInSamples(playbackFreq, chan3Volume * lv, chan3Volume * rv, samples);
+        Channel4.MixInSamples(playbackFreq, chan4Volume * lv, chan4Volume * rv, samples);
 
 		// Average samples across channels
 		for (var i = 0; i < samples.Length; i++) {

@@ -39,6 +39,13 @@ public class Profile
         Directory.CreateDirectory(screenshot_path);
     }
 
+    public IEnumerable<FileInfo> EnumerateSaves() {
+        if (!Directory.Exists(SavePath))
+            return Enumerable.Empty<FileInfo>();
+        
+        return (new DirectoryInfo(SavePath)).EnumerateFiles();
+    }
+
     public bool TryGetIcon(out Texture2D icon)
     {
         try
