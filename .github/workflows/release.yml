@@ -30,7 +30,7 @@ jobs:
     strategy: 
       fail-fast: false
       matrix: 
-        godot: [ '4.2.2-stable' ]
+        godot: [ '4.4.1-stable' ]
         os: [ 'windows-latest' ]
         platform: [ 'Windows x64' ]
     steps:
@@ -69,12 +69,17 @@ jobs:
       uses: actions/setup-dotnet@v3 
       with:
         dotnet-version: '${{ matrix.dotnet }}' # SDK Version to use
-    - name: Pack Nuget Package
+    - name: Pack Library Nuget Package
+      env:
+        # Work around https://github.com/actions/setup-dotnet/issues/29
+        DOTNET_ROOT: ${{ runner.tool_cache }}/dncs/${{ matrix.dotnet }}/x64
+      run: dotnet pack Gameboy --configuration Release --output nupkg
+    - name: Pack CLI Nuget Package
       env:
         # Work around https://github.com/actions/setup-dotnet/issues/29
         DOTNET_ROOT: ${{ runner.tool_cache }}/dncs/${{ matrix.dotnet }}/x64
       run: dotnet pack Gameboy.Player.Cli --configuration Release --output nupkg
-    - name: Publish Nuget Package
+    - name: Publish Nuget Packages
       env:
         # Work around https://github.com/actions/setup-dotnet/issues/29
         DOTNET_ROOT: ${{ runner.tool_cache }}/dncs/${{ matrix.dotnet }}/x64

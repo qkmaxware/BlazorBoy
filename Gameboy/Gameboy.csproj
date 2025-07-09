@@ -4,10 +4,25 @@
     <ProjectReference Include="..\Qkmaxware.Vm.LR35902\Qkmaxware.Vm.LR35902.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="..\LICENSE.md" CopyToOutputDirectory="Always" Pack="true" PackagePath="$(PackageLicenseFile)"/>
+  </ItemGroup>
+
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+
+    <PackageId>Blazorboy</PackageId>
+    <Version>0.2.1</Version>
+    <Authors>qkmaxware</Authors>
+    <PackageTags>emulator</PackageTags>
+    <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
+    <RepositoryUrl>https://github.com/qkmaxware/BlazorBoy</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageDescription>
+      BlazorBoy emulator core library
+    </PackageDescription>
   </PropertyGroup>
 
 </Project>
