@@ -30,9 +30,10 @@ jobs:
     strategy: 
       fail-fast: false
       matrix: 
-        godot: [ '4.4.1-stable' ]
+        godot: [ '4.4.1' ]
         os: [ 'windows-latest' ]
-        platform: [ 'Windows x64' ]
+        platform: [ 'win-x64' ]
+        preset: [ 'Windows x64' ]
     steps:
     - name: Checkout Code
       uses: actions/checkout@master
@@ -42,16 +43,28 @@ jobs:
       uses: actions/setup-dotnet@v3 
       with:
         dotnet-version: '8.0.x' # SDK Version to use
+    - name: Setup Directories
+      run: New-Item -ItemType Directory "temp" -Force; New-Item -ItemType Directory "temp\Godot" -Force; New-Item -ItemType Directory "temp\Templates" -Force;
+    
     - name: Download Godot
-      run: curl https://github.com/godotengine/godot-builds/releases/download/${{ matrix.godot }}/Godot_v${{ matrix.godot }}_mono_win64.zip -o godot.zip; curl https://github.com/godotengine/godot-builds/releases/download/${{ matrix.godot }}/Godot_v${{ matrix.godot }}_mono_export_templates.tpz -o godot_export_templates.tpz
-    - name: Extract Godot
-      run: Expand-Archive -Path godot.zip -DestinationPath Godot; Rename-Item Godot/Godot_v${{ matrix.godot }}_mono_win64 -NewName Engine; Rename-Item Godot/Engine/Godot_v${{ matrix.godot }}_mono_win64.exe -NewName "godot.exe"; Rename-Item Godot/Engine/Godot_v${{ matrix.godot }}_mono_win64_console.exe -NewName "godot_console.exe"  
+      run: Invoke-WebRequest "https://github.com/godotengine/godot/releases/download/${{ matrix.godot }}-stable/Godot_v${{ matrix.godot }}-stable_mono_win64.zip" -o "temp\godot.zip"
+    - name: Extract Godot 
+      run: Expand-Archive -Path "temp\godot.zip" -DestinationPath "temp\Godot" -Force
+    - name: Download Build Template
+      run: Invoke-WebRequest "https://github.com/godotengine/godot/releases/download/${{ matrix.godot }}-stable/Godot_v${{ matrix.godot }}-stable_mono_export_templates.tpz" -o "temp\templates.tpz"
     - name: Extract Build Templates
-      run: echo 1
-    - name: Build Binary
-      run: New-Item -Force -Path "./bin/${{ matrix.platform }}" -ItemType "directory"; ./Godot/Engine/godot_console.exe --build-solutions --export-release ${{ matrix.platform }} ../bin/${{ matrix.platform }}/BlazorBoy.exe ./Gameboy.Player.Godot/project.godot
+      run: tar -xvzf "temp\templates.tpz" -C "temp\Templates" 
+    - name: Install Build Templates
+      run: Copy-Item -Path "temp\Templates\templates" -Destination "$env:APPDATA\Godot\export_templates\${{ matrix.godot }}.stable.mono" -Recurse -Force
 
-  cli:
+    - name: Build Binary
+      run: New-Item -Force -Path "./bin" -ItemType "directory"; New-Item -Force -Path "./bin/${{ matrix.platform }}" -ItemType "directory"; New-Item -Force -Path "./bin/${{ matrix.platform }}/godot" -ItemType "directory"; .\temp\Godot\Godot_v${{ matrix.godot }}-stable_mono_win64_console.exe --headless --verbose --build-solutions --export-release ${{ matrix.preset }} "./bin/${{ matrix.platform }}/godot/BlazorBoy.exe" "./Gameboy.Player.Godot/project.godot"
+    - name: Zip Binary
+      run: echo "TODO"
+    - name: Upload Binary
+      run: echo "TODO"
+
+  nuget:
     needs: [ test ]
     name: Publish Nuget
     permissions:
@@ -69,6 +82,11 @@ jobs:
       uses: actions/setup-dotnet@v3 
       with:
         dotnet-version: '${{ matrix.dotnet }}' # SDK Version to use
+    - name: Pack CPU Nuget Package
+      env:
+        # Work around https://github.com/actions/setup-dotnet/issues/29
+        DOTNET_ROOT: ${{ runner.tool_cache }}/dncs/${{ matrix.dotnet }}/x64
+      run: dotnet pack Qkmaxware.Vm.LR35902 --configuration Release --output nupkg
     - name: Pack Library Nuget Package
       env:
         # Work around https://github.com/actions/setup-dotnet/issues/29
