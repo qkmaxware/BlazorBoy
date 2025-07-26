@@ -10,10 +10,13 @@ public class CartridgeAdapter : IMemorySegment {
     public IMbc? ActiveController => controller;
     public bool HasCart() => cart is not null && controller is not null;
 
+    private bool _ramDirty = false;
+
     public void Reset() {
         if(this.controller is not null){
             this.controller.Reset();
         }
+        _ramDirty = false;
     }
 
     
@@ -50,6 +53,8 @@ public class CartridgeAdapter : IMemorySegment {
                 break;
         }
 
+        _ramDirty = false;
+
         if (recognized) {
             this.cart = cart;
             this.controller = controller;
@@ -64,6 +69,7 @@ public class CartridgeAdapter : IMemorySegment {
             return;
         
         this.controller.UpdateRamBanks(banks);
+        _ramDirty = false;
     }
 
     public byte[][] DumpRam() {
@@ -83,6 +89,11 @@ public class CartridgeAdapter : IMemorySegment {
     public void WriteByte(int address, int value) {
         if(this.controller is not null){
             this.controller.WriteByte(address, value);
+
+            if (address >= 0xA000 && address <= 0xBFFF && LoadedCart is not null && LoadedCart.Info.cartType.HasBattery)
+            {
+                _ramDirty = true;
+            }
         }
     }
 
@@ -91,6 +102,10 @@ public class CartridgeAdapter : IMemorySegment {
             return false;
         return cart.supportsCGB();
     }
+
+    public bool RequiresSave() => _ramDirty;
+
+    public void MarkClean() => _ramDirty = false;
 
    public void SetMMU(MemoryMap mmu) { }
 

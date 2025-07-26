@@ -14,7 +14,7 @@
     <Nullable>enable</Nullable>
 
     <PackageId>Blazorboy</PackageId>
-    <Version>0.2.1</Version>
+    <Version>0.2.2</Version>
     <Authors>qkmaxware</Authors>
     <PackageTags>emulator</PackageTags>
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>

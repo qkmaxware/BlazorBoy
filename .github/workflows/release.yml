@@ -47,11 +47,11 @@ jobs:
       run: New-Item -ItemType Directory "temp" -Force; New-Item -ItemType Directory "temp\Godot" -Force; New-Item -ItemType Directory "temp\Templates" -Force;
     
     - name: Download Godot
-      run: Invoke-WebRequest "https://github.com/godotengine/godot/releases/download/${{ matrix.godot }}-stable/Godot_v${{ matrix.godot }}-stable_mono_win64.zip" -o "temp\godot.zip"
+      run: Invoke-WebRequest "https://github.com/godotengine/godot/releases/download/${{ matrix.godot }}-stable/Godot_v${{ matrix.godot }}-stable_mono_win64.zip" -OutFile "temp\godot.zip"
     - name: Extract Godot 
       run: Expand-Archive -Path "temp\godot.zip" -DestinationPath "temp\Godot" -Force
     - name: Download Build Template
-      run: Invoke-WebRequest "https://github.com/godotengine/godot/releases/download/${{ matrix.godot }}-stable/Godot_v${{ matrix.godot }}-stable_mono_export_templates.tpz" -o "temp\templates.tpz"
+      run: Invoke-WebRequest "https://github.com/godotengine/godot/releases/download/${{ matrix.godot }}-stable/Godot_v${{ matrix.godot }}-stable_mono_export_templates.tpz" -OutFile "temp\templates.tpz"
     - name: Extract Build Templates
       run: tar -xvzf "temp\templates.tpz" -C "temp\Templates" 
     - name: Install Build Templates

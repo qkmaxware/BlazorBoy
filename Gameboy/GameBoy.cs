@@ -86,6 +86,13 @@ public class Gameboy {
         }
     }
 
+    public bool RequiresSave() => SupportsSaves() && this.cart.RequiresSave();
+
+    public IEnumerable<byte> SaveRam() {
+        var enumerable = this.DumpCartRam();
+        this.cart.MarkClean();
+        return enumerable;
+    }
     public void RestoreCartRam(IEnumerable<byte> bytes) {
         var enumerator = bytes.GetEnumerator();
         foreach (var bank in this.cart.DumpRam()) {
