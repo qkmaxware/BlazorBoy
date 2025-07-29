@@ -137,5 +137,5 @@ public abstract class Channel {
     public virtual void ClockVolumeEnvelope(int fsStep) { }
 
     public abstract void Tick(ref ClockDelta dt);
-    public abstract void MixInSamples(float playbackFreq, float leftVolume, float rightVolume, Sample[] samples);
+    public abstract void MixInSamples(float playbackFreq, float leftVolume, float rightVolume, Span<Sample> samples);
 }

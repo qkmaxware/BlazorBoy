@@ -100,7 +100,7 @@ public class PcmChannel : Channel {
         timer = 0;
     }
 
-    public override void MixInSamples(float playbackFreq, float leftVolume, float rightVolume, Sample[] samples)
+    public override void MixInSamples(float playbackFreq, float leftVolume, float rightVolume, Span<Sample> samples)
     {
         if (!IsEnabled)
             return;

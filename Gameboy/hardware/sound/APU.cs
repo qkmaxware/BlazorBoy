@@ -165,9 +165,9 @@ public class APU : IMemorySegment {
 		Channel4.Reset();
 	}
 
-    public void FillSamples(float playbackFreq, Sample[] samples, float chan1Volume = 1.0f, float chan2Volume = 1.0f, float chan3Volume = 1.0f, float chan4Volume = 1.0f) {
+	public void FillSamples(float playbackFreq, Span<Sample> samples, float chan1Volume = 1.0f, float chan2Volume = 1.0f, float chan3Volume = 1.0f, float chan4Volume = 1.0f) {
         // Clear samples
-		Array.Fill(samples, new Sample()); 
+		samples.Fill(new Sample());
 
 		if (!IsPoweredOn)
             return; // Done, no audio is generated
